@@ -8,4 +8,6 @@ data class Poll(
     val endsAt: Long,
     val updatedAt: Long,
     val userId: Long
-)
+) {
+    fun findAuthor(users: List<User>) = users.find { userId == it.id }
+}

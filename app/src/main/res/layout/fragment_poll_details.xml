@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent" android:layout_height="match_parent"
+        android:fillViewport="true">
+    <android.support.v7.widget.CardView
+            android:id="@+id/pollDetailsCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="5dp"
+            android:elevation="8dp"
+            android:layout_gravity="top">
+
+        <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+            <TextView
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:id="@+id/pollDetailsTheme"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <TextView
+                    android:id="@+id/pollDetailsDate"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"/>
+
+            <TextView
+                    android:id="@+id/pollDetailsDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"/>
+
+            <TextView
+                    android:id="@+id/pollDetailsAuthor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+            android:background="@color/colorAccent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="80dp">
+
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

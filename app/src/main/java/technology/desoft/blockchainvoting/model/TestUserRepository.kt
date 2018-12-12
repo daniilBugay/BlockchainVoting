@@ -5,7 +5,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import java.util.*
 
-class TestUserProvider: UserProvider {
+class TestUserRepository: UserRepository {
+
     override fun login(email: String, password: String): Deferred<Token?> {
         return GlobalScope.async {
             if (email == "test" && password == "test")
@@ -21,6 +22,14 @@ class TestUserProvider: UserProvider {
             User(0, email, Calendar.getInstance().timeInMillis, 0)
             else
                 null
+        }
+    }
+
+    override fun getUsers(): Deferred<List<User>?> {
+        return GlobalScope.async {
+            List(10){
+                User(it.toLong(), "user$it@desoft.technology", 0, 0)
+            }
         }
     }
 }
