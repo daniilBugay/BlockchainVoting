@@ -18,6 +18,8 @@ import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.PollView
 import technology.desoft.blockchainvoting.ui.fragment.ActivePollDetailsFragment
 import technology.desoft.blockchainvoting.ui.fragment.AllPollsFragment
+import technology.desoft.blockchainvoting.ui.fragment.SignInFragment
+import technology.desoft.blockchainvoting.ui.fragment.SignUpFragment
 
 class MainActivity : MvpAppCompatActivity(), MainView {
 
@@ -42,8 +44,12 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         setContentView(R.layout.activity_main)
     }
 
-    override fun showLoginScreen() {
+    override fun showSignInScreen() {
+        changeFragment(SignInFragment()){}
+    }
 
+    override fun showSignUpScreen() {
+        changeFragment(SignUpFragment()){}
     }
 
     override fun showAllPolls() {

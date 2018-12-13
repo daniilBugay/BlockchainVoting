@@ -3,4 +3,10 @@
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#FFFFFF</color>
     <color name="colorAccent">#000000</color>
+
+    <!--Sign colors-->
+    <color name="colorSignGray5">#f2f2f2</color>
+    <color name="colorSignGray20">#cccccc</color>
+    <color name="colorSignGray40">#999999</color>
+    <color name="colorSignGray60">#666666</color>
 </resources>

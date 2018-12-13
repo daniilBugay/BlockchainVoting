@@ -7,7 +7,8 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(SkipStrategy::class)
 interface MainView: MvpView {
-    fun showLoginScreen()
+    fun showSignInScreen()
+    fun showSignUpScreen()
     fun showAllPolls()
     fun showActivePollDetails(poll: PollView, itemView: View)
     fun showCompletedPollDetails(poll: PollView, itemView: View)

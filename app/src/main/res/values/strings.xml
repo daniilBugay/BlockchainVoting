@@ -4,4 +4,10 @@
     <string name="vote">Vote</string>
     <string name="choice">Make Your Choice:</string>
     <string name="completed">completed</string>
+
+    <!--Sign strings-->
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">EMAIL</string>
+    <string name="password">PASSWORD</string>
 </resources>
