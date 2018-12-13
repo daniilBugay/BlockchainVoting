@@ -16,8 +16,8 @@ import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.presenter.MainPresenter
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.ui.fragment.ActivePollDetailsFragment
 import technology.desoft.blockchainvoting.ui.fragment.AllPollsFragment
-import technology.desoft.blockchainvoting.ui.fragment.PollDetailsFragment
 
 class MainActivity : MvpAppCompatActivity(), MainView {
 
@@ -50,8 +50,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         changeFragment(AllPollsFragment()) {}
     }
 
-    override fun showPollDetails(poll: PollView, itemView: View) {
-        val fragment = PollDetailsFragment.withPoll(poll)
+    override fun showActivePollDetails(poll: PollView, itemView: View) {
+        val fragment = ActivePollDetailsFragment.withPoll(poll)
         changeFragment(fragment) {
             addToBackStack(null)
             val transitionSet = TransitionSet()
@@ -64,5 +64,9 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             val card = itemView.pollCard
             addSharedElement(card, card.transitionName)
         }
+    }
+
+    override fun showCompletedPollDetails(poll: PollView, itemView: View) {
+
     }
 }

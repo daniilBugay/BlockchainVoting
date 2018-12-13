@@ -1,27 +1,32 @@
 package technology.desoft.blockchainvoting.ui.fragment
 
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.text.format.DateFormat
+import android.transition.Slide
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_poll_details.view.*
 import technology.desoft.blockchainvoting.R
-import technology.desoft.blockchainvoting.presentation.presenter.PollDetailsPresenter
-import technology.desoft.blockchainvoting.presentation.view.PollDetailsView
+import technology.desoft.blockchainvoting.presentation.presenter.ActivePollDetailsPresenter
+import technology.desoft.blockchainvoting.presentation.view.ActivePollDetailsView
 import technology.desoft.blockchainvoting.presentation.view.PollView
+import java.util.*
 
-class PollDetailsFragment : MvpAppCompatFragment(), PollDetailsView {
+class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView {
     companion object {
         private const val POLL_KEY = "poll"
         private const val TRANSITION_NAME_KEY = "transition name"
 
-        fun withPoll(poll: PollView): PollDetailsFragment {
-            val result = PollDetailsFragment()
+        fun withPoll(poll: PollView): ActivePollDetailsFragment {
+            val result = ActivePollDetailsFragment()
             val json = Gson().toJson(poll)
             val bundle = Bundle()
             bundle.putString(POLL_KEY, json)
@@ -32,14 +37,14 @@ class PollDetailsFragment : MvpAppCompatFragment(), PollDetailsView {
     }
 
     @InjectPresenter
-    lateinit var pollDetailPresenter: PollDetailsPresenter
+    lateinit var activePollDetailPresenter: ActivePollDetailsPresenter
 
     @ProvidePresenter
-    fun providePresenter(): PollDetailsPresenter {
+    fun providePresenter(): ActivePollDetailsPresenter {
         val json = arguments?.getString(POLL_KEY)
             ?: throw IllegalStateException("You must create fragment using withPoll companion function")
         val poll = Gson().fromJson<PollView>(json, PollView::class.java)
-        return PollDetailsPresenter(poll)
+        return ActivePollDetailsPresenter(poll)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -49,6 +54,16 @@ class PollDetailsFragment : MvpAppCompatFragment(), PollDetailsView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.pollDetailsCard.transitionName = arguments?.getString(TRANSITION_NAME_KEY)
+        val animation = AnimationUtils.loadAnimation(context, R.anim.move_up)
+        view.pollDescriptionCard.startAnimation(animation)
+        view.pollDetailsMakeChoiceText.setOnClickListener {
+            val behavior = BottomSheetBehavior.from(view.pollDetailsOptionsLayout)
+            behavior.state = if (behavior.state == BottomSheetBehavior.STATE_EXPANDED)
+                BottomSheetBehavior.STATE_COLLAPSED
+            else
+                BottomSheetBehavior.STATE_EXPANDED
+        }
+        this.exitTransition = Slide(Gravity.BOTTOM)
     }
 
     override fun showDetails(pollView: PollView) {
@@ -60,6 +75,11 @@ class PollDetailsFragment : MvpAppCompatFragment(), PollDetailsView {
             val fromDate = formatter.format(pollView.poll.createdAt)
             val toDate = formatter.format(pollView.poll.endsAt)
             pollDetailsDate.text = resources.getString(R.string.date_format, fromDate, toDate)
+            completedText.visibility = if (pollView.poll.endsAt < Calendar.getInstance().timeInMillis) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
         }
     }
 }

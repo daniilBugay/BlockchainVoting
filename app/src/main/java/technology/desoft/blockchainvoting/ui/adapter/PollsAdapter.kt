@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_poll.view.*
 import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.view.PollView
+import java.util.*
 
 class PollsAdapter(
     private val polls: List<PollView>,
@@ -36,6 +37,11 @@ class PollsAdapter(
                 val toDate = formatter.format(pollView.poll.endsAt)
                 pollDate.text = resources.getString(R.string.date_format, fromDate, toDate)
                 pollCard.transitionName = "pollCard${pollView.poll.id}"
+                pollCard.completedText.visibility = if (pollView.poll.endsAt < Calendar.getInstance().timeInMillis){
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
                 setOnClickListener { onClick(pollView, itemView) }
             }
         }

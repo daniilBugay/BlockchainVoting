@@ -9,5 +9,6 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 interface MainView: MvpView {
     fun showLoginScreen()
     fun showAllPolls()
-    fun showPollDetails(poll: PollView, itemView: View)
+    fun showActivePollDetails(poll: PollView, itemView: View)
+    fun showCompletedPollDetails(poll: PollView, itemView: View)
 }

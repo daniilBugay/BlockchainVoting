@@ -7,14 +7,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import technology.desoft.blockchainvoting.model.Poll
 import technology.desoft.blockchainvoting.model.PollRepository
 import technology.desoft.blockchainvoting.model.UserRepository
 import technology.desoft.blockchainvoting.navigation.Router
-import technology.desoft.blockchainvoting.navigation.navigations.PollDetailsNavigation
+import technology.desoft.blockchainvoting.navigation.navigations.ActivePollDetailsNavigation
+import technology.desoft.blockchainvoting.navigation.navigations.CompletedPollDetailsNavigation
 import technology.desoft.blockchainvoting.presentation.view.AllPollsView
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.PollView
+import java.util.*
 
 @InjectViewState
 class AllPollsPresenter(
@@ -30,7 +31,7 @@ class AllPollsPresenter(
         showPolls()
     }
 
-    fun showPolls() {
+    private fun showPolls() {
         viewState.loading()
         val job = launch(Dispatchers.IO) {
             val polls = pollsRepository.getPolls().await()
@@ -56,6 +57,9 @@ class AllPollsPresenter(
     }
 
     fun showDetails(pollView: PollView, view: View) {
-        router.postNavigation(PollDetailsNavigation(pollView, view))
+        if (pollView.poll.endsAt > Calendar.getInstance().timeInMillis)
+            router.postNavigation(ActivePollDetailsNavigation(pollView, view))
+        else
+            router.postNavigation(CompletedPollDetailsNavigation(pollView, view))
     }
 }
