@@ -1,10 +1,12 @@
 package technology.desoft.blockchainvoting.ui.fragment
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.TextView
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -14,6 +16,7 @@ import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.presenter.SignInPresenter
 import technology.desoft.blockchainvoting.presentation.view.SignView
+
 
 class SignInFragment : MvpAppCompatFragment(), SignView {
 
@@ -44,12 +47,20 @@ class SignInFragment : MvpAppCompatFragment(), SignView {
     }
 
     override fun showError(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT) }
+        val snackBarText = snackBar?.view?.findViewById<View>(android.support.design.R.id.snackbar_text) as TextView
+        snackBarText.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        snackBarText.gravity = Gravity.CENTER_HORIZONTAL
+        snackBar.show()
         view?.signInProgressBar?.visibility = View.GONE
     }
 
     override fun showSuccess(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT) }
+        val snackBarText = snackBar?.view?.findViewById<View>(android.support.design.R.id.snackbar_text) as TextView
+        snackBarText.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        snackBarText.gravity = Gravity.CENTER_HORIZONTAL
+        snackBar.show()
         view?.signInProgressBar?.visibility = View.GONE
     }
 
