@@ -49,7 +49,7 @@ class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView,
             ?: throw IllegalStateException("You must create fragment using withPoll companion function")
         val poll = Gson().fromJson<PollView>(json, PollView::class.java)
         val app = activity?.application as App
-        return ActivePollDetailsPresenter(GlobalScope, app.pollRepository, poll)
+        return ActivePollDetailsPresenter(GlobalScope, app.pollRepository, app.voteRepository, poll)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -71,6 +71,7 @@ class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView,
         view.pollDetailsOptionsRecycler.layoutManager = LinearLayoutManager(
             context, LinearLayoutManager.VERTICAL, false
         )
+        view.pollDetailsVoteButton.setOnClickListener { activePollDetailPresenter.vote() }
     }
 
     override fun showDetails(pollView: PollView) {

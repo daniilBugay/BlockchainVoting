@@ -8,6 +8,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import technology.desoft.blockchainvoting.model.Token
 import technology.desoft.blockchainvoting.model.UserRepository
+import technology.desoft.blockchainvoting.model.UserTokenProvider
 import technology.desoft.blockchainvoting.navigation.Router
 import technology.desoft.blockchainvoting.navigation.navigations.AllPollsNavigation
 import technology.desoft.blockchainvoting.presentation.view.MainView
@@ -17,7 +18,8 @@ import technology.desoft.blockchainvoting.presentation.view.SignView
 class SignInPresenter(
     private val coroutineScope: CoroutineScope,
     private val router: Router<MainView>,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val userTokenProvider: UserTokenProvider
 ): MvpPresenter<SignView>(), CoroutineScope by coroutineScope {
     private val jobs: MutableList<Job> = mutableListOf()
 
@@ -25,15 +27,18 @@ class SignInPresenter(
         viewState.loading()
         val job = launch(Dispatchers.IO) {
             val token = userRepository.login(email, password).await()
-            if (token != null) launch(Dispatchers.Main) { onSuccess(token) }.start()
+            if (token != null) launch(Dispatchers.Main) { onSuccess(email, password, token) }.start()
             else launch(Dispatchers.Main) { onError("error") }.start()
         }
         jobs.add(job)
         job.start()
     }
 
-    private fun onSuccess(token: Token){
+    private fun onSuccess(email: String, password: String, token: Token){
         viewState.showSuccess("Success")
+        userTokenProvider.saveEmail(email)
+        userTokenProvider.savePassword(password)
+        userTokenProvider.token = token
         router.postNavigation(AllPollsNavigation())
     }
 

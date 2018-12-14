@@ -23,7 +23,7 @@ class SignInFragment : MvpAppCompatFragment(), SignView {
     @ProvidePresenter
     fun providePresenter(): SignInPresenter {
         val app = activity?.application as App
-        return SignInPresenter(GlobalScope, app.mainRouter, app.userRepository)
+        return SignInPresenter(GlobalScope, app.mainRouter, app.userRepository, app.userProvider)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
