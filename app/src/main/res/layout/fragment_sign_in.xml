@@ -134,33 +134,25 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/spacing_large"/>
 
+            <android.support.design.button.MaterialButton
+                    android:id="@+id/signInButton"
+                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorAccent"
+                    android:text="@string/sign_in"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                    android:textAlignment="center"
+                    app:cornerRadius="5dp"
+                    app:rippleColor="@android:color/darker_gray"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:elevation="1dp"/>
+
         </LinearLayout>
 
     </RelativeLayout>
-
-    <android.support.design.button.MaterialButton
-            android:id="@+id/signInButton"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="bottom"
-            android:background="@color/colorAccent"
-            android:text="@string/sign_in"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"/>
-
-    <!--<com.balysv.materialripple.MaterialRippleLayout-->
-    <!--style="@style/RippleStyleWhite"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="?attr/actionBarSize"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:background="@color/colorAccent">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:text="@string/sign_in"-->
-    <!--android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"-->
-    <!--android:textColor="@android:color/white" />-->
-    <!--</com.balysv.materialripple.MaterialRippleLayout>-->
 
 </LinearLayout>
