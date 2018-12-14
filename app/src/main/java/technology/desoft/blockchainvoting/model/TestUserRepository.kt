@@ -3,12 +3,14 @@ package technology.desoft.blockchainvoting.model
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import java.util.*
 
 class TestUserRepository: UserRepository {
 
     override fun login(email: String, password: String): Deferred<Token?> {
         return GlobalScope.async {
+            delay(1500)
             if (email == "test" && password == "test")
                 Token("ok")
             else
@@ -18,6 +20,7 @@ class TestUserRepository: UserRepository {
 
     override fun registration(email: String, password: String, confirmPassword: String): Deferred<User?> {
         return GlobalScope.async {
+            delay(1500)
             if (password == confirmPassword)
             User(0, email, Calendar.getInstance().timeInMillis, 0)
             else

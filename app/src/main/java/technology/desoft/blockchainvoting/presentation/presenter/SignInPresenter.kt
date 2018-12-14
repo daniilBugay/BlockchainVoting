@@ -6,8 +6,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import technology.desoft.blockchainvoting.model.Token
 import technology.desoft.blockchainvoting.model.UserRepository
 import technology.desoft.blockchainvoting.navigation.Router
+import technology.desoft.blockchainvoting.navigation.navigations.AllPollsNavigation
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.SignView
 
@@ -23,11 +25,20 @@ class SignInPresenter(
         viewState.loading()
         val job = launch(Dispatchers.IO) {
             val token = userRepository.login(email, password).await()
-            if (token != null) launch(Dispatchers.Main) { viewState.showSuccess("Success") }.start()
-            else launch(Dispatchers.Main) { viewState.showError("Error") }.start()
+            if (token != null) launch(Dispatchers.Main) { onSuccess(token) }.start()
+            else launch(Dispatchers.Main) { onError("error") }.start()
         }
         jobs.add(job)
         job.start()
+    }
+
+    private fun onSuccess(token: Token){
+        viewState.showSuccess("Success")
+        router.postNavigation(AllPollsNavigation())
+    }
+
+    private fun onError(error: String){
+        viewState.showError(error)
     }
 
     override fun onDestroy() {
