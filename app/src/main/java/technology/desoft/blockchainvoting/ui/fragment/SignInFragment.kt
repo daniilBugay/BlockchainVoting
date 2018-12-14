@@ -36,8 +36,8 @@ class SignInFragment : MvpAppCompatFragment(), SignView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.signInButton.setOnClickListener {
-            val email = view.emailEditText.text.toString()
-            val password = view.passwordEditText.text.toString()
+            val email = view.emailSignInEditText.text.toString()
+            val password = view.passwordSignInEditText.text.toString()
             signInPresenter.login(email, password)
         }
     }

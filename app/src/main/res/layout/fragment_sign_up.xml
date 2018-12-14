@@ -23,7 +23,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/spacing_xlarge">
                 <ProgressBar
-                        android:id="@+id/signInProgressBar"
+                        android:id="@+id/signUpProgressBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
@@ -37,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/spacing_middle"
                     android:layout_marginStart="@dimen/spacing_medium"
-                    android:text="@string/sign_in"
+                    android:text="@string/sign_up"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                     android:textColor="@color/colorAccent"
                     android:textStyle="bold"/>
@@ -79,7 +79,7 @@
                             android:textColor="@color/colorSignGray40"/>
 
                     <android.support.design.widget.TextInputEditText
-                            android:id="@+id/emailSignInEditText"
+                            android:id="@+id/emailSignUpEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="-4dp"
@@ -105,7 +105,33 @@
                             android:textColor="@color/colorSignGray40"/>
 
                     <android.support.design.widget.TextInputEditText
-                            android:id="@+id/passwordSignInEditText"
+                            android:id="@+id/passwordSignUpEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="-4dp"
+                            android:layout_marginRight="-4dp"
+                            android:inputType="textPassword"
+                            android:maxLength="50"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                            android:textColor="@color/colorAccent"
+                            android:theme="@style/EditText.Grey"/>
+
+                    <View
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/spacing_mlarge"/>
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/confirm_password"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                            android:textColor="@color/colorSignGray40"/>
+
+                    <android.support.design.widget.TextInputEditText
+                            android:id="@+id/passwordConfirmEditText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="-4dp"
@@ -135,13 +161,13 @@
                     android:layout_height="@dimen/spacing_large"/>
 
             <android.support.design.button.MaterialButton
-                    android:id="@+id/signInButton"
+                    android:id="@+id/signUpButton"
                     android:layout_width="match_parent"
                     style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_gravity="bottom"
                     android:background="@color/colorAccent"
-                    android:text="@string/sign_in"
+                    android:text="@string/sign_up"
                     android:textColor="@android:color/white"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                     android:textAlignment="center"

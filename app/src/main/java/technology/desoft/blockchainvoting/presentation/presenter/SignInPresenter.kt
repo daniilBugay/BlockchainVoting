@@ -28,14 +28,14 @@ class SignInPresenter(
         val job = launch(Dispatchers.IO) {
             val token = userRepository.login(email, password).await()
             if (token != null) launch(Dispatchers.Main) { onSuccess(email, password, token) }.start()
-            else launch(Dispatchers.Main) { onError("Sign In Error!") }.start()
+            else launch(Dispatchers.Main) { onError("Error") }.start()
         }
         jobs.add(job)
         job.start()
     }
 
     private fun onSuccess(email: String, password: String, token: Token){
-        viewState.showSuccess("Success!")
+        viewState.showSuccess("Success")
         userTokenProvider.saveEmail(email)
         userTokenProvider.savePassword(password)
         userTokenProvider.token = token
