@@ -1,6 +1,7 @@
 package technology.desoft.blockchainvoting.ui.fragment
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -39,11 +40,13 @@ class AllPollsFragment : MvpAppCompatFragment(), AllPollsView {
     }
 
     override fun showError(message: String) {
+        view?.pollsProgressBar?.visibility = View.GONE
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     override fun showPolls(polls: List<PollView>) {
         view?.pollsProgressBar?.visibility = View.GONE
+        Handler().postDelayed({view?.pollsAddButton?.show()}, 350)
         view?.pollsRecycler?.adapter = PollsAdapter(polls) { pollView, view ->
             allPollsPresenter.showDetails(pollView, view)
         }

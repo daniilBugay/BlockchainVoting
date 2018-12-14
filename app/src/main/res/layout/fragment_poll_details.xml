@@ -91,34 +91,64 @@
             android:layout_height="wrap_content"
             app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="80dp">
+            app:behavior_peekHeight="55dp">
 
         <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                app:cardCornerRadius="8dp"
+                app:cardCornerRadius="@dimen/corner_radius_default"
                 app:cardElevation="10dp"
                 android:padding="5dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp">
 
-            <LinearLayout
-                    android:orientation="vertical"
+            <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="300dp">
+                    android:layout_height="match_parent">
 
-                <TextView
-                        android:id="@+id/pollDetailsMakeChoiceText"
-                        style="@style/TextAppearance.AppCompat.Title"
-                        android:text="@string/choice"
+                <RelativeLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:textAlignment="gravity"
-                        android:gravity="center"
+                        android:layout_height="match_parent">
+
+                    <TextView
+                            android:layout_alignParentTop="true"
+                            android:id="@+id/pollDetailsMakeChoiceText"
+                            style="@style/TextAppearance.AppCompat.Title"
+                            android:text="@string/choice"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:textAlignment="gravity"
+                            android:gravity="center"
+                            android:textColor="@android:color/white"
+                            android:background="@color/colorAccent"/>
+
+                    <android.support.v7.widget.RecyclerView
+                            android:layout_below="@+id/pollDetailsMakeChoiceText"
+                            android:id="@+id/pollDetailsOptionsRecycler"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="50dp">
+
+                    </android.support.v7.widget.RecyclerView>
+                </RelativeLayout>
+
+                <android.support.design.button.MaterialButton
+                        android:id="@+id/pollDetailsVoteButton"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:layout_height="50dp"
+                        android:text="@string/vote"
+                        android:backgroundTint="@color/colorAccent"
                         android:textColor="@android:color/white"
-                        android:background="@color/colorAccent"/>
-            </LinearLayout>
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:background="@color/colorAccent"
+                        android:layout_gravity="bottom"/>
+            </FrameLayout>
 
         </android.support.v7.widget.CardView>
     </FrameLayout>

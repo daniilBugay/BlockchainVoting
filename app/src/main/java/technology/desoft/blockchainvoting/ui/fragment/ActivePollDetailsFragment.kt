@@ -2,9 +2,8 @@ package technology.desoft.blockchainvoting.ui.fragment
 
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
+import android.support.v7.widget.LinearLayoutManager
 import android.text.format.DateFormat
-import android.transition.Slide
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +13,18 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.fragment_poll_details.view.*
+import kotlinx.coroutines.GlobalScope
+import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
+import technology.desoft.blockchainvoting.model.PollOption
 import technology.desoft.blockchainvoting.presentation.presenter.ActivePollDetailsPresenter
 import technology.desoft.blockchainvoting.presentation.view.ActivePollDetailsView
 import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.ui.OnBackListener
+import technology.desoft.blockchainvoting.ui.adapter.PollOptionsAdapter
 import java.util.*
 
-class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView {
+class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView, OnBackListener {
     companion object {
         private const val POLL_KEY = "poll"
         private const val TRANSITION_NAME_KEY = "transition name"
@@ -44,7 +48,8 @@ class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView 
         val json = arguments?.getString(POLL_KEY)
             ?: throw IllegalStateException("You must create fragment using withPoll companion function")
         val poll = Gson().fromJson<PollView>(json, PollView::class.java)
-        return ActivePollDetailsPresenter(poll)
+        val app = activity?.application as App
+        return ActivePollDetailsPresenter(GlobalScope, app.pollRepository, poll)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -63,7 +68,9 @@ class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView 
             else
                 BottomSheetBehavior.STATE_EXPANDED
         }
-        this.exitTransition = Slide(Gravity.BOTTOM)
+        view.pollDetailsOptionsRecycler.layoutManager = LinearLayoutManager(
+            context, LinearLayoutManager.VERTICAL, false
+        )
     }
 
     override fun showDetails(pollView: PollView) {
@@ -80,6 +87,27 @@ class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView 
             } else {
                 View.GONE
             }
+        }
+    }
+
+    override fun showOptions(options: List<PollOption>) {
+        view?.pollDetailsOptionsRecycler?.adapter = PollOptionsAdapter(options){
+            activePollDetailPresenter.onSelectOption(it)
+        }
+    }
+
+    override fun setSelectedOption(position: Int) {
+        val adapter = view?.pollDetailsOptionsRecycler?.adapter as PollOptionsAdapter?
+        adapter?.setSelected(position)
+    }
+
+    override fun onBack(): Boolean {
+        val behavior = BottomSheetBehavior.from(view?.pollDetailsOptionsLayout)
+        return if (behavior.state == BottomSheetBehavior.STATE_EXPANDED) {
+            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            true
+        } else {
+            false
         }
     }
 }
