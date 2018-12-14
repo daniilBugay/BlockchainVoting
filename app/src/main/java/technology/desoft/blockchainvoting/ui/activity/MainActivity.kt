@@ -16,6 +16,7 @@ import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.presenter.MainPresenter
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.ui.OnBackListener
 import technology.desoft.blockchainvoting.ui.fragment.ActivePollDetailsFragment
 import technology.desoft.blockchainvoting.ui.fragment.AllPollsFragment
 import technology.desoft.blockchainvoting.ui.fragment.SignInFragment
@@ -74,5 +75,13 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun showCompletedPollDetails(poll: PollView, itemView: View) {
 
+    }
+
+    override fun onBackPressed() {
+        val isProcessed = supportFragmentManager.fragments
+            .filterIsInstance<OnBackListener>()
+            .firstOrNull { it.onBack() }
+
+        if (isProcessed == null) super.onBackPressed()
     }
 }

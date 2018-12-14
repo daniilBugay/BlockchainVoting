@@ -25,14 +25,14 @@ class TestPollRepository: PollRepository {
         }
     }
 
-    override fun getOptions(pollId: Int): Deferred<List<PollOption>> {
+    override fun getOptions(pollId: Long): Deferred<List<PollOption>> {
         return GlobalScope.async {
             List(5){
                 PollOption(
                     it.toLong(),
                     "Poll#$pollId: Option $it",
                     Calendar.getInstance().timeInMillis,
-                    pollId.toLong(),
+                    pollId,
                     0
                 )
             }
