@@ -16,21 +16,21 @@ import kotlinx.android.synthetic.main.fragment_poll_details.view.*
 import kotlinx.coroutines.GlobalScope
 import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
-import technology.desoft.blockchainvoting.model.PollOption
-import technology.desoft.blockchainvoting.presentation.presenter.ActivePollDetailsPresenter
-import technology.desoft.blockchainvoting.presentation.view.ActivePollDetailsView
+import technology.desoft.blockchainvoting.presentation.presenter.CompletedPollPresenter
+import technology.desoft.blockchainvoting.presentation.view.CompletedPollView
+import technology.desoft.blockchainvoting.presentation.view.OptionResult
 import technology.desoft.blockchainvoting.presentation.view.PollView
 import technology.desoft.blockchainvoting.ui.OnBackListener
-import technology.desoft.blockchainvoting.ui.adapter.PollOptionsAdapter
-import java.util.*
+import technology.desoft.blockchainvoting.ui.adapter.PollResultAdapter
 
-class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView, OnBackListener {
+class CompletedPollFragment : MvpAppCompatFragment(), CompletedPollView, OnBackListener {
+
     companion object {
         private const val POLL_KEY = "poll"
         private const val TRANSITION_NAME_KEY = "transition name"
 
-        fun withPoll(poll: PollView): ActivePollDetailsFragment {
-            val result = ActivePollDetailsFragment()
+        fun withPoll(poll: PollView): CompletedPollFragment{
+            val result = CompletedPollFragment()
             val json = Gson().toJson(poll)
             val bundle = Bundle()
             bundle.putString(POLL_KEY, json)
@@ -41,15 +41,15 @@ class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView,
     }
 
     @InjectPresenter
-    lateinit var activePollDetailPresenter: ActivePollDetailsPresenter
+    lateinit var completedPollPresenter: CompletedPollPresenter
 
     @ProvidePresenter
-    fun providePresenter(): ActivePollDetailsPresenter {
+    fun providePresenter(): CompletedPollPresenter {
         val json = arguments?.getString(POLL_KEY)
             ?: throw IllegalStateException("You must create fragment using withPoll companion function")
         val poll = Gson().fromJson<PollView>(json, PollView::class.java)
         val app = activity?.application as App
-        return ActivePollDetailsPresenter(GlobalScope, app.pollRepository, app.voteRepository, poll)
+        return CompletedPollPresenter(GlobalScope, app.pollRepository, app.voteRepository, app.userProvider, poll)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -71,7 +71,8 @@ class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView,
         view.pollDetailsOptionsRecycler.layoutManager = LinearLayoutManager(
             context, LinearLayoutManager.VERTICAL, false
         )
-        view.pollDetailsVoteButton.setOnClickListener { activePollDetailPresenter.vote() }
+        view.pollDetailsVoteButton.visibility = View.GONE
+        view.completedText.visibility = View.VISIBLE
     }
 
     override fun showDetails(pollView: PollView) {
@@ -83,23 +84,11 @@ class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView,
             val fromDate = formatter.format(pollView.poll.createdAt)
             val toDate = formatter.format(pollView.poll.endsAt)
             pollDetailsDate.text = resources.getString(R.string.date_format, fromDate, toDate)
-            completedText.visibility = if (pollView.poll.endsAt < Calendar.getInstance().timeInMillis) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
         }
     }
 
-    override fun showOptions(options: List<PollOption>) {
-        view?.pollDetailsOptionsRecycler?.adapter = PollOptionsAdapter(options){
-            activePollDetailPresenter.onSelectOption(it)
-        }
-    }
-
-    override fun setSelectedOption(position: Int) {
-        val adapter = view?.pollDetailsOptionsRecycler?.adapter as PollOptionsAdapter?
-        adapter?.setSelected(position)
+    override fun showPollResult(options: List<OptionResult>) {
+        view?.pollDetailsOptionsRecycler?.adapter = PollResultAdapter(options)
     }
 
     override fun onBack(): Boolean {
@@ -111,4 +100,5 @@ class ActivePollDetailsFragment : MvpAppCompatFragment(), ActivePollDetailsView,
             false
         }
     }
+
 }

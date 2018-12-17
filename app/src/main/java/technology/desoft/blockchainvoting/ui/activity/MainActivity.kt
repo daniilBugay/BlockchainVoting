@@ -7,6 +7,7 @@ import android.transition.Fade
 import android.transition.TransitionInflater
 import android.transition.TransitionSet
 import android.view.View
+import android.widget.ProgressBar
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -17,10 +18,7 @@ import technology.desoft.blockchainvoting.presentation.presenter.MainPresenter
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.PollView
 import technology.desoft.blockchainvoting.ui.OnBackListener
-import technology.desoft.blockchainvoting.ui.fragment.ActivePollDetailsFragment
-import technology.desoft.blockchainvoting.ui.fragment.AllPollsFragment
-import technology.desoft.blockchainvoting.ui.fragment.SignInFragment
-import technology.desoft.blockchainvoting.ui.fragment.SignUpFragment
+import technology.desoft.blockchainvoting.ui.fragment.*
 
 class MainActivity : MvpAppCompatActivity(), MainView {
 
@@ -46,35 +44,53 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun showSignInScreen() {
-        changeFragment(SignInFragment()){}
+        changeFragment(SignInFragment()) {}
     }
 
     override fun showSignUpScreen() {
-        changeFragment(SignUpFragment()){}
+        changeFragment(SignUpFragment()) {}
     }
 
     override fun showAllPolls() {
-        changeFragment(AllPollsFragment()) {}
+        val fragment = AllPollsFragment()
+        changeFragment(fragment) {
+            val currentFragment = supportFragmentManager.fragments.firstOrNull()
+            val transitionSet = TransitionSet()
+            transitionSet.addTransition(
+                TransitionInflater.from(this@MainActivity).inflateTransition(android.R.transition.move)
+            )
+            transitionSet.duration = 350
+            fragment.sharedElementEnterTransition = transitionSet
+            if (currentFragment != null){
+                val progressBar = currentFragment.view?.findViewById<ProgressBar>(R.id.signInProgressBar)
+                if (progressBar != null) {
+                    addSharedElement(progressBar, progressBar.transitionName)
+                }
+            }
+        }
     }
 
-    override fun showActivePollDetails(poll: PollView, itemView: View) {
-        val fragment = ActivePollDetailsFragment.withPoll(poll)
-        changeFragment(fragment) {
+    private fun showDetails(detailsFragment: Fragment, itemView: View) {
+        changeFragment(detailsFragment) {
             addToBackStack(null)
             val transitionSet = TransitionSet()
             transitionSet.duration = 350L
             transitionSet.addTransition(
                 TransitionInflater.from(this@MainActivity).inflateTransition(android.R.transition.move)
             )
-            fragment.sharedElementEnterTransition = transitionSet
-            fragment.enterTransition = Fade()
+            detailsFragment.sharedElementEnterTransition = transitionSet
+            detailsFragment.enterTransition = Fade()
             val card = itemView.pollCard
             addSharedElement(card, card.transitionName)
         }
     }
 
-    override fun showCompletedPollDetails(poll: PollView, itemView: View) {
+    override fun showActivePollDetails(poll: PollView, itemView: View) {
+        showDetails(ActivePollFragment.withPoll(poll), itemView)
+    }
 
+    override fun showCompletedPollDetails(poll: PollView, itemView: View) {
+        showDetails(CompletedPollFragment.withPoll(poll), itemView)
     }
 
     override fun onBackPressed() {

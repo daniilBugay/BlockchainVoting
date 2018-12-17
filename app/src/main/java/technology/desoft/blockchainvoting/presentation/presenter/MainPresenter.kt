@@ -11,7 +11,7 @@ class MainPresenter(private val router: Router<MainView>): MvpPresenter<MainView
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         router.setView(viewState)
-        viewState.showSignUpScreen()
+        viewState.showSignInScreen()
     }
 
 }

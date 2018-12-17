@@ -5,6 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
+
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -15,6 +16,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 app:cardCornerRadius="@dimen/corner_radius_default"
                 android:elevation="8dp"
                 android:layout_gravity="top">
@@ -44,6 +47,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
                         android:padding="5dp"
+                        android:layout_marginStart="15dp"
                         android:layout_toEndOf="@id/completedText">
 
                     <TextView
@@ -100,21 +104,24 @@
                 android:layout_marginEnd="10dp"
                 app:cardCornerRadius="@dimen/corner_radius_default"
                 app:cardElevation="10dp"
-                android:padding="5dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp">
 
-            <FrameLayout
+            <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                <RelativeLayout
+                <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                     <TextView
-                            android:layout_alignParentTop="true"
                             android:id="@+id/pollDetailsMakeChoiceText"
                             style="@style/TextAppearance.AppCompat.Title"
                             android:text="@string/choice"
@@ -126,14 +133,13 @@
                             android:background="@color/colorAccent"/>
 
                     <android.support.v7.widget.RecyclerView
-                            android:layout_below="@+id/pollDetailsMakeChoiceText"
                             android:id="@+id/pollDetailsOptionsRecycler"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="50dp">
+                            android:layout_marginBottom="5dp">
 
                     </android.support.v7.widget.RecyclerView>
-                </RelativeLayout>
+                </LinearLayout>
 
                 <android.support.design.button.MaterialButton
                         android:id="@+id/pollDetailsVoteButton"
@@ -142,13 +148,13 @@
                         android:layout_marginEnd="30dp"
                         android:layout_height="50dp"
                         android:text="@string/vote"
-                        android:backgroundTint="@color/colorAccent"
+                        android:backgroundTint="@color/vote_button_color"
                         android:textColor="@android:color/white"
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                         android:background="@color/colorAccent"
                         android:layout_gravity="bottom"/>
-            </FrameLayout>
+            </LinearLayout>
 
         </android.support.v7.widget.CardView>
     </FrameLayout>

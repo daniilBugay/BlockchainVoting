@@ -39,6 +39,7 @@ class SignInPresenter(
         userTokenProvider.saveEmail(email)
         userTokenProvider.savePassword(password)
         userTokenProvider.token = token
+        userTokenProvider.setUserId(token)
         router.postNavigation(AllPollsNavigation())
     }
 

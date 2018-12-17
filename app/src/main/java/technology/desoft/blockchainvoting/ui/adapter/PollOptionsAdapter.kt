@@ -13,6 +13,7 @@ class PollOptionsAdapter(
     private val onSelected: (Int) -> Unit
 ): RecyclerView.Adapter<PollOptionsAdapter.ViewHolder>() {
 
+    private var isLocked = false
     private var currentSelected: Int? = null
 
     override fun getItemCount() = pollOptions.size
@@ -27,6 +28,12 @@ class PollOptionsAdapter(
         holder.bind(position)
     }
 
+
+    fun setLocked(locked: Boolean){
+        isLocked = locked
+        notifyDataSetChanged()
+    }
+
     fun setSelected(position: Int){
         currentSelected = position
         notifyDataSetChanged()
@@ -37,8 +44,12 @@ class PollOptionsAdapter(
             val option = pollOptions[position]
             itemView.pollOptionContent.text = option.content
             itemView.pollOptionRadio.isChecked = currentSelected == position
-            itemView.pollOptionRadio.setOnClickListener {
-                onSelected(position)
+            if (!isLocked) {
+                itemView.pollOptionRadio.setOnClickListener {
+                    onSelected(position)
+                }
+            } else {
+                itemView.pollOptionRadio.isEnabled = false
             }
         }
     }

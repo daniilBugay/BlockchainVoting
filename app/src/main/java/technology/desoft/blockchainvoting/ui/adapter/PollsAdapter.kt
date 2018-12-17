@@ -14,6 +14,7 @@ class PollsAdapter(
     private val polls: List<PollView>,
     private val onClick: (PollView, View) -> Unit
 ): RecyclerView.Adapter<PollsAdapter.ViewHolder>() {
+
     override fun getItemCount() = polls.size
 
     override fun onCreateViewHolder(parent: ViewGroup, type: Int): ViewHolder {

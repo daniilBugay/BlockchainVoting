@@ -29,7 +29,7 @@ class TestPollRepository: PollRepository {
         return GlobalScope.async {
             List(5){
                 PollOption(
-                    it.toLong(),
+                    pollId * 100 + it.toLong(),
                     "Poll#$pollId: Option $it",
                     Calendar.getInstance().timeInMillis,
                     pollId,

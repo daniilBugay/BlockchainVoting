@@ -1,5 +1,7 @@
 package technology.desoft.blockchainvoting.model
 
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import java.util.*
 
 class TestVoteRepository(private val userTokenProvider: UserTokenProvider) : VoteRepository {
@@ -7,10 +9,14 @@ class TestVoteRepository(private val userTokenProvider: UserTokenProvider) : Vot
 
     private var id = 0L
 
-    override fun getVotes(optionId: Long) = hashMap[optionId]?.toList() ?: emptyList()
+    override fun getVotes(optionId: Long) = GlobalScope.async {
+        hashMap[optionId]?.toList() ?: emptyList()
+    }
 
     override fun addVote(optionId: Long) {
         userTokenProvider.token.let {
+            if (hashMap[optionId] == null)
+                hashMap[optionId] = mutableListOf()
             hashMap[optionId]?.add(
                 Vote(
                     id++,

@@ -61,7 +61,6 @@ class SignInFragment : MvpAppCompatFragment(), SignView {
         snackBarText.textAlignment = View.TEXT_ALIGNMENT_CENTER
         snackBarText.gravity = Gravity.CENTER_HORIZONTAL
         snackBar.show()
-        view?.signInProgressBar?.visibility = View.GONE
     }
 
 }

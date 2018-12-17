@@ -10,6 +10,14 @@ class TestUserTokenProvider(private val sharedPreferences: SharedPreferences): U
         const val KEY_PASSWORD = "password"
     }
 
+    override fun getUserId(): Long? {
+        return 0
+    }
+
+    override fun setUserId(token: Token) {
+        
+    }
+
     override fun getSavedEmail(): String? {
         return sharedPreferences.getString(KEY_EMAIL, null)
     }

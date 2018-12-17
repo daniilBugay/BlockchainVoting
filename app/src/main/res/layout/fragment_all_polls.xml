@@ -10,7 +10,8 @@
             android:layout_height="wrap_content"
             android:visibility="gone"
             android:layout_gravity="center"
-            android:progressTint="@color/colorAccent"/>
+            android:progressTint="@color/colorAccent"
+            android:transitionName="progress"/>
 
     <android.support.v7.widget.RecyclerView
             android:id="@+id/pollsRecycler"
