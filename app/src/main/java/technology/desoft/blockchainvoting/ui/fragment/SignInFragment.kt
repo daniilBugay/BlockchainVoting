@@ -40,6 +40,9 @@ class SignInFragment : MvpAppCompatFragment(), SignView {
             val password = view.passwordSignInEditText.text.toString()
             signInPresenter.login(email, password)
         }
+        view.signInTransitionUpButton.setOnClickListener {
+            signInPresenter.transitionToSignUp()
+        }
     }
 
     override fun loading() {

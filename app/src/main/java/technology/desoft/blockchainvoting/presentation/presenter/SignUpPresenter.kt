@@ -10,6 +10,8 @@ import technology.desoft.blockchainvoting.model.Token
 import technology.desoft.blockchainvoting.model.UserRepository
 import technology.desoft.blockchainvoting.navigation.Router
 import technology.desoft.blockchainvoting.navigation.navigations.AllPollsNavigation
+import technology.desoft.blockchainvoting.navigation.navigations.SignInNavigation
+import technology.desoft.blockchainvoting.navigation.navigations.SignUpNavigation
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.SignView
 
@@ -33,9 +35,13 @@ class SignUpPresenter(
         job.start()
     }
 
+    fun transitionToSignIn(){
+        router.postNavigation(SignInNavigation())
+    }
+
     private fun onSuccess(){
         viewState.showSuccess("Success")
-        router.postNavigation(AllPollsNavigation())
+        router.postNavigation(SignInNavigation())
     }
 
     private fun onError(error: String){
