@@ -1,8 +1,10 @@
 package technology.desoft.blockchainvoting.ui.activity
 
 import android.os.Bundle
+import android.support.design.button.MaterialButton
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
+import android.support.v7.widget.CardView
 import android.transition.Fade
 import android.transition.TransitionInflater
 import android.transition.TransitionSet
@@ -38,30 +40,58 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             .commit()
     }
 
+    private inline fun changeFragmentWithTransition(fragment: Fragment, body: FragmentTransaction.() -> Unit){
+        changeFragment(fragment){
+            val transitionSet = TransitionSet()
+            transitionSet.duration = 350L
+            transitionSet.addTransition(
+                TransitionInflater.from(this@MainActivity).inflateTransition(android.R.transition.move)
+            )
+            fragment.sharedElementEnterTransition = transitionSet
+            body()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
 
     override fun showSignInScreen() {
-        changeFragment(SignInFragment()) {}
+        val fragment = SignInFragment()
+        changeFragmentWithTransition(fragment) {
+            val currentFragment = supportFragmentManager.fragments.firstOrNull()
+            if (currentFragment != null){
+                val card: CardView? = currentFragment.view?.findViewById(R.id.signUpCard)
+                val button: MaterialButton? = currentFragment.view?.findViewById(R.id.signUpButton)
+                if (card != null && button != null){
+                    addSharedElement(card, card.transitionName)
+                    addSharedElement(button, button.transitionName)
+                }
+            }
+        }
     }
 
     override fun showSignUpScreen() {
-        changeFragment(SignUpFragment()) {}
+        val fragment = SignUpFragment()
+        changeFragmentWithTransition(fragment) {
+            val currentFragment = supportFragmentManager.fragments.firstOrNull()
+            if (currentFragment != null){
+                val card: CardView? = currentFragment.view?.findViewById(R.id.signInCard)
+                val button: MaterialButton? = currentFragment.view?.findViewById(R.id.signInButton)
+                if (card != null && button != null){
+                    addSharedElement(card, card.transitionName)
+                    addSharedElement(button, button.transitionName)
+                }
+            }
+        }
     }
 
     override fun showAllPolls() {
         val fragment = AllPollsFragment()
-        changeFragment(fragment) {
+        changeFragmentWithTransition(fragment) {
             val currentFragment = supportFragmentManager.fragments.firstOrNull()
-            val transitionSet = TransitionSet()
-            transitionSet.addTransition(
-                TransitionInflater.from(this@MainActivity).inflateTransition(android.R.transition.move)
-            )
-            transitionSet.duration = 350
-            fragment.sharedElementEnterTransition = transitionSet
-            if (currentFragment != null){
+            if (currentFragment != null) {
                 val progressBar = currentFragment.view?.findViewById<ProgressBar>(R.id.signInProgressBar)
                 if (progressBar != null) {
                     addSharedElement(progressBar, progressBar.transitionName)
@@ -71,14 +101,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     private fun showDetails(detailsFragment: Fragment, itemView: View) {
-        changeFragment(detailsFragment) {
+        changeFragmentWithTransition(detailsFragment) {
             addToBackStack(null)
-            val transitionSet = TransitionSet()
-            transitionSet.duration = 350L
-            transitionSet.addTransition(
-                TransitionInflater.from(this@MainActivity).inflateTransition(android.R.transition.move)
-            )
-            detailsFragment.sharedElementEnterTransition = transitionSet
             detailsFragment.enterTransition = Fade()
             val card = itemView.pollCard
             addSharedElement(card, card.transitionName)
