@@ -41,6 +41,9 @@ class SignUpFragment: MvpAppCompatFragment(), SignView {
             val passwordConfirm = view.passwordConfirmEditText.text.toString()
             signUpPresenter.registration(email, password, passwordConfirm)
         }
+        view.signUpTransitionInButton.setOnClickListener {
+            signUpPresenter.transitionToSignIn()
+        }
     }
 
     override fun loading() {

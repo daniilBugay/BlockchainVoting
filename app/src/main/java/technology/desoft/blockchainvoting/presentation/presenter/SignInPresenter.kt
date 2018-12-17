@@ -11,6 +11,7 @@ import technology.desoft.blockchainvoting.model.UserRepository
 import technology.desoft.blockchainvoting.model.UserTokenProvider
 import technology.desoft.blockchainvoting.navigation.Router
 import technology.desoft.blockchainvoting.navigation.navigations.AllPollsNavigation
+import technology.desoft.blockchainvoting.navigation.navigations.SignUpNavigation
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.SignView
 
@@ -32,6 +33,10 @@ class SignInPresenter(
         }
         jobs.add(job)
         job.start()
+    }
+
+    fun transitionToSignUp(){
+        router.postNavigation(SignUpNavigation())
     }
 
     private fun onSuccess(email: String, password: String, token: Token){
