@@ -11,4 +11,7 @@
     <string name="email">EMAIL</string>
     <string name="password">PASSWORD</string>
     <string name="confirm_password">CONFIRM PASSWORD</string>
+    <string name="theme">THEME</string>
+    <string name="description">DESCRIPTION</string>
+    <string name="date">DATE</string>
 </resources>

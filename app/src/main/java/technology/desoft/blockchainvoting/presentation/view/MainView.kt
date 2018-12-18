@@ -12,4 +12,5 @@ interface MainView: MvpView {
     fun showAllPolls()
     fun showActivePollDetails(poll: PollView, itemView: View)
     fun showCompletedPollDetails(poll: PollView, itemView: View)
+    fun showAddScreen()
 }

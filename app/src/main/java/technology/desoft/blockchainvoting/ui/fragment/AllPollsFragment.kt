@@ -37,6 +37,9 @@ class AllPollsFragment : MvpAppCompatFragment(), AllPollsView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.pollsRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        view.pollsAddButton.setOnClickListener {
+            allPollsPresenter.onAddPoll()
+        }
     }
 
     override fun showError(message: String) {

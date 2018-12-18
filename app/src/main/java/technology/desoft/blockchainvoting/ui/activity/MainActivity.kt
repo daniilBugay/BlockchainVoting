@@ -2,6 +2,7 @@ package technology.desoft.blockchainvoting.ui.activity
 
 import android.os.Bundle
 import android.support.design.button.MaterialButton
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.widget.CardView
@@ -19,6 +20,7 @@ import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.presenter.MainPresenter
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.ui.CircularAnimationProvider
 import technology.desoft.blockchainvoting.ui.OnBackListener
 import technology.desoft.blockchainvoting.ui.fragment.*
 
@@ -117,11 +119,38 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         showDetails(CompletedPollFragment.withPoll(poll), itemView)
     }
 
+    override fun showAddScreen() {
+        val currentFragment = supportFragmentManager.fragments.firstOrNull()
+        if (currentFragment != null && currentFragment is AllPollsFragment) {
+            val fab = currentFragment.view?.findViewById<FloatingActionButton>(R.id.pollsAddButton)
+            fab?.let {
+                val x = it.x + it.width / 2
+                val y = it.y + it.height / 2
+
+                changeFragment(AddPollFragment.withCircularAnimation(x, y)) {
+                    addToBackStack(null)
+                }
+            }
+        } else {
+            changeFragment(AddPollFragment()) {
+                addToBackStack(null)
+            }
+        }
+
+    }
+
     override fun onBackPressed() {
         val isProcessed = supportFragmentManager.fragments
             .filterIsInstance<OnBackListener>()
             .firstOrNull { it.onBack() }
 
-        if (isProcessed == null) super.onBackPressed()
+        if (isProcessed == null) {
+            val currentFragment = supportFragmentManager.fragments.firstOrNull()
+
+            if (currentFragment != null && currentFragment is CircularAnimationProvider.Dismissible)
+                currentFragment.dismiss { super.onBackPressed() }
+            else
+                super.onBackPressed()
+        }
     }
 }
