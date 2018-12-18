@@ -32,6 +32,20 @@ class SignUpFragment: MvpAppCompatFragment(), SignView {
         return SignUpPresenter(GlobalScope, app.mainRouter, app.userRepository)
     }
 
+    private fun setCustomSnackbar(message: String, backgroundColor: Int){
+        val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT) }
+        snackBar?.view?.setBackgroundColor(
+            ContextCompat.getColor(context!!, backgroundColor)
+        )
+
+        val snackBarText = snackBar?.view?.findViewById<View>(android.support.design.R.id.snackbar_text) as TextView
+        snackBarText.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        snackBarText.gravity = Gravity.CENTER_HORIZONTAL
+        snackBarText.setTextColor(Color.WHITE)
+        snackBarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
+        snackBar.show()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_sign_up, container, false)
     }
@@ -54,32 +68,12 @@ class SignUpFragment: MvpAppCompatFragment(), SignView {
     }
 
     override fun showError(message: String) {
-        val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT) }
-        snackBar?.view?.setBackgroundColor(
-            ContextCompat.getColor(context!!, R.color.colorRed)
-        )
-
-        val snackBarText = snackBar?.view?.findViewById<View>(android.support.design.R.id.snackbar_text) as TextView
-        snackBarText.textAlignment = View.TEXT_ALIGNMENT_CENTER
-        snackBarText.gravity = Gravity.CENTER_HORIZONTAL
-        snackBarText.setTextColor(Color.WHITE)
-        snackBarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
-        snackBar.show()
+        setCustomSnackbar(message, R.color.colorRed)
         view?.signUpProgressBar?.visibility = View.GONE
     }
 
     override fun showSuccess(message: String) {
-        val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT) }
-        snackBar?.view?.setBackgroundColor(
-            ContextCompat.getColor(context!!, R.color.colorGreen)
-        )
-
-        val snackBarText = snackBar?.view?.findViewById<View>(android.support.design.R.id.snackbar_text) as TextView
-        snackBarText.textAlignment = View.TEXT_ALIGNMENT_CENTER
-        snackBarText.gravity = Gravity.CENTER_HORIZONTAL
-        snackBarText.setTextColor(Color.WHITE)
-        snackBarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
-        snackBar.show()
+        setCustomSnackbar(message, R.color.colorAccent)
         view?.signUpProgressBar?.visibility = View.GONE
     }
 }
