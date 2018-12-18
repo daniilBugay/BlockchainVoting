@@ -1,7 +1,10 @@
 package technology.desoft.blockchainvoting.ui.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -51,18 +54,30 @@ class SignInFragment : MvpAppCompatFragment(), SignView {
 
     override fun showError(message: String) {
         val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT) }
+        snackBar?.view?.setBackgroundColor(
+            ContextCompat.getColor(context!!, R.color.colorRed)
+        )
+
         val snackBarText = snackBar?.view?.findViewById<View>(android.support.design.R.id.snackbar_text) as TextView
         snackBarText.textAlignment = View.TEXT_ALIGNMENT_CENTER
         snackBarText.gravity = Gravity.CENTER_HORIZONTAL
+        snackBarText.setTextColor(Color.WHITE)
+        snackBarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
         snackBar.show()
         view?.signInProgressBar?.visibility = View.GONE
     }
 
     override fun showSuccess(message: String) {
         val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT) }
+        snackBar?.view?.setBackgroundColor(
+            ContextCompat.getColor(context!!, R.color.colorGreen)
+        )
+
         val snackBarText = snackBar?.view?.findViewById<View>(android.support.design.R.id.snackbar_text) as TextView
         snackBarText.textAlignment = View.TEXT_ALIGNMENT_CENTER
         snackBarText.gravity = Gravity.CENTER_HORIZONTAL
+        snackBarText.setTextColor(Color.WHITE)
+        snackBarText.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18f)
         snackBar.show()
     }
 

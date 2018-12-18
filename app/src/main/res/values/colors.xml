@@ -9,4 +9,7 @@
     <color name="colorSignGray20">#cccccc</color>
     <color name="colorSignGray40">#999999</color>
     <color name="colorSignGray60">#666666</color>
+
+    <color name="colorGreen">#008500</color>
+    <color name="colorRed">#ec1c24</color>
 </resources>
