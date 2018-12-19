@@ -26,7 +26,8 @@ class AddPollPresenter(
     }
 
     fun removeOption(position: Int){
-        options.removeAt(position)
+        if (position != -1)
+            options.removeAt(position)
     }
 
     fun moveOption(from: Int, to: Int) {

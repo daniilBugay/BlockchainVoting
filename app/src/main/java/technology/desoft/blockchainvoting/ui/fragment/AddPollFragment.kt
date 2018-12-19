@@ -104,9 +104,11 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
             context, LinearLayoutManager.VERTICAL, false
         )
         val adapter = AddOptionAdapter(mutableListOf())
-        view.addOptionRecycler.adapter = adapter
         val touchHelper = ItemTouchHelper(ItemTouchCallback(adapter, addPollPresenter))
+        adapter.setOnDragStartListener { touchHelper.startDrag(it) }
+        view.addOptionRecycler.adapter = adapter
         touchHelper.attachToRecyclerView(view.addOptionRecycler)
+
 
     }
 
