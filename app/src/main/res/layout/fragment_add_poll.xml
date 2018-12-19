@@ -1,93 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/colorAccent"
-        android:visibility="invisible">
+        android:fillViewport="true">
 
-    <android.support.v7.widget.CardView
-            android:id="@+id/addCardTheme"
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:padding="@dimen/spacing_medium"
-            android:minHeight="60dp"
-            app:contentPaddingRight="@dimen/corner_radius_default">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/colorAccent"
+            android:visibility="visible">
 
-
-        <LinearLayout
-                android:padding="@dimen/spacing_medium"
-                android:orientation="vertical"
+        <android.support.v7.widget.CardView
+                android:id="@+id/addDataCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:padding="@dimen/spacing_medium"
+                android:minHeight="60dp"
+                app:cardCornerRadius="@dimen/corner_radius_default">
 
-            <TextView
-                    android:text="@string/theme"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <EditText
-                    android:id="@+id/addThemeEditText"
+            <LinearLayout
+                    android:padding="@dimen/spacing_medium"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="text"
-                    android:maxLines="1"/>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+                    android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
-            android:id="@+id/addCardDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:minHeight="60dp"
-            android:padding="@dimen/spacing_medium"
-            app:contentPaddingRight="@dimen/corner_radius_default">
+                <TextView
+                        android:text="@string/theme"
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
+                <EditText
+                        android:id="@+id/addThemeEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:maxLines="1"/>
 
-        <LinearLayout
-                android:padding="@dimen/spacing_medium"
-                android:orientation="vertical"
+                <TextView
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:text="@string/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <TextView
+                        android:layout_marginTop="@dimen/spacing_medium"
+                        android:text="@string/description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                <EditText
+                        android:id="@+id/addDescriptionEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="5"
+                        android:inputType="textMultiLine"/>
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+                android:id="@+id/addOptionCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="60dp"
+                app:cardCornerRadius="@dimen/corner_radius_default"
+                android:elevation="8dp"
+                android:layout_margin="15dp">
 
-            <TextView
-                    android:text="@string/description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <EditText
-                    android:id="@+id/addDescriptionEditText"
+            <LinearLayout
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:maxLines="5"
-                    android:inputType="textMultiLine"/>
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+                    android:layout_height="match_parent"
+                    android:padding="5dp">
 
-    <android.support.v7.widget.CardView
-            android:id="@+id/addCardDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:minHeight="60dp"
-            app:contentPaddingRight="@dimen/corner_radius_default">
+                <EditText
+                        android:id="@+id/addOptionContent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="4"/>
 
-        <LinearLayout
-                android:padding="@dimen/spacing_medium"
-                android:orientation="vertical"
+                <android.support.design.button.MaterialButton
+                        android:id="@+id/addOptionButton"
+                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/add"
+                        android:textColor="@android:color/white"
+                        android:backgroundTint="@color/colorAccent"/>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.RecyclerView
+                android:id="@+id/addOptionRecycler"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
-            <TextView
-                    android:text="@string/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
 
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
-
-</LinearLayout>
+</FrameLayout>

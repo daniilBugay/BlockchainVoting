@@ -32,6 +32,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentStart="true"
                         android:background="@color/colorAccent">
+
                     <technology.desoft.blockchainvoting.ui.VerticalTextView
                             android:text="@string/completed"
                             android:gravity="bottom|end"
