@@ -102,6 +102,19 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         }
     }
 
+    override fun showPersonalPolls() {
+        val fragment = PersonalPollsFragment()
+        changeFragmentWithTransition(fragment) {
+            val currentFragment = supportFragmentManager.fragments.firstOrNull()
+            if (currentFragment != null) {
+                val progressBar = currentFragment.view?.findViewById<ProgressBar>(R.id.pollsProgressBar)
+                if (progressBar != null) {
+                    addSharedElement(progressBar, progressBar.transitionName)
+                }
+            }
+        }
+    }
+
     private fun showDetails(detailsFragment: Fragment, itemView: View) {
         changeFragmentWithTransition(detailsFragment) {
             addToBackStack(null)

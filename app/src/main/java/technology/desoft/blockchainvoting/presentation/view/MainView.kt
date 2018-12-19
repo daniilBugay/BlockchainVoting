@@ -10,6 +10,7 @@ interface MainView: MvpView {
     fun showSignInScreen()
     fun showSignUpScreen()
     fun showAllPolls()
+    fun showPersonalPolls()
     fun showActivePollDetails(poll: PollView, itemView: View)
     fun showCompletedPollDetails(poll: PollView, itemView: View)
     fun showAddScreen()
