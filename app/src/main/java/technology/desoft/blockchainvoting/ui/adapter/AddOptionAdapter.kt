@@ -47,6 +47,10 @@ class AddOptionAdapter(
         notifyItemMoved(from, to)
     }
 
+    fun clear() {
+        optionContents.clear()
+    }
+
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(position: Int){
             val optionContent = optionContents[position]

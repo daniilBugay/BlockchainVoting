@@ -13,9 +13,8 @@ class AddPollPresenter(
 ): MvpPresenter<AddPollView>() {
     private val options: MutableList<String> = mutableListOf()
 
-    override fun attachView(view: AddPollView?) {
-        super.attachView(view)
-        options.forEach { viewState.addOption(it) }
+    fun setOptions(){
+        options.asReversed().forEach { viewState.addOption(it) }
     }
 
     fun onAdd(contentString: String){
