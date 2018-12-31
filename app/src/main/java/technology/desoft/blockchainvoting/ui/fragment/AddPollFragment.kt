@@ -3,6 +3,7 @@ package technology.desoft.blockchainvoting.ui.fragment
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.support.v7.widget.LinearLayoutManager
@@ -17,7 +18,6 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_add_poll.view.*
-import kotlinx.android.synthetic.main.item_poll_result.*
 import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.presenter.AddPollPresenter
@@ -51,7 +51,7 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
     @ProvidePresenter
     fun providePresenter(): AddPollPresenter {
         val app = activity?.application as App
-        return AddPollPresenter(app.pollRepository, app.userProvider)
+        return AddPollPresenter(app.mainRouter, app.pollRepository, app.userProvider)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -80,6 +80,7 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
                     oldBottom: Int
                 ) {
                     v?.removeOnLayoutChangeListener(this)
+                    view.addFinishButton.visibility = View.INVISIBLE
                     val width = view.width
                     val height = view.height
                     val duration = context!!.resources.getInteger(R.integer.circular_animation_duration)
@@ -89,6 +90,7 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
                     anim.duration = duration.toLong()
                     anim.start()
                     view.visibility = View.VISIBLE
+                    Handler().postDelayed({ view.addFinishButton.show() }, 300)
                 }
             }
         )
@@ -117,6 +119,8 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
         )
         initDatePick(view)
         initRecycler(view)
+
+        view.addFinishButton.setOnClickListener { finish() }
     }
 
     @SuppressLint("SetTextI18n")
@@ -194,5 +198,20 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
         (view?.addOptionRecycler?.adapter as? AddOptionAdapter)?.addOption(optionContent)
         view?.addOptionRecycler?.scrollToPosition(0)
         view?.addOptionContent?.text?.clear()
+    }
+
+    fun finish(){
+        val view = this.view ?: return
+
+        addPollPresenter.finishAdding(
+            view.addThemeEditText.text.toString(),
+            view.addDescriptionEditText.text.toString(),
+            view.fromDateText.text.toString(),
+            view.toDateText.text.toString()
+        )
+    }
+
+    override fun error(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

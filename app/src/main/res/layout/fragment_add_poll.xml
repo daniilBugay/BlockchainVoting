@@ -1,148 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+
+<android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/colorAccent"
-            android:visibility="visible">
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
-        <android.support.v7.widget.CardView
-                android:id="@+id/addDataCard"
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:padding="@dimen/spacing_medium"
-                android:minHeight="60dp"
-                app:cardCornerRadius="@dimen/corner_radius_default">
+                android:orientation="vertical"
+                android:background="@color/colorAccent"
+                android:visibility="visible">
 
-            <LinearLayout
-                    android:padding="@dimen/spacing_medium"
-                    android:orientation="vertical"
+            <android.support.v7.widget.CardView
+                    android:id="@+id/addDataCard"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                <TextView
-                        android:text="@string/theme"
-                        android:layout_marginTop="@dimen/spacing_medium"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                <EditText
-                        android:id="@+id/addThemeEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:maxLines="1"/>
-
-                <TextView
-                        android:layout_marginTop="@dimen/spacing_medium"
-                        android:text="@string/date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:padding="@dimen/spacing_medium"
+                    android:minHeight="60dp"
+                    app:cardCornerRadius="@dimen/corner_radius_default">
 
                 <LinearLayout
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:orientation="horizontal"
+                        android:padding="@dimen/spacing_medium"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                     <TextView
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            android:id="@+id/fromDateText"
+                            android:text="@string/theme"
+                            android:layout_marginTop="@dimen/spacing_medium"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+
+                    <EditText
+                            android:id="@+id/addThemeEditText"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="30dp"
-                            android:text="@string/spaces11"/>
+                            android:inputType="text"
+                            android:maxLines="1"/>
 
                     <TextView
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            android:text="@string/minus"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:text="@string/date"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAlignment="center"
-                            android:layout_gravity="center_vertical"/>
+                            android:layout_height="wrap_content"/>
+
+                    <LinearLayout
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        <TextView
+                                style="@style/TextAppearance.AppCompat.Subhead"
+                                android:id="@+id/fromDateText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:minHeight="30dp"
+                                android:minWidth="80dp"/>
+
+                        <TextView
+                                style="@style/TextAppearance.AppCompat.Subhead"
+                                android:text="@string/minus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAlignment="center"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="5dp"/>
+
+                        <TextView
+                                style="@style/TextAppearance.AppCompat.Subhead"
+                                android:id="@+id/toDateText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:minHeight="30dp"
+                                android:minWidth="80dp"
+                                android:layout_marginStart="5dp"/>
+                    </LinearLayout>
+
+                    <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorAccent"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"/>
 
                     <TextView
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            android:id="@+id/toDateText"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:text="@string/description"
                             android:layout_width="wrap_content"
-                            android:text="@string/spaces11"
+                            android:layout_height="wrap_content"/>
+
+                    <EditText
+                            android:id="@+id/addDescriptionEditText"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:minHeight="30dp"/>
+                            android:maxLines="5"
+                            android:inputType="textMultiLine"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                    android:id="@+id/addOptionCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:cardCornerRadius="@dimen/corner_radius_default"
+                    android:elevation="8dp"
+                    android:layout_margin="15dp">
+
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp">
+
+                    <EditText
+                            android:id="@+id/addOptionContent"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="4"/>
+
+                    <android.support.design.button.MaterialButton
+                            android:id="@+id/addOptionButton"
+                            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginStart="5dp"
+                            android:text="@string/add"
+                            android:textColor="@android:color/white"
+                            android:backgroundTint="@color/colorAccent"/>
                 </LinearLayout>
 
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/colorAccent"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"/>
+            </android.support.v7.widget.CardView>
 
-                <TextView
-                        android:layout_marginTop="@dimen/spacing_medium"
-                        android:text="@string/description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-
-                <EditText
-                        android:id="@+id/addDescriptionEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:maxLines="5"
-                        android:inputType="textMultiLine"/>
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-                android:id="@+id/addOptionCard"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                app:cardCornerRadius="@dimen/corner_radius_default"
-                android:elevation="8dp"
-                android:layout_margin="15dp">
-
-            <LinearLayout
-                    android:orientation="horizontal"
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/addOptionRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="5dp">
+                    android:paddingBottom="60dp">
 
-                <EditText
-                        android:id="@+id/addOptionContent"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="4"/>
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
 
-                <android.support.design.button.MaterialButton
-                        android:id="@+id/addOptionButton"
-                        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="5dp"
-                        android:text="@string/add"
-                        android:textColor="@android:color/white"
-                        android:backgroundTint="@color/colorAccent"/>
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.RecyclerView
-                android:id="@+id/addOptionRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
-
-</ScrollView>
+    </ScrollView>
+    <android.support.design.widget.FloatingActionButton
+            style="@style/Widget.MaterialComponents.FloatingActionButton"
+            android:id="@+id/addFinishButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="15dp"
+            android:background="@color/colorPrimaryDark"
+            app:backgroundTint="@color/colorPrimaryDark"/>
+</android.support.design.widget.CoordinatorLayout>

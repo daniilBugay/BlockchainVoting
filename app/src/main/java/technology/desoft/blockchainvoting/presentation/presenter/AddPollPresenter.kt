@@ -4,10 +4,14 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import technology.desoft.blockchainvoting.model.PollRepository
 import technology.desoft.blockchainvoting.model.UserTokenProvider
+import technology.desoft.blockchainvoting.navigation.Router
+import technology.desoft.blockchainvoting.navigation.navigations.AllPollsNavigation
 import technology.desoft.blockchainvoting.presentation.view.AddPollView
+import technology.desoft.blockchainvoting.presentation.view.MainView
 
 @InjectViewState
 class AddPollPresenter(
+    private val router: Router<MainView>,
     private val pollRepository: PollRepository,
     private val userTokenProvider: UserTokenProvider
 ): MvpPresenter<AddPollView>() {
@@ -33,5 +37,10 @@ class AddPollPresenter(
         val temp = options[from]
         options[from] = options[to]
         options[to] = temp
+    }
+
+    fun finishAdding(theme: String, description: String, fromDate: String, toDate: String) {
+
+        router.postNavigation(AllPollsNavigation())
     }
 }
