@@ -13,6 +13,7 @@ import technology.desoft.blockchainvoting.navigation.Router
 import technology.desoft.blockchainvoting.navigation.navigations.ActivePollDetailsNavigation
 import technology.desoft.blockchainvoting.navigation.navigations.AddPollNavigation
 import technology.desoft.blockchainvoting.navigation.navigations.CompletedPollDetailsNavigation
+import technology.desoft.blockchainvoting.navigation.navigations.PersonalPollsNavigation
 import technology.desoft.blockchainvoting.presentation.view.AllPollsView
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.PollView
@@ -66,5 +67,9 @@ class AllPollsPresenter(
 
     fun onAddPoll() {
         router.postNavigation(AddPollNavigation())
+    }
+
+    fun onPersonalShow() {
+        router.postNavigation(PersonalPollsNavigation())
     }
 }

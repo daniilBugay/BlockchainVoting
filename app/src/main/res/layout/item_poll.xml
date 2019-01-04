@@ -36,7 +36,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_toEndOf="@id/completedText"
-                android:layout_marginStart="15dp">
+                android:layout_marginStart="10dp">
 
             <TextView
                     style="@style/TextAppearance.AppCompat.Title"

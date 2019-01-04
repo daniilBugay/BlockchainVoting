@@ -16,8 +16,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_margin="10dp"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp"
                 app:cardCornerRadius="@dimen/corner_radius_default"
                 android:elevation="8dp"
                 android:layout_gravity="top">
@@ -47,8 +45,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="5dp"
-                        android:layout_marginStart="15dp"
+                        android:layout_marginStart="10dp"
                         android:layout_toEndOf="@id/completedText">
 
                     <TextView
