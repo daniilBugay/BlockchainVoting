@@ -85,7 +85,7 @@
                                 android:layout_height="wrap_content"
                                 android:minHeight="30dp"
                                 android:minWidth="80dp"
-                                android:layout_marginStart="5dp"/>
+                                android:layout_marginStart="15dp"/>
                     </LinearLayout>
 
                     <View

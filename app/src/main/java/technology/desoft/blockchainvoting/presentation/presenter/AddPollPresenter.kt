@@ -1,7 +1,9 @@
 package technology.desoft.blockchainvoting.presentation.presenter
 
+import android.content.res.Resources
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.model.PollRepository
 import technology.desoft.blockchainvoting.model.UserTokenProvider
 import technology.desoft.blockchainvoting.navigation.Router
@@ -11,6 +13,7 @@ import technology.desoft.blockchainvoting.presentation.view.MainView
 
 @InjectViewState
 class AddPollPresenter(
+    private val resources: Resources,
     private val router: Router<MainView>,
     private val pollRepository: PollRepository,
     private val userTokenProvider: UserTokenProvider
@@ -40,7 +43,9 @@ class AddPollPresenter(
     }
 
     fun finishAdding(theme: String, description: String, fromDate: String, toDate: String) {
-
-        router.postNavigation(AllPollsNavigation())
+        if (theme.isBlank()  || fromDate.isBlank() || toDate.isBlank() || options.isEmpty())
+            viewState.error(resources.getString(R.string.input_error))
+        else
+            router.postNavigation(AllPollsNavigation())
     }
 }
