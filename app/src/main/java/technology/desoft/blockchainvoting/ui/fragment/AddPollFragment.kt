@@ -51,7 +51,7 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
     @ProvidePresenter
     fun providePresenter(): AddPollPresenter {
         val app = activity?.application as App
-        return AddPollPresenter(app.mainRouter, app.pollRepository, app.userProvider)
+        return AddPollPresenter(resources, app.mainRouter, app.pollRepository, app.userProvider)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -128,24 +128,29 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
         view.apply {
             fromDateText.setOnClickListener {
                 showDatePicker { year, month, day ->
-                    fromDateText.text = "$day.$month.$year"
+                    fromDateText.text = getDateString(day, month, year)
                 }
             }
             toDateText.setOnClickListener {
                 showDatePicker { year, month, day ->
                     if (fromDateText.text.isEmpty()) return@showDatePicker
-                    val (fromYear, fromMonth, fromDay) = fromDateText.text.split(".").map { num -> num.toInt() }
+                    val (fromYear, fromMonth, fromDay)
+                            = fromDateText.text.split(".").map { num -> num.toInt() }
                     val fromCalendar = Calendar.getInstance()
                     fromCalendar.set(fromYear, fromMonth, fromDay)
                     val toCalendar = Calendar.getInstance()
                     toCalendar.set(year, month, day)
                     if (fromCalendar <= toCalendar)
-                        toDateText.text = "$day.$month.$year"
+                        toDateText.text = getDateString(day, month, year)
                     else
                         showDatePickError()
                 }
             }
         }
+    }
+
+    private fun getDateString(day: Int, month: Int, year: Int): String {
+        return "$day.${month + 1}.$year"
     }
 
     private fun showDatePickError() {
@@ -200,7 +205,7 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
         view?.addOptionContent?.text?.clear()
     }
 
-    fun finish(){
+    private fun finish(){
         val view = this.view ?: return
 
         addPollPresenter.finishAdding(

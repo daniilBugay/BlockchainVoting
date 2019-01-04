@@ -9,6 +9,9 @@ import android.support.v7.widget.CardView
 import android.transition.Fade
 import android.transition.TransitionInflater
 import android.transition.TransitionSet
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import com.arellomobile.mvp.MvpAppCompatActivity
@@ -42,8 +45,8 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             .commit()
     }
 
-    private inline fun changeFragmentWithTransition(fragment: Fragment, body: FragmentTransaction.() -> Unit){
-        changeFragment(fragment){
+    private inline fun changeFragmentWithTransition(fragment: Fragment, body: FragmentTransaction.() -> Unit) {
+        changeFragment(fragment) {
             val transitionSet = TransitionSet()
             transitionSet.duration = 350L
             transitionSet.addTransition(
@@ -63,10 +66,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         val fragment = SignInFragment()
         changeFragmentWithTransition(fragment) {
             val currentFragment = supportFragmentManager.fragments.firstOrNull()
-            if (currentFragment != null){
+            if (currentFragment != null) {
                 val card: CardView? = currentFragment.view?.findViewById(R.id.signUpCard)
                 val button: MaterialButton? = currentFragment.view?.findViewById(R.id.signUpButton)
-                if (card != null && button != null){
+                if (card != null && button != null) {
                     addSharedElement(card, card.transitionName)
                     addSharedElement(button, button.transitionName)
                 }
@@ -78,10 +81,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         val fragment = SignUpFragment()
         changeFragmentWithTransition(fragment) {
             val currentFragment = supportFragmentManager.fragments.firstOrNull()
-            if (currentFragment != null){
+            if (currentFragment != null) {
                 val card: CardView? = currentFragment.view?.findViewById(R.id.signInCard)
                 val button: MaterialButton? = currentFragment.view?.findViewById(R.id.signInButton)
-                if (card != null && button != null){
+                if (card != null && button != null) {
                     addSharedElement(card, card.transitionName)
                     addSharedElement(button, button.transitionName)
                 }
@@ -104,15 +107,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
 
     override fun showPersonalPolls() {
         val fragment = PersonalPollsFragment()
-        changeFragmentWithTransition(fragment) {
-            val currentFragment = supportFragmentManager.fragments.firstOrNull()
-            if (currentFragment != null) {
-                val progressBar = currentFragment.view?.findViewById<ProgressBar>(R.id.pollsProgressBar)
-                if (progressBar != null) {
-                    addSharedElement(progressBar, progressBar.transitionName)
-                }
-            }
-        }
+        changeFragment(fragment) { addToBackStack(null) }
     }
 
     private fun showDetails(detailsFragment: Fragment, itemView: View) {

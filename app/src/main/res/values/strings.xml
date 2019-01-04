@@ -18,4 +18,6 @@
     <string name="add">Add</string>
     <string name="minus">-</string>
     <string name="date_error">Invalid date pick</string>
+    <string name="input_error">Invalid poll</string>
+    <string name="personal">Personal page</string>
 </resources>

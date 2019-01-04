@@ -3,9 +3,7 @@ package technology.desoft.blockchainvoting.ui.fragment
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -40,6 +38,20 @@ class AllPollsFragment : MvpAppCompatFragment(), AllPollsView {
         view.pollsAddButton.setOnClickListener {
             allPollsPresenter.onAddPoll()
         }
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        inflater?.inflate(R.menu.menu_main, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId){
+            R.id.personal_menu_item -> allPollsPresenter.onPersonalShow()
+            else -> return false
+        }
+        return true
     }
 
     override fun showError(message: String) {

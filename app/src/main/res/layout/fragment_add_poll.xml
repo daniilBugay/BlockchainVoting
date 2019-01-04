@@ -55,19 +55,29 @@
                             android:layout_height="wrap_content"/>
 
                     <LinearLayout
+                            android:layout_marginTop="10dp"
                             android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
-                        <TextView
-                                style="@style/TextAppearance.AppCompat.Subhead"
-                                android:id="@+id/fromDateText"
+                        <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:minHeight="30dp"
-                                android:minWidth="80dp"/>
+                                android:orientation="vertical">
+
+                            <TextView
+                                    style="@style/TextAppearance.AppCompat.Subhead"
+                                    android:id="@+id/fromDateText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:minHeight="30dp"
+                                    android:minWidth="70dp"/>
+                            <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/colorAccent"/>
+                        </LinearLayout>
 
                         <TextView
                                 style="@style/TextAppearance.AppCompat.Subhead"
@@ -76,24 +86,30 @@
                                 android:layout_height="wrap_content"
                                 android:textAlignment="center"
                                 android:layout_gravity="center_vertical"
-                                android:layout_marginStart="5dp"/>
+                                android:layout_marginStart="10dp"
+                                android:layout_marginEnd="10dp"/>
 
-                        <TextView
-                                style="@style/TextAppearance.AppCompat.Subhead"
-                                android:id="@+id/toDateText"
+
+                        <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:minHeight="30dp"
-                                android:minWidth="80dp"
-                                android:layout_marginStart="5dp"/>
-                    </LinearLayout>
+                                android:orientation="vertical">
 
-                    <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/colorAccent"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="5dp"/>
+                            <TextView
+                                    style="@style/TextAppearance.AppCompat.Subhead"
+                                    android:id="@+id/toDateText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:minHeight="30dp"
+                                    android:minWidth="70dp"/>
+                            <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/colorAccent"
+                                    android:layout_marginEnd="5dp"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <TextView
                             android:layout_marginTop="@dimen/spacing_medium"
@@ -157,6 +173,7 @@
 
     </ScrollView>
     <android.support.design.widget.FloatingActionButton
+            android:src="@drawable/ic_next"
             style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:id="@+id/addFinishButton"
             android:layout_width="wrap_content"
