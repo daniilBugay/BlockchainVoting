@@ -1,12 +1,14 @@
 package technology.desoft.blockchainvoting.model
 
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import java.util.*
 
 class TestPollRepository: PollRepository {
+
+    override fun removePoll(id: Long): Job {
+        return GlobalScope.launch{}
+    }
+
     override fun getPolls(): Deferred<List<Poll>?> {
         return GlobalScope.async {
             delay(1500)

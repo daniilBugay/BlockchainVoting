@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
 import technology.desoft.blockchainvoting.presentation.presenter.AddPollPresenter
 
-class ItemTouchCallback(private val adapter: AddOptionAdapter, private val presenter: AddPollPresenter)
+class PollOptionTouchCallback(private val adapter: AddOptionAdapter, private val presenter: AddPollPresenter)
     : ItemTouchHelper.Callback() {
 
     override fun isItemViewSwipeEnabled() = true

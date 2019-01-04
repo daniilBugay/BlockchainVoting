@@ -11,7 +11,7 @@ import technology.desoft.blockchainvoting.presentation.view.PollView
 import java.util.*
 
 class PollsAdapter(
-    private val polls: List<PollView>,
+    private val polls: MutableList<PollView>,
     private val onClick: (PollView, View) -> Unit
 ): RecyclerView.Adapter<PollsAdapter.ViewHolder>() {
 
@@ -27,7 +27,16 @@ class PollsAdapter(
         holder.bind(position)
     }
 
+    fun removePoll(position: Int){
+        if (position == -1) return
+        polls.removeAt(position)
+        notifyItemRemoved(position)
+    }
+
+    fun getPollByPosition(position: Int) = polls[position]
+
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+
         fun bind(position: Int){
             val pollView = polls[position]
             with(itemView){

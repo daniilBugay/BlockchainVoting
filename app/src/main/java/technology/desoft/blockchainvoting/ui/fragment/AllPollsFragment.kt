@@ -50,7 +50,7 @@ class AllPollsFragment : MvpAppCompatFragment(), AllPollsView {
     override fun showPolls(polls: List<PollView>) {
         view?.pollsProgressBar?.visibility = View.GONE
         Handler().postDelayed({view?.pollsAddButton?.show()}, 350)
-        view?.pollsRecycler?.adapter = PollsAdapter(polls) { pollView, view ->
+        view?.pollsRecycler?.adapter = PollsAdapter(polls.toMutableList()) { pollView, view ->
             allPollsPresenter.showDetails(pollView, view)
         }
     }

@@ -24,7 +24,7 @@ import technology.desoft.blockchainvoting.presentation.presenter.AddPollPresente
 import technology.desoft.blockchainvoting.presentation.view.AddPollView
 import technology.desoft.blockchainvoting.ui.CircularAnimationProvider
 import technology.desoft.blockchainvoting.ui.adapter.AddOptionAdapter
-import technology.desoft.blockchainvoting.ui.adapter.ItemTouchCallback
+import technology.desoft.blockchainvoting.ui.adapter.PollOptionTouchCallback
 import java.util.*
 import kotlin.math.hypot
 
@@ -154,7 +154,7 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
 
     private fun initRecycler(view: View){
         val adapter = AddOptionAdapter(mutableListOf())
-        val touchHelper = ItemTouchHelper(ItemTouchCallback(adapter, addPollPresenter))
+        val touchHelper = ItemTouchHelper(PollOptionTouchCallback(adapter, addPollPresenter))
         adapter.setOnDragStartListener { touchHelper.startDrag(it) }
         view.addOptionRecycler.adapter = adapter
         touchHelper.attachToRecyclerView(view.addOptionRecycler)

@@ -2,6 +2,7 @@ package technology.desoft.blockchainvoting.ui.fragment
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import kotlinx.android.synthetic.main.fragment_add_poll.view.*
 import kotlinx.android.synthetic.main.fragment_personal_polls.view.*
 import kotlinx.coroutines.GlobalScope
 import technology.desoft.blockchainvoting.App
@@ -16,6 +18,9 @@ import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.presenter.PersonalPollsPresenter
 import technology.desoft.blockchainvoting.presentation.view.PersonalPollsView
 import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.ui.adapter.AddOptionAdapter
+import technology.desoft.blockchainvoting.ui.adapter.PollOptionTouchCallback
+import technology.desoft.blockchainvoting.ui.adapter.PollTouchCallback
 import technology.desoft.blockchainvoting.ui.adapter.PollsAdapter
 
 class PersonalPollsFragment: MvpAppCompatFragment(), PersonalPollsView {
@@ -47,14 +52,14 @@ class PersonalPollsFragment: MvpAppCompatFragment(), PersonalPollsView {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun showPersonalPolls(personalPolls: List<PollView>) {
-        view?.personalPollsProgressBar?.visibility = View.GONE
-        view?.personalPollsRecycler?.adapter = PollsAdapter(personalPolls) { pollView, view ->
-            personalPollsPresenter.showDetails(pollView, view)
+    override fun showPersonalPolls(personalPolls: MutableList<PollView>) {
+        val view = this.view ?: return
+        val adapter = PollsAdapter(personalPolls) { pollView, itemView ->
+            personalPollsPresenter.showDetails(pollView, itemView)
         }
-    }
-
-    override fun deletePersonalPoll(id: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val touchHelper = ItemTouchHelper(PollTouchCallback(adapter, personalPollsPresenter))
+        view.personalPollsRecycler.adapter = adapter
+        touchHelper.attachToRecyclerView(view.personalPollsRecycler)
+        view.personalPollsProgressBar?.visibility = View.GONE
     }
 }

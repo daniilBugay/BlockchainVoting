@@ -43,7 +43,7 @@ class PersonalPollsPresenter(
                 val author = users.find { it.id == userId } ?: return@launch
                 val filteredPolls = polls.filter { it.userId == userId }
                 val pollViews = filteredPolls.map { PollView(it, author) }
-                launch(Dispatchers.Main) { viewState.showPersonalPolls(pollViews) }.start()
+                launch(Dispatchers.Main) { viewState.showPersonalPolls(pollViews.toMutableList()) }.start()
             }
         }
         jobs.add(job)
@@ -55,6 +55,12 @@ class PersonalPollsPresenter(
             router.postNavigation(ActivePollDetailsNavigation(pollView, view))
         else
             router.postNavigation(CompletedPollDetailsNavigation(pollView, view))
+    }
+
+    fun removePoll(id: Long) {
+        val job = pollsRepository.removePoll(id)
+        jobs.add(job)
+        job.start()
     }
 
     override fun onDestroy() {
