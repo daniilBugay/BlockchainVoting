@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.animation.FastOutSlowInInterpolator
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.Toolbar
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +19,7 @@ import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import kotlinx.android.synthetic.main.fragment_add_poll.*
 import kotlinx.android.synthetic.main.fragment_add_poll.view.*
 import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
@@ -119,8 +122,12 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
         )
         initDatePick(view)
         initRecycler(view)
-
         view.addFinishButton.setOnClickListener { finish() }
+
+    }
+
+    private fun setTitle(title: String){
+        (activity as AppCompatActivity).supportActionBar?.title = title
     }
 
     @SuppressLint("SetTextI18n")
@@ -171,6 +178,7 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
         val view = this.view ?: return
         if (view.addOptionRecycler.adapter?.itemCount == 0)
             addPollPresenter.setOptions()
+        setTitle(resources.getString(R.string.poll_info))
     }
 
     private fun getAnimationSettings(view: View, x: Float, y: Float): CircularAnimationProvider.Settings {
@@ -218,5 +226,10 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
 
     override fun error(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        setTitle(resources.getString(R.string.app_name))
     }
 }

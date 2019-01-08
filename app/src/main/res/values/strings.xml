@@ -12,12 +12,13 @@
     <string name="password">PASSWORD</string>
     <string name="confirm_password">CONFIRM PASSWORD</string>
 
-    <string name="theme">THEME</string>
-    <string name="description">DESCRIPTION</string>
-    <string name="date">DATE</string>
+    <string name="theme">Theme</string>
+    <string name="description">Description</string>
+    <string name="date">Date</string>
     <string name="add">Add</string>
-    <string name="minus">-</string>
+    <string name="separation">:</string>
     <string name="date_error">Invalid date pick</string>
     <string name="input_error">Invalid poll</string>
     <string name="personal">Personal page</string>
+    <string name="poll_info">Poll info</string>
 </resources>
