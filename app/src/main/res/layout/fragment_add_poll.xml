@@ -32,7 +32,6 @@
                     app:cardCornerRadius="@dimen/corner_radius_default">
 
                 <LinearLayout
-                        android:padding="@dimen/spacing_medium"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -50,11 +49,21 @@
                             android:textColorHint="@android:color/darker_gray"
                             android:maxLines="1"/>
 
+                    <EditText
+                            android:id="@+id/addDescriptionEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/description"
+                            android:maxLines="5"
+                            android:inputType="textMultiLine"
+                            android:textColorHint="@android:color/darker_gray"/>
+
                     <LinearLayout
                             android:layout_marginStart="5dp"
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_medium">
 
                         <TextView
                                 android:textSize="18sp"
@@ -69,7 +78,7 @@
                                 android:id="@+id/fromDateText"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:minHeight="30dp"
+                                android:minHeight="20dp"
                                 android:layout_weight="10"
                                 android:textAlignment="textEnd"/>
 
@@ -90,7 +99,7 @@
                                 android:id="@+id/toDateText"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:minHeight="30dp"
+                                android:minHeight="20dp"
                                 android:layout_weight="20"
                                 android:textAlignment="textStart"/>
 
@@ -101,19 +110,22 @@
                             android:layout_height="1dp"
                             android:background="@color/colorAccent"
                             android:layout_marginStart="4dp"
-                            android:layout_marginEnd="4dp"/>
-
-                    <EditText
-                            android:id="@+id/addDescriptionEditText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/description"
-                            android:maxLines="5"
-                            android:inputType="textMultiLine"
-                            android:textColorHint="@android:color/darker_gray"/>
+                            android:layout_marginEnd="4dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="10dp"/>
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
+
+            <TextView
+                    android:textSize="24sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/poll_options"
+                    android:layout_marginEnd="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/white"
+                    android:layout_marginStart="@dimen/spacing_large"/>
 
             <android.support.v7.widget.CardView
                     android:id="@+id/addOptionCard"
@@ -127,7 +139,10 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:padding="5dp">
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:paddingStart="@dimen/spacing_large"
+                        android:paddingEnd="@dimen/spacing_large">
 
                     <EditText
                             android:id="@+id/addOptionContent"
@@ -135,17 +150,17 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="4"/>
 
-                    <android.support.design.button.MaterialButton
+                    <android.support.design.widget.FloatingActionButton
                             android:id="@+id/addOptionButton"
-                            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            style="@style/Widget.MaterialComponents.FloatingActionButton"
+                            android:layout_width="37dp"
+                            android:layout_height="37dp"
                             android:layout_marginStart="5dp"
-                            android:text="@string/add"
-                            android:textColor="@android:color/white"
-                            android:backgroundTint="@color/colorAccent"/>
+                            android:backgroundTint="@color/colorAccent"
+                            app:fabSize="mini"
+                            app:elevation="0dp"
+                            android:src="@drawable/ic_check_mark"
+                            app:maxImageSize="20dp"/>
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
@@ -162,6 +177,7 @@
     </ScrollView>
     <android.support.design.widget.FloatingActionButton
             android:src="@drawable/ic_next"
+            app:maxImageSize="25dp"
             style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:id="@+id/addFinishButton"
             android:layout_width="wrap_content"

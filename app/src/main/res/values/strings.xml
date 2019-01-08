@@ -2,12 +2,13 @@
     <string name="app_name">BlockchainVoting</string>
     <string name="date_format">%s - %s</string>
     <string name="vote">Vote</string>
-    <string name="choice">Make Your Choice:</string>
+    <string name="choice">Make Your Choice</string>
     <string name="completed">completed</string>
 
     <!--Sign strings-->
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
+    <string name="confirm">Confirm</string>
     <string name="email">EMAIL</string>
     <string name="password">PASSWORD</string>
     <string name="confirm_password">CONFIRM PASSWORD</string>
@@ -21,4 +22,5 @@
     <string name="input_error">Invalid poll</string>
     <string name="personal">Personal page</string>
     <string name="poll_info">Poll info</string>
+    <string name="poll_options">Poll options</string>
 </resources>

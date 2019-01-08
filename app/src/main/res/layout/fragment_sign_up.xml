@@ -206,7 +206,7 @@
                 android:layout_height="?attr/actionBarSize"
                 android:layout_gravity="bottom"
                 android:background="@color/colorAccent"
-                android:text="@string/sign_up"
+                android:text="@string/confirm"
                 android:textColor="@android:color/white"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
                 android:textAlignment="center"
