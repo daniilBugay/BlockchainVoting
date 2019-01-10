@@ -9,9 +9,6 @@ import android.support.v7.widget.CardView
 import android.transition.Fade
 import android.transition.TransitionInflater
 import android.transition.TransitionSet
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import com.arellomobile.mvp.MvpAppCompatActivity
@@ -22,7 +19,7 @@ import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.presenter.MainPresenter
 import technology.desoft.blockchainvoting.presentation.view.MainView
-import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 import technology.desoft.blockchainvoting.ui.CircularAnimationProvider
 import technology.desoft.blockchainvoting.ui.OnBackListener
 import technology.desoft.blockchainvoting.ui.fragment.*
@@ -119,11 +116,11 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         }
     }
 
-    override fun showActivePollDetails(poll: PollView, itemView: View) {
+    override fun showActivePollDetails(poll: PollAndAuthor, itemView: View) {
         showDetails(ActivePollFragment.withPoll(poll), itemView)
     }
 
-    override fun showCompletedPollDetails(poll: PollView, itemView: View) {
+    override fun showCompletedPollDetails(poll: PollAndAuthor, itemView: View) {
         showDetails(CompletedPollFragment.withPoll(poll), itemView)
     }
 

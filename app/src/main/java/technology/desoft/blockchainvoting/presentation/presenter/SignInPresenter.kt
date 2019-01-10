@@ -1,14 +1,14 @@
 package technology.desoft.blockchainvoting.presentation.presenter
 
+import android.content.res.Resources
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import technology.desoft.blockchainvoting.model.Token
-import technology.desoft.blockchainvoting.model.UserRepository
-import technology.desoft.blockchainvoting.model.UserTokenProvider
+import kotlinx.coroutines.*
+import retrofit2.HttpException
+import technology.desoft.blockchainvoting.R
+import technology.desoft.blockchainvoting.model.network.user.Token
+import technology.desoft.blockchainvoting.model.network.user.UserRepository
+import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
 import technology.desoft.blockchainvoting.navigation.Router
 import technology.desoft.blockchainvoting.navigation.navigations.AllPollsNavigation
 import technology.desoft.blockchainvoting.navigation.navigations.SignUpNavigation
@@ -20,16 +20,21 @@ class SignInPresenter(
     private val coroutineScope: CoroutineScope,
     private val router: Router<MainView>,
     private val userRepository: UserRepository,
-    private val userTokenProvider: UserTokenProvider
+    private val userTokenProvider: UserTokenProvider,
+    private val resource: Resources
 ): MvpPresenter<SignView>(), CoroutineScope by coroutineScope {
     private val jobs: MutableList<Job> = mutableListOf()
 
     fun login(email: String, password: String){
         viewState.loading()
         val job = launch(Dispatchers.IO) {
-            val token = userRepository.login(email, password).await()
-            if (token != null) launch(Dispatchers.Main) { onSuccess(email, password, token) }.start()
-            else launch(Dispatchers.Main) { onError("Error") }.start()
+            try {
+                val token = userRepository.login(email, password).await()
+                if (token != null) launch(Dispatchers.Main) { onSuccess(email, password, token) }.start()
+                else launch(Dispatchers.Main) { onError(resource.getString(R.string.error)) }.start()
+            } catch (e: HttpException){
+                launch(Dispatchers.Main) { onError(resource.getString(R.string.network_error)) }
+            }
         }
         jobs.add(job)
         job.start()
@@ -40,7 +45,8 @@ class SignInPresenter(
     }
 
     private fun onSuccess(email: String, password: String, token: Token){
-        viewState.showSuccess("Success")
+        viewState.showSuccess(resource.getString(R.string.success))
+        userRepository.setToken(token)
         userTokenProvider.saveEmail(email)
         userTokenProvider.savePassword(password)
         userTokenProvider.token = token

@@ -18,20 +18,19 @@ import kotlinx.android.synthetic.main.fragment_poll_details.view.*
 import kotlinx.coroutines.GlobalScope
 import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
-import technology.desoft.blockchainvoting.model.PollOption
+import technology.desoft.blockchainvoting.model.network.polls.PollOption
 import technology.desoft.blockchainvoting.presentation.presenter.ActivePollPresenter
 import technology.desoft.blockchainvoting.presentation.view.ActivePollView
-import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 import technology.desoft.blockchainvoting.ui.OnBackListener
 import technology.desoft.blockchainvoting.ui.adapter.PollOptionsAdapter
-import java.util.*
 
 class ActivePollFragment : MvpAppCompatFragment(), ActivePollView, OnBackListener {
     companion object {
         private const val POLL_KEY = "poll"
         private const val TRANSITION_NAME_KEY = "transition name"
 
-        fun withPoll(poll: PollView): ActivePollFragment {
+        fun withPoll(poll: PollAndAuthor): ActivePollFragment {
             val result = ActivePollFragment()
             val json = Gson().toJson(poll)
             val bundle = Bundle()
@@ -49,7 +48,7 @@ class ActivePollFragment : MvpAppCompatFragment(), ActivePollView, OnBackListene
     fun providePresenter(): ActivePollPresenter {
         val json = arguments?.getString(POLL_KEY)
             ?: throw IllegalStateException("You must create fragment using withPoll companion function")
-        val poll = Gson().fromJson<PollView>(json, PollView::class.java)
+        val poll = Gson().fromJson<PollAndAuthor>(json, PollAndAuthor::class.java)
         val app = activity?.application as App
         return ActivePollPresenter(GlobalScope, app.pollRepository, app.voteRepository, app.userProvider, poll)
     }
@@ -78,14 +77,14 @@ class ActivePollFragment : MvpAppCompatFragment(), ActivePollView, OnBackListene
         }
     }
 
-    override fun showDetails(pollView: PollView) {
+    override fun showDetails(pollAndAuthor: PollAndAuthor) {
         view?.apply {
-            pollDetailsTheme.text = pollView.poll.theme
-            pollDetailsDescription.text = pollView.poll.description
-            pollDetailsAuthor.text = pollView.author.email
+            pollDetailsTheme.text = pollAndAuthor.poll.theme
+            pollDetailsDescription.text = pollAndAuthor.poll.description
+            pollDetailsAuthor.text = pollAndAuthor.author.email
             val formatter = DateFormat.getDateFormat(context)
-            val fromDate = formatter.format(pollView.poll.createdAt)
-            val toDate = formatter.format(pollView.poll.endsAt)
+            val fromDate = formatter.format(pollAndAuthor.poll.createdAt)
+            val toDate = formatter.format(pollAndAuthor.poll.endsAt)
             pollDetailsDate.text = resources.getString(R.string.date_format, fromDate, toDate)
         }
     }

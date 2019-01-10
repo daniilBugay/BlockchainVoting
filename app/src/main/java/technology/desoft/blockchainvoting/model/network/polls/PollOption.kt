@@ -1,4 +1,4 @@
-package technology.desoft.blockchainvoting.model
+package technology.desoft.blockchainvoting.model.network.polls
 
 data class PollOption(
     val id: Long,

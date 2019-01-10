@@ -19,7 +19,7 @@ import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.presenter.CompletedPollPresenter
 import technology.desoft.blockchainvoting.presentation.view.CompletedPollView
 import technology.desoft.blockchainvoting.presentation.view.OptionResult
-import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 import technology.desoft.blockchainvoting.ui.OnBackListener
 import technology.desoft.blockchainvoting.ui.adapter.PollResultAdapter
 
@@ -29,7 +29,7 @@ class CompletedPollFragment : MvpAppCompatFragment(), CompletedPollView, OnBackL
         private const val POLL_KEY = "poll"
         private const val TRANSITION_NAME_KEY = "transition name"
 
-        fun withPoll(poll: PollView): CompletedPollFragment{
+        fun withPoll(poll: PollAndAuthor): CompletedPollFragment{
             val result = CompletedPollFragment()
             val json = Gson().toJson(poll)
             val bundle = Bundle()
@@ -47,7 +47,7 @@ class CompletedPollFragment : MvpAppCompatFragment(), CompletedPollView, OnBackL
     fun providePresenter(): CompletedPollPresenter {
         val json = arguments?.getString(POLL_KEY)
             ?: throw IllegalStateException("You must create fragment using withPoll companion function")
-        val poll = Gson().fromJson<PollView>(json, PollView::class.java)
+        val poll = Gson().fromJson<PollAndAuthor>(json, PollAndAuthor::class.java)
         val app = activity?.application as App
         return CompletedPollPresenter(GlobalScope, app.pollRepository, app.voteRepository, app.userProvider, poll)
     }
@@ -75,14 +75,14 @@ class CompletedPollFragment : MvpAppCompatFragment(), CompletedPollView, OnBackL
         view.completedText.visibility = View.VISIBLE
     }
 
-    override fun showDetails(pollView: PollView) {
+    override fun showDetails(pollAndAuthor: PollAndAuthor) {
         view?.apply {
-            pollDetailsTheme.text = pollView.poll.theme
-            pollDetailsDescription.text = pollView.poll.description
-            pollDetailsAuthor.text = pollView.author.email
+            pollDetailsTheme.text = pollAndAuthor.poll.theme
+            pollDetailsDescription.text = pollAndAuthor.poll.description
+            pollDetailsAuthor.text = pollAndAuthor.author.email
             val formatter = DateFormat.getDateFormat(context)
-            val fromDate = formatter.format(pollView.poll.createdAt)
-            val toDate = formatter.format(pollView.poll.endsAt)
+            val fromDate = formatter.format(pollAndAuthor.poll.createdAt)
+            val toDate = formatter.format(pollAndAuthor.poll.endsAt)
             pollDetailsDate.text = resources.getString(R.string.date_format, fromDate, toDate)
         }
     }

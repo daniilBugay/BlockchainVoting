@@ -13,7 +13,6 @@ import android.widget.TextView
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import kotlinx.android.synthetic.main.fragment_sign_in.view.*
 import kotlinx.android.synthetic.main.fragment_sign_up.view.*
 import kotlinx.coroutines.GlobalScope
 import technology.desoft.blockchainvoting.App
@@ -29,10 +28,10 @@ class SignUpFragment: MvpAppCompatFragment(), SignView {
     @ProvidePresenter
     fun providePresenter(): SignUpPresenter{
         val app = activity?.application as App
-        return SignUpPresenter(GlobalScope, app.mainRouter, app.userRepository)
+        return SignUpPresenter(GlobalScope, app.mainRouter, app.userRepository, resources)
     }
 
-    private fun setCustomSnackbar(message: String, backgroundColor: Int){
+    private fun setCustomSnackBar(message: String, backgroundColor: Int){
         val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT) }
         snackBar?.view?.setBackgroundColor(
             ContextCompat.getColor(context!!, backgroundColor)
@@ -68,12 +67,12 @@ class SignUpFragment: MvpAppCompatFragment(), SignView {
     }
 
     override fun showError(message: String) {
-        setCustomSnackbar(message, R.color.colorRed)
+        setCustomSnackBar(message, R.color.colorRed)
         view?.signUpProgressBar?.visibility = View.GONE
     }
 
     override fun showSuccess(message: String) {
-        setCustomSnackbar(message, R.color.colorAccent)
+        setCustomSnackBar(message, R.color.colorAccent)
         view?.signUpProgressBar?.visibility = View.GONE
     }
 }

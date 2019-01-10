@@ -1,4 +1,4 @@
-package technology.desoft.blockchainvoting.model
+package technology.desoft.blockchainvoting.model.network.user
 
 interface UserTokenProvider {
     var token: Token

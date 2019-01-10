@@ -5,5 +5,5 @@ import com.arellomobile.mvp.MvpView
 interface PersonalPollsView: MvpView {
     fun loading()
     fun showError(message: String)
-    fun showPersonalPolls(personalPolls: MutableList<PollView>)
+    fun showPersonalPolls(personalPolls: MutableList<PollAndAuthor>)
 }

@@ -1,9 +1,17 @@
 package technology.desoft.blockchainvoting.model
 
 import kotlinx.coroutines.*
+import technology.desoft.blockchainvoting.model.network.polls.PollRepository
+import technology.desoft.blockchainvoting.model.network.polls.Poll
+import technology.desoft.blockchainvoting.model.network.polls.PollOption
+import technology.desoft.blockchainvoting.model.network.user.Token
 import java.util.*
 
 class TestPollRepository: PollRepository {
+
+    override fun setToken(token: Token) {
+
+    }
 
     override fun removePoll(id: Long): Job {
         return GlobalScope.launch{}
@@ -18,10 +26,9 @@ class TestPollRepository: PollRepository {
                     it.toLong(),
                     "Theme $it",
                     "Desc $it",
-                    Calendar.getInstance().timeInMillis,
-                    Calendar.getInstance().timeInMillis + random.nextLong() % 1000*60*60*24*10 - 1000*60*60*24*5,
-                    0,
-                    it.toLong()
+                    Calendar.getInstance().time,
+                    Date(Calendar.getInstance().timeInMillis + random.nextLong() % 1000 * 60 * 60 * 24 * 10 - 1000 * 60 * 60 * 24 * 5),
+                    0
                 )
             }
         }

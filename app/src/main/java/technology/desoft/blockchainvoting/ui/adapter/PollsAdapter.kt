@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_poll.view.*
 import technology.desoft.blockchainvoting.R
-import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 import java.util.*
 
 class PollsAdapter(
-    private val polls: MutableList<PollView>,
-    private val onClick: (PollView, View) -> Unit
+    private val polls: MutableList<PollAndAuthor>,
+    private val onClick: (PollAndAuthor, View) -> Unit
 ): RecyclerView.Adapter<PollsAdapter.ViewHolder>() {
 
     override fun getItemCount() = polls.size
@@ -47,7 +47,7 @@ class PollsAdapter(
                 val toDate = formatter.format(pollView.poll.endsAt)
                 pollDate.text = resources.getString(R.string.date_format, fromDate, toDate)
                 pollCard.transitionName = "pollCard${pollView.poll.id}"
-                pollCard.completedText.visibility = if (pollView.poll.endsAt < Calendar.getInstance().timeInMillis){
+                pollCard.completedText.visibility = if (pollView.poll.endsAt < Calendar.getInstance().time){
                     View.VISIBLE
                 } else {
                     View.GONE

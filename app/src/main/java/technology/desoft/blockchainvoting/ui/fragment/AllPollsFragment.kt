@@ -14,7 +14,7 @@ import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.presenter.AllPollsPresenter
 import technology.desoft.blockchainvoting.presentation.view.AllPollsView
-import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 import technology.desoft.blockchainvoting.ui.adapter.PollsAdapter
 
 class AllPollsFragment : MvpAppCompatFragment(), AllPollsView {
@@ -25,7 +25,13 @@ class AllPollsFragment : MvpAppCompatFragment(), AllPollsView {
     @ProvidePresenter
     fun providePresenter(): AllPollsPresenter {
         val app = activity?.application as App
-        return AllPollsPresenter(GlobalScope, app.mainRouter, app.pollRepository, app.userRepository)
+        return AllPollsPresenter(
+            GlobalScope,
+            app.mainRouter,
+            app.pollRepository,
+            app.userRepository,
+            app.userProvider
+        )
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -59,7 +65,7 @@ class AllPollsFragment : MvpAppCompatFragment(), AllPollsView {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun showPolls(polls: List<PollView>) {
+    override fun showPolls(polls: List<PollAndAuthor>) {
         view?.pollsProgressBar?.visibility = View.GONE
         Handler().postDelayed({view?.pollsAddButton?.show()}, 350)
         view?.pollsRecycler?.adapter = PollsAdapter(polls.toMutableList()) { pollView, view ->

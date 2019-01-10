@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_poll_option.view.*
 import technology.desoft.blockchainvoting.R
-import technology.desoft.blockchainvoting.model.PollOption
+import technology.desoft.blockchainvoting.model.network.polls.PollOption
 
 class PollOptionsAdapter(
     private val pollOptions: List<PollOption>,

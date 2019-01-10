@@ -21,4 +21,8 @@
     <string name="input_error">Invalid poll</string>
     <string name="personal">Personal page</string>
     <string name="poll_info">Poll info</string>
+    <string name="error">Error</string>
+    <string name="network_error">Network error</string>
+    <string name="user_exists_error">User with this email already exists</string>
+    <string name="success">Success</string>
 </resources>

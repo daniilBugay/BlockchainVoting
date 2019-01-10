@@ -2,9 +2,12 @@ package technology.desoft.blockchainvoting.model
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import technology.desoft.blockchainvoting.model.network.VoteRepository
+import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
 import java.util.*
 
-class TestVoteRepository(private val userTokenProvider: UserTokenProvider) : VoteRepository {
+class TestVoteRepository(private val userTokenProvider: UserTokenProvider) :
+    VoteRepository {
     private val hashMap = mutableMapOf<Long, MutableList<Vote>>()
 
     private var id = 0L

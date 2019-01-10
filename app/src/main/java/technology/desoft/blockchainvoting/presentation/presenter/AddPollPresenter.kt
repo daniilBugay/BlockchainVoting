@@ -4,8 +4,8 @@ import android.content.res.Resources
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import technology.desoft.blockchainvoting.R
-import technology.desoft.blockchainvoting.model.PollRepository
-import technology.desoft.blockchainvoting.model.UserTokenProvider
+import technology.desoft.blockchainvoting.model.network.polls.PollRepository
+import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
 import technology.desoft.blockchainvoting.navigation.Router
 import technology.desoft.blockchainvoting.navigation.navigations.AllPollsNavigation
 import technology.desoft.blockchainvoting.presentation.view.AddPollView

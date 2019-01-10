@@ -7,15 +7,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import technology.desoft.blockchainvoting.model.PollRepository
-import technology.desoft.blockchainvoting.model.UserRepository
-import technology.desoft.blockchainvoting.model.UserTokenProvider
+import technology.desoft.blockchainvoting.model.network.polls.PollRepository
+import technology.desoft.blockchainvoting.model.network.user.UserRepository
+import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
 import technology.desoft.blockchainvoting.navigation.Router
 import technology.desoft.blockchainvoting.navigation.navigations.ActivePollDetailsNavigation
 import technology.desoft.blockchainvoting.navigation.navigations.CompletedPollDetailsNavigation
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.PersonalPollsView
-import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 import java.util.*
 
 @InjectViewState
@@ -42,7 +42,7 @@ class PersonalPollsPresenter(
             if (users != null && polls != null) {
                 val author = users.find { it.id == userId } ?: return@launch
                 val filteredPolls = polls.filter { it.userId == userId }
-                val pollViews = filteredPolls.map { PollView(it, author) }
+                val pollViews = filteredPolls.map { PollAndAuthor(it, author) }
                 launch(Dispatchers.Main) { viewState.showPersonalPolls(pollViews.toMutableList()) }.start()
             }
         }
@@ -50,11 +50,11 @@ class PersonalPollsPresenter(
         job.start()
     }
 
-    fun showDetails(pollView: PollView, view: View) {
-        if (pollView.poll.endsAt > Calendar.getInstance().timeInMillis)
-            router.postNavigation(ActivePollDetailsNavigation(pollView, view))
+    fun showDetails(pollAndAuthor: PollAndAuthor, view: View) {
+        if (pollAndAuthor.poll.endsAt > Calendar.getInstance().time)
+            router.postNavigation(ActivePollDetailsNavigation(pollAndAuthor, view))
         else
-            router.postNavigation(CompletedPollDetailsNavigation(pollView, view))
+            router.postNavigation(CompletedPollDetailsNavigation(pollAndAuthor, view))
     }
 
     fun removePoll(id: Long) {

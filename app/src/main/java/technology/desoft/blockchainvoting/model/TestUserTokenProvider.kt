@@ -1,8 +1,11 @@
 package technology.desoft.blockchainvoting.model
 
 import android.content.SharedPreferences
+import technology.desoft.blockchainvoting.model.network.user.Token
+import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
 
-class TestUserTokenProvider(private val sharedPreferences: SharedPreferences): UserTokenProvider {
+class TestUserTokenProvider(private val sharedPreferences: SharedPreferences):
+    UserTokenProvider {
     override lateinit var token: Token
 
     private companion object {

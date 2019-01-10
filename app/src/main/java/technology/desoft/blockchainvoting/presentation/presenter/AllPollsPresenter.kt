@@ -7,8 +7,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import technology.desoft.blockchainvoting.model.PollRepository
-import technology.desoft.blockchainvoting.model.UserRepository
+import technology.desoft.blockchainvoting.model.network.polls.PollRepository
+import technology.desoft.blockchainvoting.model.network.user.UserRepository
+import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
 import technology.desoft.blockchainvoting.navigation.Router
 import technology.desoft.blockchainvoting.navigation.navigations.ActivePollDetailsNavigation
 import technology.desoft.blockchainvoting.navigation.navigations.AddPollNavigation
@@ -16,7 +17,7 @@ import technology.desoft.blockchainvoting.navigation.navigations.CompletedPollDe
 import technology.desoft.blockchainvoting.navigation.navigations.PersonalPollsNavigation
 import technology.desoft.blockchainvoting.presentation.view.AllPollsView
 import technology.desoft.blockchainvoting.presentation.view.MainView
-import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 import java.util.*
 
 @InjectViewState
@@ -24,12 +25,14 @@ class AllPollsPresenter(
     private val coroutineScope: CoroutineScope,
     private val router: Router<MainView>,
     private val pollsRepository: PollRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val userTokenProvider: UserTokenProvider
 ) : MvpPresenter<AllPollsView>(), CoroutineScope by coroutineScope {
     private val jobs: MutableList<Job> = mutableListOf()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
+        pollsRepository.setToken(userTokenProvider.token)
         showPolls()
     }
 
@@ -44,7 +47,7 @@ class AllPollsPresenter(
                     if (author == null)
                         null
                     else
-                        PollView(it, author)
+                        PollAndAuthor(it, author)
                 }
                 launch(Dispatchers.Main) { viewState.showPolls(pollViews) }.start()
             }
@@ -58,11 +61,11 @@ class AllPollsPresenter(
         jobs.forEach(Job::cancel)
     }
 
-    fun showDetails(pollView: PollView, view: View) {
-        if (pollView.poll.endsAt > Calendar.getInstance().timeInMillis)
-            router.postNavigation(ActivePollDetailsNavigation(pollView, view))
+    fun showDetails(pollAndAuthor: PollAndAuthor, view: View) {
+        if (pollAndAuthor.poll.endsAt > Calendar.getInstance().time)
+            router.postNavigation(ActivePollDetailsNavigation(pollAndAuthor, view))
         else
-            router.postNavigation(CompletedPollDetailsNavigation(pollView, view))
+            router.postNavigation(CompletedPollDetailsNavigation(pollAndAuthor, view))
     }
 
     fun onAddPoll() {

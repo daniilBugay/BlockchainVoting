@@ -3,9 +3,13 @@ package technology.desoft.blockchainvoting.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import kotlinx.coroutines.*
-import technology.desoft.blockchainvoting.model.*
+import technology.desoft.blockchainvoting.model.Vote
+import technology.desoft.blockchainvoting.model.network.VoteRepository
+import technology.desoft.blockchainvoting.model.network.polls.PollOption
+import technology.desoft.blockchainvoting.model.network.polls.PollRepository
+import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
 import technology.desoft.blockchainvoting.presentation.view.ActivePollView
-import technology.desoft.blockchainvoting.presentation.view.PollView
+import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 
 @InjectViewState
 class ActivePollPresenter(
@@ -13,7 +17,7 @@ class ActivePollPresenter(
     private val pollRepository: PollRepository,
     private val voteRepository: VoteRepository,
     private val userTokenProvider: UserTokenProvider,
-    private val pollView: PollView
+    private val pollAndAuthor: PollAndAuthor
 ) : MvpPresenter<ActivePollView>(), CoroutineScope by coroutineScope {
     private val jobs: MutableList<Job> = mutableListOf()
 
@@ -23,9 +27,9 @@ class ActivePollPresenter(
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
-        viewState.showDetails(pollView)
+        viewState.showDetails(pollAndAuthor)
         val job = launch(Dispatchers.IO) {
-            options = pollRepository.getOptions(pollView.poll.id).await()
+            options = pollRepository.getOptions(pollAndAuthor.poll.id).await() ?: return@launch
             launch(Dispatchers.Main) {
                 lastSelectedOption = getCurrentVote().await()
                 viewState.showOptions(options)

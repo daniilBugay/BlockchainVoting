@@ -1,197 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorSignGray5"
-        android:orientation="vertical">
+        android:fillViewport="true">
 
     <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:orientation="vertical"
-            android:padding="@dimen/spacing_smlarge">
+            android:layout_height="wrap_content"
+            android:background="@color/colorSignGray5"
+            android:orientation="vertical">
 
-        <FrameLayout
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/spacing_xlarge">
-            <ProgressBar
-                    android:id="@+id/signInProgressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_gravity="center"
-                    android:transitionName="progress"
-                    android:progressTint="@color/colorAccent"/>
-        </FrameLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_smlarge">
 
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="start">
-
-                <TextView
-                        style="@style/Base.TextAppearance.AppCompat.Subhead"
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/spacing_xlarge">
+                <ProgressBar
+                        android:id="@+id/signInProgressBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/spacing_middle"
-                        android:layout_marginStart="@dimen/spacing_medium"
-                        android:text="@string/sign_in"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/colorAccent"
-                        android:textStyle="bold"/>
+                        android:visibility="gone"
+                        android:layout_gravity="center"
+                        android:transitionName="progress"
+                        android:progressTint="@color/colorAccent"/>
+            </FrameLayout>
 
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="4dp"
-                        android:layout_marginStart="@dimen/spacing_medium"
-                        android:background="@color/colorAccent"/>
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            </LinearLayout>
-
-            <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="end"
-                    android:id="@+id/signInTransitionUpButton">
-
-                <TextView
-                        style="@style/Base.TextAppearance.AppCompat.Subhead"
+                <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/spacing_middle"
-                        android:layout_marginStart="@dimen/spacing_medium"
-                        android:text="@string/sign_up"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/colorSignGray40"
-                        android:textStyle="bold"/>
+                        android:orientation="vertical"
+                        android:layout_gravity="start">
 
-                <View
-                        android:layout_width="match_parent"
-                        android:layout_height="4dp"
-                        android:layout_marginStart="@dimen/spacing_medium"
-                        android:background="@color/colorSignGray40"/>
+                    <TextView
+                            style="@style/Base.TextAppearance.AppCompat.Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/spacing_middle"
+                            android:layout_marginStart="@dimen/spacing_medium"
+                            android:text="@string/sign_in"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                            android:textColor="@color/colorAccent"
+                            android:textStyle="bold"/>
 
-            </LinearLayout>
+                    <View
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:layout_marginStart="@dimen/spacing_medium"
+                            android:background="@color/colorAccent"/>
 
-        </FrameLayout>
+                </LinearLayout>
 
-        <View
-                android:layout_width="0dp"
-                android:layout_height="@dimen/spacing_mxlarge"/>
+                <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="end"
+                        android:id="@+id/signInTransitionUpButton">
 
-        <android.support.v7.widget.CardView
-                android:id="@+id/signInCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:transitionName="signCard"
-                android:layout_margin="@dimen/spacing_small"
-                android:visibility="visible"
-                app:cardCornerRadius="2dp"
-                app:cardElevation="1dp">
+                    <TextView
+                            style="@style/Base.TextAppearance.AppCompat.Subhead"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/spacing_middle"
+                            android:layout_marginStart="@dimen/spacing_medium"
+                            android:text="@string/sign_up"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                            android:textColor="@color/colorSignGray40"
+                            android:textStyle="bold"/>
 
-            <LinearLayout
+                    <View
+                            android:layout_width="match_parent"
+                            android:layout_height="4dp"
+                            android:layout_marginStart="@dimen/spacing_medium"
+                            android:background="@color/colorSignGray40"/>
+
+                </LinearLayout>
+
+            </FrameLayout>
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/spacing_mxlarge"/>
+
+            <android.support.v7.widget.CardView
+                    android:id="@+id/signInCard"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="@dimen/spacing_mlarge">
+                    android:transitionName="signCard"
+                    android:layout_margin="@dimen/spacing_small"
+                    android:visibility="visible"
+                    app:cardCornerRadius="2dp"
+                    app:cardElevation="1dp">
 
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/spacing_xlarge"/>
-
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/email"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                        android:textColor="@color/colorSignGray40"/>
-
-                <android.support.design.widget.TextInputEditText
-                        android:id="@+id/emailSignInEditText"
+                <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="-4dp"
-                        android:layout_marginRight="-4dp"
-                        android:inputType="text"
-                        android:maxLength="50"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="20sp"
-                        android:theme="@style/EditText.Grey"/>
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_mlarge">
 
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/spacing_mlarge"/>
+                    <View
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/spacing_xlarge"/>
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/password"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                        android:textColor="@color/colorSignGray40"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/email"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                            android:textColor="@color/colorSignGray40"/>
 
-                <android.support.design.widget.TextInputEditText
-                        android:id="@+id/passwordSignInEditText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="-4dp"
-                        android:layout_marginRight="-4dp"
-                        android:inputType="textPassword"
-                        android:maxLength="50"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="20sp"
-                        android:theme="@style/EditText.Grey"/>
+                    <android.support.design.widget.TextInputEditText
+                            android:id="@+id/emailSignInEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="-4dp"
+                            android:layout_marginRight="-4dp"
+                            android:inputType="text"
+                            android:maxLength="50"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="20sp"
+                            android:theme="@style/EditText.Grey"/>
 
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/spacing_middle"/>
+                    <View
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/spacing_mlarge"/>
 
-                <View
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/spacing_middle"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/password"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
+                            android:textColor="@color/colorSignGray40"/>
 
-            </LinearLayout>
+                    <android.support.design.widget.TextInputEditText
+                            android:id="@+id/passwordSignInEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="-4dp"
+                            android:layout_marginRight="-4dp"
+                            android:inputType="textPassword"
+                            android:maxLength="50"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="20sp"
+                            android:theme="@style/EditText.Grey"/>
 
-        </android.support.v7.widget.CardView>
+                    <View
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/spacing_middle"/>
 
-        <View
-                android:layout_width="0dp"
-                android:layout_height="@dimen/spacing_large"/>
+                    <View
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/spacing_middle"/>
 
-        <android.support.design.button.MaterialButton
-                android:id="@+id/signInButton"
-                android:transitionName="signButton"
-                android:layout_width="match_parent"
-                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_gravity="bottom"
-                android:background="@color/colorAccent"
-                android:text="@string/sign_in"
-                android:textColor="@android:color/white"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
-                android:textAlignment="center"
-                app:cornerRadius="5dp"
-                app:rippleColor="@android:color/darker_gray"
-                android:clickable="true"
-                android:focusable="true"
-                android:elevation="1dp"/>
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <View
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/spacing_large"/>
+
+            <android.support.design.button.MaterialButton
+                    android:id="@+id/signInButton"
+                    android:transitionName="signButton"
+                    android:layout_width="match_parent"
+                    style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorAccent"
+                    android:text="@string/sign_in"
+                    android:textColor="@android:color/white"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
+                    android:textAlignment="center"
+                    app:cornerRadius="5dp"
+                    app:rippleColor="@android:color/darker_gray"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:elevation="1dp"/>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

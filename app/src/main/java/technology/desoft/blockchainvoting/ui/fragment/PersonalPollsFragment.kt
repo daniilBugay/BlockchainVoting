@@ -10,16 +10,13 @@ import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import kotlinx.android.synthetic.main.fragment_add_poll.view.*
 import kotlinx.android.synthetic.main.fragment_personal_polls.view.*
 import kotlinx.coroutines.GlobalScope
 import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.presenter.PersonalPollsPresenter
 import technology.desoft.blockchainvoting.presentation.view.PersonalPollsView
-import technology.desoft.blockchainvoting.presentation.view.PollView
-import technology.desoft.blockchainvoting.ui.adapter.AddOptionAdapter
-import technology.desoft.blockchainvoting.ui.adapter.PollOptionTouchCallback
+import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 import technology.desoft.blockchainvoting.ui.adapter.PollTouchCallback
 import technology.desoft.blockchainvoting.ui.adapter.PollsAdapter
 
@@ -52,7 +49,7 @@ class PersonalPollsFragment: MvpAppCompatFragment(), PersonalPollsView {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
-    override fun showPersonalPolls(personalPolls: MutableList<PollView>) {
+    override fun showPersonalPolls(personalPolls: MutableList<PollAndAuthor>) {
         val view = this.view ?: return
         val adapter = PollsAdapter(personalPolls) { pollView, itemView ->
             personalPollsPresenter.showDetails(pollView, itemView)
