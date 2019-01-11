@@ -9,4 +9,5 @@ interface PollRepository {
     fun getPolls(): Deferred<List<Poll>?>
     fun getOptions(pollId: Long): Deferred<List<PollOption>?>
     fun removePoll(id: Long): Job
+    fun createPoll(createPollView: CreatePollView, pollOptions: List<CreatePollOptionView>): Job
 }

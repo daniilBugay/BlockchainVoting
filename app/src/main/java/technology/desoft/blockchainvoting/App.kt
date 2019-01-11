@@ -9,8 +9,9 @@ import technology.desoft.blockchainvoting.model.*
 import technology.desoft.blockchainvoting.model.network.BASE_URL
 import technology.desoft.blockchainvoting.model.network.polls.PollRepository
 import technology.desoft.blockchainvoting.model.network.user.UserRepository
-import technology.desoft.blockchainvoting.model.network.VoteRepository
+import technology.desoft.blockchainvoting.model.network.vote.VoteRepository
 import technology.desoft.blockchainvoting.model.network.polls.RetrofitPollRepository
+import technology.desoft.blockchainvoting.model.network.user.PreferencesUserTokenProvider
 import technology.desoft.blockchainvoting.model.network.user.RetrofitUserRepository
 import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
 import technology.desoft.blockchainvoting.navigation.Router
@@ -36,7 +37,7 @@ class App: Application() {
         userRepository = RetrofitUserRepository(retrofit)
         pollRepository = RetrofitPollRepository(retrofit)
         mainRouter = SimpleRouter()
-        userProvider = TestUserTokenProvider(
+        userProvider = PreferencesUserTokenProvider(
             PreferenceManager.getDefaultSharedPreferences(this)
         )
 

@@ -33,11 +33,13 @@ class AllPollsPresenter(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         pollsRepository.setToken(userTokenProvider.token)
+    }
+
+    fun refresh(){
         showPolls()
     }
 
     private fun showPolls() {
-        viewState.loading()
         val job = launch(Dispatchers.IO) {
             val polls = pollsRepository.getPolls().await()
             val users = userRepository.getUsers().await()

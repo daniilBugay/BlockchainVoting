@@ -45,6 +45,18 @@ class AllPollsFragment : MvpAppCompatFragment(), AllPollsView {
             allPollsPresenter.onAddPoll()
         }
         setHasOptionsMenu(true)
+        view.allPollsRefresh.setOnRefreshListener {
+            view.pollsAddButton?.hide()
+            allPollsPresenter.refresh()
+        }
+        view.pollsRecycler?.adapter = PollsAdapter(mutableListOf()) { pollAndAuthor, transitionView ->
+            allPollsPresenter.showDetails(pollAndAuthor, transitionView)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        allPollsPresenter.refresh()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -53,7 +65,7 @@ class AllPollsFragment : MvpAppCompatFragment(), AllPollsView {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+        when (item?.itemId) {
             R.id.personal_menu_item -> allPollsPresenter.onPersonalShow()
             else -> return false
         }
@@ -61,19 +73,14 @@ class AllPollsFragment : MvpAppCompatFragment(), AllPollsView {
     }
 
     override fun showError(message: String) {
-        view?.pollsProgressBar?.visibility = View.GONE
+        view?.allPollsRefresh?.isRefreshing = false
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
     override fun showPolls(polls: List<PollAndAuthor>) {
-        view?.pollsProgressBar?.visibility = View.GONE
-        Handler().postDelayed({view?.pollsAddButton?.show()}, 350)
-        view?.pollsRecycler?.adapter = PollsAdapter(polls.toMutableList()) { pollView, view ->
-            allPollsPresenter.showDetails(pollView, view)
-        }
-    }
+        view?.allPollsRefresh?.isRefreshing = false
+        Handler().postDelayed({ view?.pollsAddButton?.show() }, 450)
 
-    override fun loading() {
-        view?.pollsProgressBar?.visibility = View.VISIBLE
+        (view?.pollsRecycler?.adapter as PollsAdapter).setPolls(polls)
     }
 }

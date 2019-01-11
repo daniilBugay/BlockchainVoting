@@ -1,9 +1,7 @@
 package technology.desoft.blockchainvoting.model
 
 import kotlinx.coroutines.*
-import technology.desoft.blockchainvoting.model.network.polls.PollRepository
-import technology.desoft.blockchainvoting.model.network.polls.Poll
-import technology.desoft.blockchainvoting.model.network.polls.PollOption
+import technology.desoft.blockchainvoting.model.network.polls.*
 import technology.desoft.blockchainvoting.model.network.user.Token
 import java.util.*
 
@@ -40,11 +38,13 @@ class TestPollRepository: PollRepository {
                 PollOption(
                     pollId * 100 + it.toLong(),
                     "Poll#$pollId: Option $it",
-                    Calendar.getInstance().timeInMillis,
-                    pollId,
-                    0
+                    pollId
                 )
             }
         }
+    }
+
+    override fun createPoll(createPollView: CreatePollView, pollOptions: List<CreatePollOptionView>): Job {
+        return GlobalScope.launch {  }
     }
 }

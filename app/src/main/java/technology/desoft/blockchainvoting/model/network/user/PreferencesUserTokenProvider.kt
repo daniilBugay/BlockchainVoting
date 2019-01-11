@@ -1,24 +1,22 @@
-package technology.desoft.blockchainvoting.model
+package technology.desoft.blockchainvoting.model.network.user
 
 import android.content.SharedPreferences
-import technology.desoft.blockchainvoting.model.network.user.Token
-import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
 
-class TestUserTokenProvider(private val sharedPreferences: SharedPreferences):
+class PreferencesUserTokenProvider(private val sharedPreferences: SharedPreferences):
     UserTokenProvider {
-    override lateinit var token: Token
+    private var savedToken: Token? = null
+
+    override var token: Token
+        get() = savedToken ?: throw IllegalStateException("Token is null")
+        set(value){
+            savedToken = value
+        }
+
+    override var userId: Long? = null
 
     private companion object {
         const val KEY_EMAIL = "email"
         const val KEY_PASSWORD = "password"
-    }
-
-    override fun getUserId(): Long? {
-        return 0
-    }
-
-    override fun setUserId(token: Token) {
-        
     }
 
     override fun getSavedEmail(): String? {
@@ -39,6 +37,16 @@ class TestUserTokenProvider(private val sharedPreferences: SharedPreferences):
         sharedPreferences.edit()
             .putString(KEY_PASSWORD, password)
             .apply()
+    }
+
+    override fun clear() {
+        sharedPreferences.edit()
+            .remove(KEY_PASSWORD)
+            .remove(KEY_EMAIL)
+            .apply()
+
+        savedToken = null
+        userId = null
     }
 
 }

@@ -3,8 +3,8 @@ package technology.desoft.blockchainvoting.presentation.presenter
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import kotlinx.coroutines.*
-import technology.desoft.blockchainvoting.model.Vote
-import technology.desoft.blockchainvoting.model.network.VoteRepository
+import technology.desoft.blockchainvoting.model.network.vote.Vote
+import technology.desoft.blockchainvoting.model.network.vote.VoteRepository
 import technology.desoft.blockchainvoting.model.network.polls.PollOption
 import technology.desoft.blockchainvoting.model.network.polls.PollRepository
 import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
@@ -45,7 +45,7 @@ class ActivePollPresenter(
     }
 
     private suspend fun getCurrentVote() = async {
-        val userId = userTokenProvider.getUserId()
+        val userId = userTokenProvider.userId
         val vote = options.flatMap { voteRepository.getVotes(it.id).await() }
             .firstOrNull { it.userId == userId }
             ?: return@async null

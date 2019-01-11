@@ -1,9 +1,6 @@
 package technology.desoft.blockchainvoting.model.network.polls
 
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
+import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import technology.desoft.blockchainvoting.model.network.user.Token
 
@@ -38,6 +35,15 @@ class RetrofitPollRepository(retrofit: Retrofit): PollRepository {
     }
 
     override fun removePoll(id: Long): Job {
-        return api.removePoll(id, token.tokenString)
+        return GlobalScope.launch { api.removePoll(id, token.tokenString).await() }
+    }
+
+    override fun createPoll(createPollView: CreatePollView, pollOptions: List<CreatePollOptionView>): Job {
+        return GlobalScope.launch {
+            val response = api.createPoll(token.tokenString, createPollView).await()
+            val poll = response.body()
+            if (response.isSuccessful && poll != null)
+                pollOptions.forEach { api.createOption(poll.id, token.tokenString, it).await() }
+        }
     }
 }

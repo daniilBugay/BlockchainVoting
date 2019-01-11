@@ -32,7 +32,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     @ProvidePresenter
     fun providePresenter(): MainPresenter {
         val app = application as App
-        return MainPresenter(app.mainRouter)
+        return MainPresenter(app.mainRouter, app.userProvider, app.userRepository)
     }
 
     private inline fun changeFragment(fragment: Fragment, body: FragmentTransaction.() -> Unit) {

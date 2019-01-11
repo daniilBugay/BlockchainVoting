@@ -3,35 +3,39 @@ package technology.desoft.blockchainvoting.presentation.presenter
 import android.content.res.Resources
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import kotlinx.coroutines.*
 import technology.desoft.blockchainvoting.R
+import technology.desoft.blockchainvoting.model.network.polls.CreatePollOptionView
+import technology.desoft.blockchainvoting.model.network.polls.CreatePollView
 import technology.desoft.blockchainvoting.model.network.polls.PollRepository
-import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
 import technology.desoft.blockchainvoting.navigation.Router
 import technology.desoft.blockchainvoting.navigation.navigations.AllPollsNavigation
 import technology.desoft.blockchainvoting.presentation.view.AddPollView
 import technology.desoft.blockchainvoting.presentation.view.MainView
+import java.util.*
 
 @InjectViewState
 class AddPollPresenter(
     private val resources: Resources,
-    private val router: Router<MainView>,
-    private val pollRepository: PollRepository,
-    private val userTokenProvider: UserTokenProvider
-): MvpPresenter<AddPollView>() {
+    private val pollRepository: PollRepository
+) : MvpPresenter<AddPollView>() {
     private val options: MutableList<String> = mutableListOf()
+    private val jobs = mutableListOf<Job>()
+    private var endsAtDate: Calendar? = null
+    private var startFinishing = false
 
-    fun setOptions(){
+    fun setOptions() {
         options.asReversed().forEach { viewState.addOption(it) }
     }
 
-    fun onAdd(contentString: String){
+    fun onAdd(contentString: String) {
         if (!contentString.isBlank()) {
             options.add(contentString)
             viewState.addOption(contentString)
         }
     }
 
-    fun removeOption(position: Int){
+    fun removeOption(position: Int) {
         if (position != -1)
             options.removeAt(position)
     }
@@ -42,10 +46,34 @@ class AddPollPresenter(
         options[to] = temp
     }
 
-    fun finishAdding(theme: String, description: String, fromDate: String, toDate: String) {
-        if (theme.isBlank()  || fromDate.isBlank() || toDate.isBlank() || options.isEmpty())
+    fun finishAdding(theme: String, description: String) {
+        if (startFinishing) return
+
+        startFinishing = true
+        val endsAt = endsAtDate
+        if (theme.isBlank() || endsAt == null || options.isEmpty())
             viewState.error(resources.getString(R.string.input_error))
-        else
-            router.postNavigation(AllPollsNavigation())
+        else {
+            val createPollView = CreatePollView(theme, description, endsAt.time)
+            val createPollOptions = options.map { CreatePollOptionView(it) }
+            val job = pollRepository.createPoll(createPollView, createPollOptions)
+            jobs.add(job)
+            job.start()
+            job.invokeOnCompletion {
+                GlobalScope.launch(Dispatchers.Main) {
+                    viewState.finishAdding()
+                    startFinishing = false
+                }
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        jobs.forEach(Job::cancel)
+    }
+
+    fun setEndsDate(endsAt: Calendar) {
+        endsAtDate = endsAt
     }
 }

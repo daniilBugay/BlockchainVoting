@@ -11,7 +11,7 @@ import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 import java.util.*
 
 class PollsAdapter(
-    private val polls: MutableList<PollAndAuthor>,
+    private var polls: MutableList<PollAndAuthor>,
     private val onClick: (PollAndAuthor, View) -> Unit
 ): RecyclerView.Adapter<PollsAdapter.ViewHolder>() {
 
@@ -34,6 +34,14 @@ class PollsAdapter(
     }
 
     fun getPollByPosition(position: Int) = polls[position]
+
+    fun setPolls(allPolls: List<PollAndAuthor>) {
+        val reversed = allPolls.asReversed()
+        val lastSize = polls.size
+        polls = reversed.toMutableList()
+        notifyItemRangeChanged(0, lastSize)
+        notifyItemRangeInserted(0, allPolls.size - lastSize)
+    }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 

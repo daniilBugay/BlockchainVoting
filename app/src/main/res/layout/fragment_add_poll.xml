@@ -58,52 +58,16 @@
                             android:inputType="textMultiLine"
                             android:textColorHint="@android:color/darker_gray"/>
 
-                    <LinearLayout
-                            android:layout_marginStart="5dp"
-                            android:orientation="horizontal"
+                    <TextView
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:id="@+id/endsAtText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_medium">
-
-                        <TextView
-                                android:textSize="18sp"
-                                android:text="@string/date"
-                                android:layout_marginEnd="5dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textColor="@android:color/black"/>
-
-                        <TextView
-                                style="@style/TextAppearance.AppCompat.Subhead"
-                                android:id="@+id/fromDateText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:minHeight="20dp"
-                                android:layout_weight="10"
-                                android:textAlignment="textEnd"/>
-
-                        <TextView
-                                style="@style/TextAppearance.AppCompat.Subhead"
-                                android:text="@string/separation"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textAlignment="center"
-                                android:textColor="@android:color/darker_gray"
-                                android:gravity="center_horizontal"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="5dp"
-                                android:layout_marginEnd="5dp"/>
-
-                        <TextView
-                                style="@style/TextAppearance.AppCompat.Subhead"
-                                android:id="@+id/toDateText"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:minHeight="20dp"
-                                android:layout_weight="20"
-                                android:textAlignment="textStart"/>
-
-                    </LinearLayout>
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:maxLines="1"
+                            android:layout_marginStart="5dp"
+                            android:hint="@string/ends_date"
+                            android:textColorHint="@android:color/darker_gray"/>
 
                     <View
                             android:layout_width="match_parent"
@@ -118,6 +82,7 @@
             </android.support.v7.widget.CardView>
 
             <TextView
+                    android:id="@+id/pollOptionsText"
                     android:textSize="24sp"
                     android:fontFamily="sans-serif-medium"
                     android:text="@string/poll_options"

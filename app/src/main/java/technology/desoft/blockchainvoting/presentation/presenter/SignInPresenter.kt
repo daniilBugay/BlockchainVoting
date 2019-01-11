@@ -14,6 +14,7 @@ import technology.desoft.blockchainvoting.navigation.navigations.AllPollsNavigat
 import technology.desoft.blockchainvoting.navigation.navigations.SignUpNavigation
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.SignView
+import kotlin.math.log
 
 @InjectViewState
 class SignInPresenter(
@@ -22,17 +23,25 @@ class SignInPresenter(
     private val userRepository: UserRepository,
     private val userTokenProvider: UserTokenProvider,
     private val resource: Resources
-): MvpPresenter<SignView>(), CoroutineScope by coroutineScope {
+) : MvpPresenter<SignView>(), CoroutineScope by coroutineScope {
     private val jobs: MutableList<Job> = mutableListOf()
+    private var logging = false
 
-    fun login(email: String, password: String){
+    fun login(rawEmail: String, rawPassword: String) {
+        if (logging)
+            return
+
+        logging = true
+
+        val email = rawEmail.trim()
+        val password = rawPassword.trim()
         viewState.loading()
         val job = launch(Dispatchers.IO) {
             try {
                 val token = userRepository.login(email, password).await()
                 if (token != null) launch(Dispatchers.Main) { onSuccess(email, password, token) }.start()
                 else launch(Dispatchers.Main) { onError(resource.getString(R.string.error)) }.start()
-            } catch (e: HttpException){
+            } catch (e: HttpException) {
                 launch(Dispatchers.Main) { onError(resource.getString(R.string.network_error)) }
             }
         }
@@ -40,22 +49,27 @@ class SignInPresenter(
         job.start()
     }
 
-    fun transitionToSignUp(){
+    fun transitionToSignUp() {
         router.postNavigation(SignUpNavigation())
     }
 
-    private fun onSuccess(email: String, password: String, token: Token){
+    private fun onSuccess(email: String, password: String, token: Token) {
         viewState.showSuccess(resource.getString(R.string.success))
         userRepository.setToken(token)
         userTokenProvider.saveEmail(email)
         userTokenProvider.savePassword(password)
         userTokenProvider.token = token
-        userTokenProvider.setUserId(token)
+        runBlocking {
+            val users = userRepository.getUsers().await()
+            userTokenProvider.userId = users?.find { it.email == email }?.id
+        }
         router.postNavigation(AllPollsNavigation())
+        logging = false
     }
 
-    private fun onError(error: String){
+    private fun onError(error: String) {
         viewState.showError(error)
+        logging = false
     }
 
     override fun onDestroy() {

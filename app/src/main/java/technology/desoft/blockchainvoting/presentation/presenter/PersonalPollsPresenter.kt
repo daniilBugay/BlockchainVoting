@@ -13,6 +13,7 @@ import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
 import technology.desoft.blockchainvoting.navigation.Router
 import technology.desoft.blockchainvoting.navigation.navigations.ActivePollDetailsNavigation
 import technology.desoft.blockchainvoting.navigation.navigations.CompletedPollDetailsNavigation
+import technology.desoft.blockchainvoting.navigation.navigations.SignInNavigation
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.PersonalPollsView
 import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
@@ -33,12 +34,15 @@ class PersonalPollsPresenter(
         showPersonalPolls()
     }
 
+    fun refresh(){
+        showPersonalPolls()
+    }
+
     private fun showPersonalPolls() {
-        viewState.loading()
         val job = launch(Dispatchers.IO) {
             val polls = pollsRepository.getPolls().await()
             val users = userRepository.getUsers().await()
-            val userId = userProvider.getUserId()
+            val userId = userProvider.userId
             if (users != null && polls != null) {
                 val author = users.find { it.id == userId } ?: return@launch
                 val filteredPolls = polls.filter { it.userId == userId }
@@ -66,5 +70,10 @@ class PersonalPollsPresenter(
     override fun onDestroy() {
         super.onDestroy()
         jobs.forEach(Job::cancel)
+    }
+
+    fun logOut(){
+        userProvider.clear()
+        router.postNavigation(SignInNavigation())
     }
 }

@@ -8,4 +8,5 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 interface AddPollView: MvpView {
     fun addOption(optionContent: String)
     fun error(message: String)
+    fun finishAdding()
 }

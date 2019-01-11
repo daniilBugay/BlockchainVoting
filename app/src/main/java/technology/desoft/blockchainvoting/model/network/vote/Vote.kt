@@ -1,4 +1,4 @@
-package technology.desoft.blockchainvoting.model
+package technology.desoft.blockchainvoting.model.network.vote
 
 data class Vote(
     val id: Long,

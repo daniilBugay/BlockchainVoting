@@ -8,7 +8,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import technology.desoft.blockchainvoting.model.network.polls.PollRepository
 import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
-import technology.desoft.blockchainvoting.model.network.VoteRepository
+import technology.desoft.blockchainvoting.model.network.vote.VoteRepository
 import technology.desoft.blockchainvoting.presentation.view.CompletedPollView
 import technology.desoft.blockchainvoting.presentation.view.OptionResult
 import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor

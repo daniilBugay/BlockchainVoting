@@ -1,6 +1,5 @@
 package technology.desoft.blockchainvoting.ui.fragment
 
-import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.os.Handler
@@ -8,8 +7,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.Toolbar
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
@@ -19,7 +18,6 @@ import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
-import kotlinx.android.synthetic.main.fragment_add_poll.*
 import kotlinx.android.synthetic.main.fragment_add_poll.view.*
 import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
@@ -54,7 +52,7 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
     @ProvidePresenter
     fun providePresenter(): AddPollPresenter {
         val app = activity?.application as App
-        return AddPollPresenter(resources, app.mainRouter, app.pollRepository, app.userProvider)
+        return AddPollPresenter(resources, app.pollRepository)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -114,6 +112,8 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
         view.addDataCard.startAnimation(animation)
         animation.startOffset += 200
         view.addOptionCard.startAnimation(animation)
+        animation.startOffset += 200
+        view.pollOptionsText.startAnimation(animation)
         view.addOptionButton.setOnClickListener {
             addPollPresenter.onAdd(view.addOptionContent.text.toString())
         }
@@ -126,29 +126,19 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
 
     }
 
-    private fun setTitle(title: String){
+    private fun setTitle(title: String) {
         (activity as AppCompatActivity).supportActionBar?.title = title
     }
 
-    @SuppressLint("SetTextI18n")
     private fun initDatePick(view: View) {
         view.apply {
-            fromDateText.setOnClickListener {
+            endsAtText.setOnClickListener {
                 showDatePicker { year, month, day ->
-                    fromDateText.text = getDateString(day, month, year)
-                }
-            }
-            toDateText.setOnClickListener {
-                showDatePicker { year, month, day ->
-                    if (fromDateText.text.isEmpty()) return@showDatePicker
-                    val (fromYear, fromMonth, fromDay)
-                            = fromDateText.text.split(".").map { num -> num.toInt() }
-                    val fromCalendar = Calendar.getInstance()
-                    fromCalendar.set(fromYear, fromMonth, fromDay)
-                    val toCalendar = Calendar.getInstance()
-                    toCalendar.set(year, month, day)
-                    if (fromCalendar <= toCalendar)
-                        toDateText.text = getDateString(day, month, year)
+                    val date = createCalendar(year, month, day)
+                    if (Calendar.getInstance() <= date) {
+                        endsAtText.text = DateFormat.getDateFormat(context).format(date.time)
+                        addPollPresenter.setEndsDate(date)
+                    }
                     else
                         showDatePickError()
                 }
@@ -156,15 +146,19 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
         }
     }
 
-    private fun getDateString(day: Int, month: Int, year: Int): String {
-        return "$day.${month + 1}.$year"
+    private fun createCalendar(year: Int, month: Int, day: Int): Calendar {
+        return Calendar.getInstance().apply {
+            set(Calendar.YEAR, year)
+            set(Calendar.MONTH, month)
+            set(Calendar.DAY_OF_MONTH, day)
+        }
     }
 
     private fun showDatePickError() {
         Toast.makeText(context!!, R.string.date_error, Toast.LENGTH_LONG).show()
     }
 
-    private fun initRecycler(view: View){
+    private fun initRecycler(view: View) {
         val adapter = AddOptionAdapter(mutableListOf())
         val touchHelper = ItemTouchHelper(PollOptionTouchCallback(adapter, addPollPresenter))
         adapter.setOnDragStartListener { touchHelper.startDrag(it) }
@@ -213,14 +207,12 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
         view?.addOptionContent?.text?.clear()
     }
 
-    private fun finish(){
+    private fun finish() {
         val view = this.view ?: return
 
         addPollPresenter.finishAdding(
             view.addThemeEditText.text.toString(),
-            view.addDescriptionEditText.text.toString(),
-            view.fromDateText.text.toString(),
-            view.toDateText.text.toString()
+            view.addDescriptionEditText.text.toString()
         )
     }
 
@@ -231,5 +223,9 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
     override fun onStop() {
         super.onStop()
         setTitle(resources.getString(R.string.app_name))
+    }
+
+    override fun finishAdding() {
+        activity?.supportFragmentManager?.popBackStack()
     }
 }

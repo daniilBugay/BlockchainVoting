@@ -25,8 +25,17 @@ class SignUpPresenter(
 ) : MvpPresenter<SignView>(), CoroutineScope by coroutineScope {
 
     private val jobs: MutableList<Job> = mutableListOf()
+    private var registration = false
 
-    fun registration(email: String, password: String, confirmPassword: String) {
+    fun registration(rawEmail: String, rawPassword: String, rawConfirmPassword: String) {
+        if (registration)
+            return
+
+        registration = true
+
+        val email = rawEmail.trim()
+        val password = rawPassword.trim()
+        val confirmPassword = rawConfirmPassword.trim()
         viewState.loading()
         val job = launch(Dispatchers.IO) {
             try {
@@ -49,10 +58,12 @@ class SignUpPresenter(
 
     private fun onSuccess() {
         viewState.showSuccess("Success")
+        registration = false
         router.postNavigation(SignInNavigation())
     }
 
     private fun onError(error: String) {
+        registration = false
         viewState.showError(error)
     }
 

@@ -2,8 +2,9 @@ package technology.desoft.blockchainvoting.model
 
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
-import technology.desoft.blockchainvoting.model.network.VoteRepository
+import technology.desoft.blockchainvoting.model.network.vote.VoteRepository
 import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
+import technology.desoft.blockchainvoting.model.network.vote.Vote
 import java.util.*
 
 class TestVoteRepository(private val userTokenProvider: UserTokenProvider) :
