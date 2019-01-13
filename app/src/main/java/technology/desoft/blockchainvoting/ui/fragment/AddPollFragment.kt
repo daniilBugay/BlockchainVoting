@@ -226,6 +226,6 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
     }
 
     override fun finishAdding() {
-        activity?.supportFragmentManager?.popBackStack()
+        activity?.onBackPressed()
     }
 }

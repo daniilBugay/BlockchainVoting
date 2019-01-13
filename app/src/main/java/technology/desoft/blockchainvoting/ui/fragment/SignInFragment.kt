@@ -38,7 +38,7 @@ class SignInFragment : MvpAppCompatFragment(), SignView {
         )
     }
 
-    private fun setCustomSnackBar(message: String, backgroundColor: Int){
+    private fun showCustomSnackBar(message: String, backgroundColor: Int){
         val snackBar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_SHORT) }
         snackBar?.view?.setBackgroundColor(
             ContextCompat.getColor(context!!, backgroundColor)
@@ -74,12 +74,12 @@ class SignInFragment : MvpAppCompatFragment(), SignView {
 
 
     override fun showError(message: String) {
-        setCustomSnackBar(message, R.color.colorRed)
+        showCustomSnackBar(message, R.color.colorRed)
         view?.signInProgressBar?.visibility = View.GONE
     }
 
     override fun showSuccess(message: String) {
-        setCustomSnackBar(message, R.color.colorAccent)
+        showCustomSnackBar(message, R.color.colorAccent)
     }
 
 }

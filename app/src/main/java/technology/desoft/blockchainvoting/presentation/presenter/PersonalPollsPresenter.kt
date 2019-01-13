@@ -13,6 +13,7 @@ import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
 import technology.desoft.blockchainvoting.navigation.Router
 import technology.desoft.blockchainvoting.navigation.navigations.ActivePollDetailsNavigation
 import technology.desoft.blockchainvoting.navigation.navigations.CompletedPollDetailsNavigation
+import technology.desoft.blockchainvoting.navigation.navigations.LogOutNavigation
 import technology.desoft.blockchainvoting.navigation.navigations.SignInNavigation
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.PersonalPollsView
@@ -74,6 +75,6 @@ class PersonalPollsPresenter(
 
     fun logOut(){
         userProvider.clear()
-        router.postNavigation(SignInNavigation())
+        router.postNavigation(LogOutNavigation())
     }
 }

@@ -1,6 +1,7 @@
 package technology.desoft.blockchainvoting.ui.fragment
 
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.*
@@ -9,6 +10,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_add_poll.*
+import kotlinx.android.synthetic.main.fragment_personal_polls.*
 import kotlinx.android.synthetic.main.fragment_personal_polls.view.*
 import kotlinx.android.synthetic.main.item_poll_result.*
 import kotlinx.coroutines.GlobalScope
@@ -53,6 +55,8 @@ class PersonalPollsFragment : MvpAppCompatFragment(), PersonalPollsView {
         view.personalPollsRecycler.adapter = adapter
         touchHelper.attachToRecyclerView(view.personalPollsRecycler)
         setHasOptionsMenu(true)
+        Handler().postDelayed({view.personalBackButton.show()}, 350)
+        personalBackButton.setOnClickListener { activity?.onBackPressed() }
     }
 
     override fun onResume() {

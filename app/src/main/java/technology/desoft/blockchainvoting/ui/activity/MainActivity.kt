@@ -1,5 +1,6 @@
 package technology.desoft.blockchainvoting.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.button.MaterialButton
 import android.support.design.widget.FloatingActionButton
@@ -65,7 +66,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             val currentFragment = supportFragmentManager.fragments.firstOrNull()
             if (currentFragment != null) {
                 val card: CardView? = currentFragment.view?.findViewById(R.id.signUpCard)
-                val button: MaterialButton? = currentFragment.view?.findViewById(R.id.signUpButton)
+                val button: MaterialButton? = currentFragment.view?.findViewById<MaterialButton?>(R.id.signUpButton)
                 if (card != null && button != null) {
                     addSharedElement(card, card.transitionName)
                     addSharedElement(button, button.transitionName)
@@ -90,16 +91,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     }
 
     override fun showAllPolls() {
-        val fragment = AllPollsFragment()
-        changeFragmentWithTransition(fragment) {
-            val currentFragment = supportFragmentManager.fragments.firstOrNull()
-            if (currentFragment != null) {
-                val progressBar = currentFragment.view?.findViewById<ProgressBar>(R.id.signInProgressBar)
-                if (progressBar != null) {
-                    addSharedElement(progressBar, progressBar.transitionName)
-                }
-            }
-        }
+        changeFragment(AllPollsFragment()) {}
     }
 
     override fun showPersonalPolls() {
@@ -127,7 +119,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     override fun showAddScreen() {
         val currentFragment = supportFragmentManager.fragments.firstOrNull()
         if (currentFragment != null && currentFragment is AllPollsFragment) {
-            val fab = currentFragment.view?.findViewById<FloatingActionButton>(R.id.pollsAddButton)
+            val fab = currentFragment.view?.findViewById<FloatingActionButton?>(R.id.pollsAddButton)
             fab?.let {
                 val x = it.x + it.width / 2
                 val y = it.y + it.height / 2
@@ -157,5 +149,10 @@ class MainActivity : MvpAppCompatActivity(), MainView {
             else
                 super.onBackPressed()
         }
+    }
+
+    override fun logOut() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }
