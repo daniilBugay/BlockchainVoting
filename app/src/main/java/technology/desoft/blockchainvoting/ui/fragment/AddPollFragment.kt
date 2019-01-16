@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.animation.FastOutSlowInInterpolator
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.format.DateFormat
@@ -13,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -80,19 +78,26 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
                     oldRight: Int,
                     oldBottom: Int
                 ) {
-                    v?.removeOnLayoutChangeListener(this)
+                    v?.removeOnLayoutChangeListener(this) ?: return
                     view.addFinishButton.visibility = View.INVISIBLE
-                    val width = view.width
-                    val height = view.height
-                    val duration = context!!.resources.getInteger(R.integer.circular_animation_duration)
+                    val width = v.width
+                    val height = v.height
+                    val duration = v.context.resources.getInteger(R.integer.circular_animation_duration)
                     val radius = hypot(width.toFloat(), height.toFloat())
                     val anim = ViewAnimationUtils.createCircularReveal(v, x, y, 0f, radius)
+
                     anim.interpolator = FastOutSlowInInterpolator()
                     anim.duration = duration.toLong()
                     anim.start()
-                    view.visibility = View.VISIBLE
-                    Handler().postDelayed({ view.addFinishButton.show() }, 300)
+                    CircularAnimationProvider.startBackgroundAnimation(
+                        v,
+                        R.color.colorAccent,
+                        android.R.color.background_light,
+                        resources.getInteger(R.integer.circular_animation_duration)
+                    )
+                    Handler().postDelayed({ v.addFinishButton.show() }, 300)
                 }
+
             }
         )
     }
@@ -107,13 +112,6 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val animation = AnimationUtils.loadAnimation(context, R.anim.move_up)
-        animation.startOffset += 100
-        view.addDataCard.startAnimation(animation)
-        animation.startOffset += 100
-        view.addOptionCard.startAnimation(animation)
-        animation.startOffset += 100
-        view.pollOptionsText.startAnimation(animation)
         view.addOptionButton.setOnClickListener {
             addPollPresenter.onAdd(view.addOptionContent.text.toString())
         }
@@ -126,31 +124,38 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
 
     }
 
-    private fun setTitle(title: String) {
-        (activity as AppCompatActivity).supportActionBar?.title = title
-    }
-
     private fun initDatePick(view: View) {
         view.apply {
             endsAtText.setOnClickListener {
                 showDatePicker { year, month, day ->
                     val date = createCalendar(year, month, day)
-                    if (Calendar.getInstance() <= date) {
+                    if (Calendar.getInstance().lessThan(date)) {
                         endsAtText.text = DateFormat.getDateFormat(context).format(date.time)
                         addPollPresenter.setEndsDate(date)
-                    }
-                    else
+                    } else
                         showDatePickError()
                 }
             }
         }
     }
 
+    private fun Calendar.lessThan(other: Calendar): Boolean {
+        if (this[Calendar.YEAR] < other[Calendar.YEAR]) return true
+
+        if (this[Calendar.YEAR] == other[Calendar.YEAR]) {
+            if (this[Calendar.MONTH] < other[Calendar.MONTH])
+                return true
+            if (
+                this[Calendar.MONTH] == other[Calendar.MONTH] &&
+                this[Calendar.DAY_OF_MONTH] <= other[Calendar.DAY_OF_MONTH]
+            ) return true
+        }
+        return false
+    }
+
     private fun createCalendar(year: Int, month: Int, day: Int): Calendar {
         return Calendar.getInstance().apply {
-            set(Calendar.YEAR, year)
-            set(Calendar.MONTH, month)
-            set(Calendar.DAY_OF_MONTH, day)
+            set(year, month, day, 23, 59, 59)
         }
     }
 
@@ -172,7 +177,6 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
         val view = this.view ?: return
         if (view.addOptionRecycler.adapter?.itemCount == 0)
             addPollPresenter.setOptions()
-        setTitle(resources.getString(R.string.poll_info))
     }
 
     private fun getAnimationSettings(view: View, x: Float, y: Float): CircularAnimationProvider.Settings {
@@ -193,7 +197,7 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
                     it.context,
                     it,
                     getAnimationSettings(it, x, y),
-                    ContextCompat.getColor(it.context, android.R.color.white),
+                    ContextCompat.getColor(it.context, android.R.color.background_light),
                     ContextCompat.getColor(it.context, R.color.colorAccent),
                     onEnd
                 )
@@ -218,11 +222,6 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
 
     override fun error(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        setTitle(resources.getString(R.string.app_name))
     }
 
     override fun finishAdding() {

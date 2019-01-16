@@ -3,15 +3,15 @@ package technology.desoft.blockchainvoting.presentation.presenter
 import android.content.res.Resources
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.model.network.polls.CreatePollOptionView
 import technology.desoft.blockchainvoting.model.network.polls.CreatePollView
 import technology.desoft.blockchainvoting.model.network.polls.PollRepository
-import technology.desoft.blockchainvoting.navigation.Router
-import technology.desoft.blockchainvoting.navigation.navigations.AllPollsNavigation
 import technology.desoft.blockchainvoting.presentation.view.AddPollView
-import technology.desoft.blockchainvoting.presentation.view.MainView
 import java.util.*
 
 @InjectViewState
@@ -49,14 +49,14 @@ class AddPollPresenter(
     fun finishAdding(theme: String, description: String) {
         if (startFinishing) return
 
-        startFinishing = true
         val endsAt = endsAtDate
         if (theme.isBlank() || endsAt == null || options.isEmpty())
             viewState.error(resources.getString(R.string.input_error))
         else {
+            startFinishing = true
             val createPollView = CreatePollView(theme, description, endsAt.time)
             val createPollOptions = options.map { CreatePollOptionView(it) }
-            val job = pollRepository.createPoll(createPollView, createPollOptions)
+            val job = pollRepository.createPoll(createPollView, createPollOptions.asReversed())
             jobs.add(job)
             job.start()
             job.invokeOnCompletion {

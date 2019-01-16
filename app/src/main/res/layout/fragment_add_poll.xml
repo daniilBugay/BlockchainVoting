@@ -4,8 +4,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent">
+        android:layout_height="match_parent">
 
     <android.support.v4.widget.NestedScrollView
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,6 +18,19 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:visibility="visible">
+
+            <TextView
+                    android:id="@+id/pollInfoText"
+                    android:textSize="24sp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/poll_info"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:layout_marginStart="@dimen/spacing_large"/>
 
             <android.support.v7.widget.CardView
                     android:id="@+id/addDataCard"
@@ -90,7 +102,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
+                    android:textColor="@color/colorAccent"
                     android:layout_marginStart="@dimen/spacing_large"/>
 
             <android.support.v7.widget.CardView
@@ -142,15 +154,15 @@
 
     </android.support.v4.widget.NestedScrollView>
     <android.support.design.widget.FloatingActionButton
-            android:src="@drawable/ic_next"
+            android:src="@drawable/ic_poll_add"
             app:maxImageSize="25dp"
             style="@style/Widget.MaterialComponents.FloatingActionButton"
             android:id="@+id/addFinishButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/colorSecondAccent"
+            android:backgroundTint="@color/colorAccent"
             android:layout_gravity="bottom|end"
             android:layout_margin="15dp"
-            android:background="@color/colorSecondAccent"
-            app:backgroundTint="@color/colorSecondAccent"/>
+            android:background="@color/colorAccent"
+            app:backgroundTint="@color/colorAccent"/>
 </android.support.design.widget.CoordinatorLayout>

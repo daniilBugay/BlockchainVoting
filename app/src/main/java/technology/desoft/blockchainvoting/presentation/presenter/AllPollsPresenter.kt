@@ -80,8 +80,8 @@ class AllPollsPresenter(
             launch(Dispatchers.Main) { viewState.showPolls(currentPolls) }.start()
         } else {
             val searchPolls = currentPolls
-                .filter { searchText in it.poll.theme}
-                .sortedBy { it.poll.theme.indexOf(searchText) }
+                .filter { it.poll.theme.contains(searchText, ignoreCase = true) }
+                .sortedBy { it.poll.theme.indexOf(searchText, ignoreCase = true) }
             launch(Dispatchers.Main) { viewState.showPolls(searchPolls) }.start()
         }
     }

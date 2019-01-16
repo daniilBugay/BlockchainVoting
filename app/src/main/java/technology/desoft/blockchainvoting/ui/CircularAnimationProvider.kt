@@ -48,6 +48,12 @@ object CircularAnimationProvider {
                 }
             })
         }
+        CircularAnimationProvider.startBackgroundAnimation(
+            view,
+            startColor,
+            endColor,
+            duration
+        )
         anim.start()
     }
 
