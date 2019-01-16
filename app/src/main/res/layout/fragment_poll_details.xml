@@ -6,87 +6,91 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-    <LinearLayout
-            android:orientation="vertical"
+    <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/pollDetailsRefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-        <android.support.v7.widget.CardView
-                android:id="@+id/pollDetailsCard"
+        <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_margin="10dp"
-                app:cardCornerRadius="@dimen/corner_radius_default"
-                android:elevation="8dp"
-                android:layout_gravity="top">
+                android:layout_height="match_parent">
 
-            <RelativeLayout
+            <android.support.v7.widget.CardView
+                    android:id="@+id/pollDetailsCard"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <FrameLayout
-                        android:visibility="gone"
-                        android:id="@+id/completedText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentStart="true"
-                        android:background="@color/colorAccent">
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    app:cardCornerRadius="@dimen/corner_radius_default"
+                    android:elevation="8dp"
+                    android:layout_gravity="top">
 
-                    <technology.desoft.blockchainvoting.ui.VerticalTextView
-                            android:text="@string/completed"
-                            android:gravity="bottom|end"
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    <FrameLayout
+                            android:visibility="gone"
+                            android:id="@+id/completedText"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:textAlignment="center"
-                            android:textColor="@android:color/white"/>
-                </FrameLayout>
+                            android:layout_alignParentStart="true"
+                            android:background="@color/colorAccent">
 
-                <LinearLayout
-                        xmlns:android="http://schemas.android.com/apk/res/android"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginStart="10dp"
-                        android:layout_toEndOf="@id/completedText">
+                        <technology.desoft.blockchainvoting.ui.VerticalTextView
+                                android:text="@string/completed"
+                                android:gravity="bottom|end"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:textAlignment="center"
+                                android:textColor="@android:color/white"/>
+                    </FrameLayout>
 
-                    <TextView
-                            style="@style/TextAppearance.AppCompat.Title"
-                            android:id="@+id/pollDetailsTheme"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-
-                    <TextView
-                            android:id="@+id/pollDetailsDate"
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            android:layout_width="wrap_content"
+                    <LinearLayout
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"/>
+                            android:orientation="vertical"
+                            android:layout_marginStart="10dp"
+                            android:layout_toEndOf="@id/completedText">
 
-                    <TextView
-                            android:id="@+id/pollDetailsAuthor"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"/>
-                </LinearLayout>
-            </RelativeLayout>
-        </android.support.v7.widget.CardView>
+                        <TextView
+                                style="@style/TextAppearance.AppCompat.Title"
+                                android:id="@+id/pollDetailsTheme"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
 
-        <android.support.v7.widget.CardView
-                android:id="@+id/pollDescriptionCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_margin="10dp"
-                android:minHeight="100dp"
-                app:cardCornerRadius="@dimen/corner_radius_default">
+                        <TextView
+                                android:id="@+id/pollDetailsDate"
+                                style="@style/TextAppearance.AppCompat.Subhead"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"/>
 
-            <TextView
-                    android:layout_margin="5dp"
-                    android:id="@+id/pollDetailsDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-        </android.support.v7.widget.CardView>
-    </LinearLayout>
+                        <TextView
+                                android:id="@+id/pollDetailsAuthor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
 
+            <android.support.v7.widget.CardView
+                    android:id="@+id/pollDescriptionCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:layout_margin="10dp"
+                    android:minHeight="100dp"
+                    app:cardCornerRadius="@dimen/corner_radius_default">
+
+                <TextView
+                        android:layout_margin="5dp"
+                        android:id="@+id/pollDetailsDescription"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
     <FrameLayout
             android:id="@+id/pollDetailsOptionsLayout"
             android:layout_width="match_parent"

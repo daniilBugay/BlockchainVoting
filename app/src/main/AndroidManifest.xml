@@ -3,6 +3,7 @@
           xmlns:tools="http://schemas.android.com/tools" package="technology.desoft.blockchainvoting">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
 
     <application
             android:name=".App"
@@ -20,6 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <receiver android:name=".ui.notification.NotificationSender"
+                  android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+            </intent-filter>
+
+        </receiver>
     </application>
 
 </manifest>

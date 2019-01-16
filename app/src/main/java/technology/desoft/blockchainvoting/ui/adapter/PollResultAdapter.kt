@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_poll_result.view.*
 import technology.desoft.blockchainvoting.R
-import technology.desoft.blockchainvoting.presentation.view.OptionResult
+import technology.desoft.blockchainvoting.model.network.polls.PollOption
+import technology.desoft.blockchainvoting.ui.PercentDrawable
 
-class PollResultAdapter(private val pollResults: List<OptionResult>): RecyclerView.Adapter<PollResultAdapter.ViewHolder>() {
+class PollResultAdapter(private val pollResults: List<PollOption>): RecyclerView.Adapter<PollResultAdapter.ViewHolder>() {
 
     override fun getItemCount() = pollResults.size
 
@@ -25,9 +26,11 @@ class PollResultAdapter(private val pollResults: List<OptionResult>): RecyclerVi
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         fun bind(position: Int){
             val optionResult = pollResults[position]
+            val percent = optionResult.interest?.toInt() ?: 0
+            itemView.background = PercentDrawable(itemView.context, percent)
             itemView.apply {
-                pollOptionContent.text = optionResult.option.content
-                pollOptionResult.text = optionResult.votesCount.toString()
+                pollOptionContent.text = optionResult.content
+                pollOptionResult.text = resources.getString(R.string.percent, percent)
             }
         }
     }

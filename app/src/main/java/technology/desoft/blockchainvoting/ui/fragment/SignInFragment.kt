@@ -33,6 +33,8 @@ class SignInFragment : MvpAppCompatFragment(), SignView {
             GlobalScope,
             app.mainRouter,
             app.userRepository,
+            app.pollRepository,
+            app.voteRepository,
             app.userProvider,
             resources
         )

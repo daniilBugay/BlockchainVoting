@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.item_poll_option.view.*
 import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.model.network.polls.PollOption
+import technology.desoft.blockchainvoting.ui.PercentDrawable
 
 class PollOptionsAdapter(
     private val pollOptions: List<PollOption>,
@@ -42,8 +43,11 @@ class PollOptionsAdapter(
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         fun bind(position: Int){
             val option = pollOptions[position]
+            val percent = option.interest?.toInt() ?: 0
+            itemView.background = PercentDrawable(itemView.context, percent)
             itemView.pollOptionContent.text = option.content
             itemView.pollOptionRadio.isChecked = currentSelected == position
+            itemView.pollOptionRadio.text = itemView.context.getString(R.string.percent, percent)
             if (!isLocked) {
                 itemView.pollOptionRadio.setOnClickListener {
                     onSelected(position)

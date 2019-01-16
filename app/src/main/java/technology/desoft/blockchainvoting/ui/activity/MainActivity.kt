@@ -1,5 +1,8 @@
 package technology.desoft.blockchainvoting.ui.activity
 
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.button.MaterialButton
@@ -11,7 +14,6 @@ import android.transition.Fade
 import android.transition.TransitionInflater
 import android.transition.TransitionSet
 import android.view.View
-import android.widget.ProgressBar
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -24,8 +26,13 @@ import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 import technology.desoft.blockchainvoting.ui.CircularAnimationProvider
 import technology.desoft.blockchainvoting.ui.OnBackListener
 import technology.desoft.blockchainvoting.ui.fragment.*
+import technology.desoft.blockchainvoting.ui.notification.NotificationSender
 
 class MainActivity : MvpAppCompatActivity(), MainView {
+
+    private companion object {
+        const val NOTIFICATION_PERIOD = 10_000L
+    }
 
     @InjectPresenter
     lateinit var mainPresenter: MainPresenter
@@ -33,7 +40,13 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     @ProvidePresenter
     fun providePresenter(): MainPresenter {
         val app = application as App
-        return MainPresenter(app.mainRouter, app.userProvider, app.userRepository)
+        return MainPresenter(
+            app.mainRouter,
+            app.userProvider,
+            app.userRepository,
+            app.pollRepository,
+            app.voteRepository
+        )
     }
 
     private inline fun changeFragment(fragment: Fragment, body: FragmentTransaction.() -> Unit) {
@@ -58,6 +71,18 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if (savedInstanceState == null) {
+            registerReceiver()
+        }
+    }
+
+    private fun registerReceiver() {
+        val intent = Intent(this, NotificationSender::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(
+            this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT
+        )
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.set(AlarmManager.RTC_WAKEUP, NOTIFICATION_PERIOD, pendingIntent)
     }
 
     override fun showSignInScreen() {

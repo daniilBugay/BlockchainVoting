@@ -10,8 +10,8 @@
 
     <!--Sign styles-->
     <style name="EditText.Grey" parent="@style/AppTheme">
-        <item name="colorControlActivated">@color/colorSignGray60</item>
-        <item name="colorControlHighlight">@color/colorSignGray60</item>
-        <item name="colorControlNormal">@color/colorSignGray40</item>
+        <item name="colorControlActivated">@color/colorGray60</item>
+        <item name="colorControlHighlight">@color/colorGray60</item>
+        <item name="colorControlNormal">@color/colorGray40</item>
     </style>
 </resources>

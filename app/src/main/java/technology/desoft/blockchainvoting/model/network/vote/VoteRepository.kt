@@ -1,8 +1,9 @@
 package technology.desoft.blockchainvoting.model.network.vote
 
-import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Job
+import technology.desoft.blockchainvoting.model.network.user.Token
 
 interface VoteRepository {
-    fun getVotes(optionId: Long): Deferred<List<Vote>>
-    fun addVote(optionId: Long)
+    fun setToken(token: Token)
+    fun addVote(pollId: Long, optionId: Long): Job
 }

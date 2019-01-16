@@ -9,7 +9,7 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorSignGray5"
+            android:background="@color/colorGray5"
             android:orientation="vertical">
 
         <LinearLayout
@@ -49,14 +49,14 @@
                             android:layout_marginStart="@dimen/spacing_medium"
                             android:text="@string/sign_in"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                            android:textColor="@color/colorSignGray40"
+                            android:textColor="@color/colorGray40"
                             android:textStyle="bold"/>
 
                     <View
                             android:layout_width="match_parent"
                             android:layout_height="4dp"
                             android:layout_marginStart="@dimen/spacing_medium"
-                            android:background="@color/colorSignGray40"/>
+                            android:background="@color/colorGray40"/>
 
                 </LinearLayout>
 
@@ -117,7 +117,7 @@
                             android:text="@string/email"
                             android:textAlignment="center"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                            android:textColor="@color/colorSignGray40"/>
+                            android:textColor="@color/colorGray40"/>
 
                     <android.support.design.widget.TextInputEditText
                             android:id="@+id/emailSignUpEditText"
@@ -144,7 +144,7 @@
                             android:text="@string/password"
                             android:textAlignment="center"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                            android:textColor="@color/colorSignGray40"/>
+                            android:textColor="@color/colorGray40"/>
 
                     <android.support.design.widget.TextInputEditText
                             android:id="@+id/passwordSignUpEditText"
@@ -171,7 +171,7 @@
                             android:text="@string/confirm_password"
                             android:textAlignment="center"
                             android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
-                            android:textColor="@color/colorSignGray40"/>
+                            android:textColor="@color/colorGray40"/>
 
                     <android.support.design.widget.TextInputEditText
                             android:id="@+id/passwordConfirmEditText"

@@ -10,4 +10,5 @@ interface ActivePollView: MvpView {
     fun lockButton()
     fun unlockButton()
     fun lockOptions()
+    fun showError(message: String)
 }

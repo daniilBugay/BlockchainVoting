@@ -29,11 +29,6 @@ class AllPollsPresenter(
     private var polls: List<PollAndAuthor>? = null
     private var searchRequest: String? = null
 
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
-        pollsRepository.setToken(userTokenProvider.token)
-    }
-
     fun refresh(){
         showPolls(searchRequest)
     }

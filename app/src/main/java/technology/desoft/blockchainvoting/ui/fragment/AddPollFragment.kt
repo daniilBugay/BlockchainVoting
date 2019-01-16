@@ -108,11 +108,11 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val animation = AnimationUtils.loadAnimation(context, R.anim.move_up)
-        animation.startOffset += 200
+        animation.startOffset += 100
         view.addDataCard.startAnimation(animation)
-        animation.startOffset += 200
+        animation.startOffset += 100
         view.addOptionCard.startAnimation(animation)
-        animation.startOffset += 200
+        animation.startOffset += 100
         view.pollOptionsText.startAnimation(animation)
         view.addOptionButton.setOnClickListener {
             addPollPresenter.onAdd(view.addOptionContent.text.toString())

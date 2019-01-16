@@ -6,10 +6,11 @@
     <color name="colorSecondAccent">#FFFFFF</color>
 
     <!--Sign colors-->
-    <color name="colorSignGray5">#f2f2f2</color>
-    <color name="colorSignGray20">#cccccc</color>
-    <color name="colorSignGray40">#999999</color>
-    <color name="colorSignGray60">#666666</color>
+    <color name="colorGray5">#f2f2f2</color>
+    <color name="colorGray20">#cccccc</color>
+    <color name="colorGray40">#999999</color>
+    <color name="colorGray60">#666666</color>
+    <color name="colorGray80">#444444</color>
 
     <color name="colorGreen">#008500</color>
     <color name="colorRed">#ec1c24</color>

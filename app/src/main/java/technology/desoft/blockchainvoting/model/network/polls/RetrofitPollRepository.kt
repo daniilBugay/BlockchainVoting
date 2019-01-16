@@ -7,7 +7,7 @@ import technology.desoft.blockchainvoting.model.network.user.Token
 class RetrofitPollRepository(retrofit: Retrofit): PollRepository {
     private val api = retrofit.create(PollApi::class.java)
 
-    private lateinit var token: Token
+    private var token: Token? = null
 
     override fun setToken(token: Token){
         this.token = token
@@ -15,7 +15,8 @@ class RetrofitPollRepository(retrofit: Retrofit): PollRepository {
 
     override fun getPolls(): Deferred<List<Poll>?> {
         return GlobalScope.async {
-            val response = api.getPolls(token.tokenString).await()
+            val currentToken = token ?: return@async null
+            val response = api.getPolls(currentToken.tokenString).await()
 
             if (!response.isSuccessful)
                 null
@@ -26,7 +27,8 @@ class RetrofitPollRepository(retrofit: Retrofit): PollRepository {
 
     override fun getOptions(pollId: Long): Deferred<List<PollOption>?> {
         return GlobalScope.async {
-            val response = api.getOptions(pollId, token.tokenString).await()
+            val currentToken = token ?: return@async null
+            val response = api.getOptions(pollId, currentToken.tokenString).await()
             if (!response.isSuccessful)
                 null
             else
@@ -35,15 +37,19 @@ class RetrofitPollRepository(retrofit: Retrofit): PollRepository {
     }
 
     override fun removePoll(id: Long): Job {
-        return GlobalScope.launch { api.removePoll(id, token.tokenString).await() }
+        return GlobalScope.launch {
+            val currentToken = token ?: return@launch
+            api.removePoll(id, currentToken.tokenString).await()
+        }
     }
 
     override fun createPoll(createPollView: CreatePollView, pollOptions: List<CreatePollOptionView>): Job {
         return GlobalScope.launch {
-            val response = api.createPoll(token.tokenString, createPollView).await()
+            val currentToken = token ?: return@launch
+            val response = api.createPoll(currentToken.tokenString, createPollView).await()
             val poll = response.body()
             if (response.isSuccessful && poll != null)
-                pollOptions.forEach { api.createOption(poll.id, token.tokenString, it).await() }
+                pollOptions.forEach { api.createOption(poll.id, currentToken.tokenString, it).await() }
         }
     }
 }

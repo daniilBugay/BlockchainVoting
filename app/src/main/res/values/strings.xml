@@ -27,4 +27,7 @@
     <string name="success">Success</string>
     <string name="poll_options">Poll options</string>
     <string name="logout">LogOut</string>
+    <string name="percent">"%d%%"</string>
+    <string name="vote_error">You have already voted</string>
+    <string name="new_poll_description">New poll! Poll with theme \"%s\" was created</string>
 </resources>

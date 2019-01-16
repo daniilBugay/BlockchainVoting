@@ -10,10 +10,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.fragment_poll_details.*
 import kotlinx.android.synthetic.main.fragment_poll_details.view.*
 import kotlinx.coroutines.GlobalScope
 import technology.desoft.blockchainvoting.App
@@ -50,7 +52,7 @@ class ActivePollFragment : MvpAppCompatFragment(), ActivePollView, OnBackListene
             ?: throw IllegalStateException("You must create fragment using withPoll companion function")
         val poll = Gson().fromJson<PollAndAuthor>(json, PollAndAuthor::class.java)
         val app = activity?.application as App
-        return ActivePollPresenter(GlobalScope, app.pollRepository, app.voteRepository, app.userProvider, poll)
+        return ActivePollPresenter(GlobalScope, app.pollRepository, app.voteRepository, poll, resources)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -72,8 +74,10 @@ class ActivePollFragment : MvpAppCompatFragment(), ActivePollView, OnBackListene
         view.pollDetailsOptionsRecycler.layoutManager = LinearLayoutManager(
             context, LinearLayoutManager.VERTICAL, false
         )
-        view.pollDetailsVoteButton.setOnClickListener {
-            activePollDetailPresenter.vote()
+        view.pollDetailsVoteButton.setOnClickListener { activePollDetailPresenter.vote() }
+        view.pollDetailsRefresh.setOnRefreshListener {
+            activePollDetailPresenter.refresh()
+            pollDetailsRefresh.isRefreshing = false
         }
     }
 
@@ -103,7 +107,7 @@ class ActivePollFragment : MvpAppCompatFragment(), ActivePollView, OnBackListene
     override fun lockButton() {
         view?.pollDetailsVoteButton?.isEnabled = false
         view?.pollDetailsVoteButton?.backgroundTintList = ColorStateList.valueOf(
-            ContextCompat.getColor(context!!, R.color.colorSignGray5)
+            ContextCompat.getColor(context!!, R.color.colorGray5)
         )
     }
 
@@ -123,5 +127,9 @@ class ActivePollFragment : MvpAppCompatFragment(), ActivePollView, OnBackListene
 
     override fun lockOptions() {
         (view?.pollDetailsOptionsRecycler?.adapter as PollOptionsAdapter).setLocked(true)
+    }
+
+    override fun showError(message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 }

@@ -7,18 +7,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import technology.desoft.blockchainvoting.model.network.polls.PollRepository
-import technology.desoft.blockchainvoting.model.network.user.UserTokenProvider
-import technology.desoft.blockchainvoting.model.network.vote.VoteRepository
 import technology.desoft.blockchainvoting.presentation.view.CompletedPollView
-import technology.desoft.blockchainvoting.presentation.view.OptionResult
 import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 
 @InjectViewState
 class CompletedPollPresenter(
     private val coroutineScope: CoroutineScope,
     private val pollRepository: PollRepository,
-    private val voteRepository: VoteRepository,
-    private val userProvider: UserTokenProvider,
     private val pollAndAuthor: PollAndAuthor
 ) : MvpPresenter<CompletedPollView>(), CoroutineScope by coroutineScope {
 
@@ -29,9 +24,7 @@ class CompletedPollPresenter(
         viewState.showDetails(pollAndAuthor)
         val job = launch(Dispatchers.IO){
 
-            val options = pollRepository.getOptions(pollAndAuthor.poll.id).await()?.map {
-                OptionResult(it, voteRepository.getVotes(it.id).await().size)
-            }
+            val options = pollRepository.getOptions(pollAndAuthor.poll.id).await()
             launch(Dispatchers.Main) {
                 options?.let { viewState.showPollResult(it) }
             }.start()

@@ -16,9 +16,9 @@ import kotlinx.android.synthetic.main.fragment_poll_details.view.*
 import kotlinx.coroutines.GlobalScope
 import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
+import technology.desoft.blockchainvoting.model.network.polls.PollOption
 import technology.desoft.blockchainvoting.presentation.presenter.CompletedPollPresenter
 import technology.desoft.blockchainvoting.presentation.view.CompletedPollView
-import technology.desoft.blockchainvoting.presentation.view.OptionResult
 import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 import technology.desoft.blockchainvoting.ui.OnBackListener
 import technology.desoft.blockchainvoting.ui.adapter.PollResultAdapter
@@ -49,7 +49,7 @@ class CompletedPollFragment : MvpAppCompatFragment(), CompletedPollView, OnBackL
             ?: throw IllegalStateException("You must create fragment using withPoll companion function")
         val poll = Gson().fromJson<PollAndAuthor>(json, PollAndAuthor::class.java)
         val app = activity?.application as App
-        return CompletedPollPresenter(GlobalScope, app.pollRepository, app.voteRepository, app.userProvider, poll)
+        return CompletedPollPresenter(GlobalScope, app.pollRepository, poll)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -87,7 +87,7 @@ class CompletedPollFragment : MvpAppCompatFragment(), CompletedPollView, OnBackL
         }
     }
 
-    override fun showPollResult(options: List<OptionResult>) {
+    override fun showPollResult(options: List<PollOption>) {
         view?.pollDetailsOptionsRecycler?.adapter = PollResultAdapter(options)
     }
 
