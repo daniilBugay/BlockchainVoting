@@ -59,8 +59,6 @@ class CompletedPollFragment : MvpAppCompatFragment(), CompletedPollView, OnBackL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.pollDetailsCard.transitionName = arguments?.getString(TRANSITION_NAME_KEY)
-        val animation = AnimationUtils.loadAnimation(context, R.anim.move_up)
-        view.pollDescriptionCard.startAnimation(animation)
         view.pollDetailsMakeChoiceText.setOnClickListener {
             val behavior = BottomSheetBehavior.from(view.pollDetailsOptionsLayout)
             behavior.state = if (behavior.state == BottomSheetBehavior.STATE_EXPANDED)

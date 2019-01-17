@@ -2,7 +2,7 @@
     <string name="app_name">BlockchainVoting</string>
     <string name="date_format">%s - %s</string>
     <string name="vote">Vote</string>
-    <string name="choice">Make Your Choice:</string>
+    <string name="choice">Make Your Choice</string>
     <string name="completed">completed</string>
 
     <!--Sign strings-->

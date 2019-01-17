@@ -67,6 +67,7 @@
     <android.support.design.widget.FloatingActionButton
             android:visibility="invisible"
             android:id="@+id/pollsAddButton"
+            app:maxImageSize="27dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_input_add"
