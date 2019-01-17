@@ -53,16 +53,22 @@
 
                     <TextView
                             android:id="@+id/pollDate"
+                            android:drawableStart="@drawable/ic_calendar"
+                            android:drawablePadding="5dp"
                             style="@style/TextAppearance.AppCompat.Subhead"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="12sp"
                             android:layout_marginTop="5dp"
                             android:layout_alignParentStart="true"/>
 
                     <TextView
                             android:id="@+id/pollAuthor"
+                            android:drawableStart="@drawable/ic_mail"
+                            android:drawablePadding="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="12sp"
                             android:textColor="@android:color/darker_gray"
                             android:layout_marginTop="5dp"
                             android:layout_alignParentEnd="true"/>
@@ -73,7 +79,7 @@
                         android:id="@+id/pollTheme"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"/>
+                        android:layout_marginTop="7dp"/>
             </LinearLayout>
 
         </RelativeLayout>

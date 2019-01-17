@@ -58,7 +58,6 @@ class SignInPresenter(
     }
 
     private fun onSuccess(email: String, password: String, token: Token) {
-        viewState.showSuccess(resource.getString(R.string.success))
         userRepository.setToken(token)
         pollRepository.setToken(token)
         voteRepository.setToken(token)

@@ -80,8 +80,4 @@ class SignInFragment : MvpAppCompatFragment(), SignView {
         view?.signInProgressBar?.visibility = View.GONE
     }
 
-    override fun showSuccess(message: String) {
-        showCustomSnackBar(message, R.color.colorAccent)
-    }
-
 }

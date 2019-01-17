@@ -57,7 +57,6 @@ class SignUpPresenter(
     }
 
     private fun onSuccess() {
-        viewState.showSuccess("Success")
         registration = false
         router.postNavigation(SignInNavigation())
     }

@@ -67,16 +67,22 @@
 
                                 <TextView
                                         android:id="@+id/pollDetailsDate"
+                                        android:drawableStart="@drawable/ic_calendar"
+                                        android:drawablePadding="5dp"
                                         style="@style/TextAppearance.AppCompat.Subhead"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:textSize="12sp"
                                         android:layout_marginTop="5dp"
                                         android:layout_alignParentStart="true"/>
 
                                 <TextView
                                         android:id="@+id/pollDetailsAuthor"
+                                        android:drawableStart="@drawable/ic_mail"
+                                        android:drawablePadding="5dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:textSize="12sp"
                                         android:layout_marginTop="5dp"
                                         android:layout_alignParentEnd="true"/>
                             </RelativeLayout>
@@ -86,13 +92,13 @@
                                     android:id="@+id/pollDetailsTheme"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"/>
+                                    android:layout_marginTop="7dp"/>
 
                             <TextView
                                     android:id="@+id/pollDetailsDescription"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp"/>
+                                    android:layout_marginTop="7dp"/>
                         </LinearLayout>
 
                     </RelativeLayout>
