@@ -1,0 +1,4 @@
+package technology.desoft.blockchainvoting.ui.notification
+
+const val NEW_POLL_TOPIC = "new_poll"
+const val FIREBASE_API_TOKEN = "key=AAAAiKAWGCk:APA91bFzY2pR2-hNunpzY5q46CbbL9fDbq5dKscVO9CYq0XaGmhsyvHNh9Q8sCHLwCFBDDMgkhcvv6p9ETAQuT7lB-dQaG59vz6v6WmIIbD8t5C4kP7LQQvbYsa4Q6wwC3JG0BVPh8uR"

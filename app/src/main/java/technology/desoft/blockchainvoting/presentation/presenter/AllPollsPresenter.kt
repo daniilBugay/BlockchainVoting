@@ -45,7 +45,7 @@ class AllPollsPresenter(
                     else
                         PollAndAuthor(it, author)
                 }
-                polls = pollViews
+                polls = pollViews.sortedByDescending { it.poll.createdAt }
                 search(searchText)
             }
         }

@@ -47,7 +47,9 @@ class PersonalPollsPresenter(
             if (users != null && polls != null) {
                 val author = users.find { it.id == userId } ?: return@launch
                 val filteredPolls = polls.filter { it.userId == userId }
-                val pollViews = filteredPolls.map { PollAndAuthor(it, author) }
+                val pollViews = filteredPolls
+                    .map { PollAndAuthor(it, author) }
+                    .sortedByDescending { it.poll.createdAt }
                 launch(Dispatchers.Main) { viewState.showPersonalPolls(pollViews.toMutableList()) }.start()
             }
         }

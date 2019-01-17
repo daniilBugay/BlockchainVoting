@@ -55,7 +55,7 @@ class AddOptionAdapter(
         fun bind(position: Int){
             val optionContent = optionContents[position]
             itemView.addOptionContentText.text = optionContent
-            itemView.addOptionDragButton.setOnTouchListener { v, event ->
+            itemView.addOptionDragButton.setOnTouchListener { _, _->
                     onDragStart?.invoke(this)
                 true
             }

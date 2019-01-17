@@ -1,8 +1,6 @@
 package technology.desoft.blockchainvoting.model.network.vote
 
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import technology.desoft.blockchainvoting.model.network.user.Token
@@ -16,11 +14,10 @@ class RetrofitVoteRepository(retrofit: Retrofit): VoteRepository {
         this.token = token
     }
 
-    override fun addVote(pollId: Long, optionId: Long): Job {
-        return GlobalScope.launch {
+    override fun addVote(pollId: Long, optionId: Long): Deferred<AddVoteResult> {
+        return GlobalScope.async {
             val response = api.addVote(pollId, optionId, token.tokenString).await()
-            if (!response.isSuccessful)
-                throw HttpException(response)
+            AddVoteResult(response.code() == 406)
         }
     }
 }
