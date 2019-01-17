@@ -16,7 +16,6 @@ import technology.desoft.blockchainvoting.navigation.navigations.AllPollsNavigat
 import technology.desoft.blockchainvoting.navigation.navigations.SignUpNavigation
 import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.SignView
-import kotlin.math.log
 
 @InjectViewState
 class SignInPresenter(
@@ -69,8 +68,8 @@ class SignInPresenter(
             val users = userRepository.getUsers().await()
             userTokenProvider.userId = users?.find { it.email == email }?.id
         }
-        router.postNavigation(AllPollsNavigation())
         logging = false
+        router.postNavigation(AllPollsNavigation())
     }
 
     private fun onError(error: String) {

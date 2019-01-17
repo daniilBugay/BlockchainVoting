@@ -3,15 +3,21 @@ package technology.desoft.blockchainvoting.presentation.presenter
 import android.content.res.Resources
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody
 import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.model.network.polls.CreatePollOptionView
 import technology.desoft.blockchainvoting.model.network.polls.CreatePollView
 import technology.desoft.blockchainvoting.model.network.polls.PollRepository
 import technology.desoft.blockchainvoting.presentation.view.AddPollView
+import technology.desoft.blockchainvoting.ui.notification.FIREBASE_API_TOKEN
 import java.util.*
 
 @InjectViewState
@@ -60,12 +66,41 @@ class AddPollPresenter(
             jobs.add(job)
             job.start()
             job.invokeOnCompletion {
+                sendNotification(theme)
                 GlobalScope.launch(Dispatchers.Main) {
                     viewState.finishAdding()
                     startFinishing = false
                 }
             }
         }
+    }
+
+    private fun sendNotification(pollTheme: String) {
+        val mediaType = MediaType.get("application/json; charset=utf-8")
+        val title = resources.getString(R.string.new_poll_title)
+        val description = resources.getString(R.string.new_poll_description, pollTheme)
+        val json = """
+            {
+                "to": "/topics/new_poll",
+                "data": {
+                    "title": "$title",
+                    "description" : "$description"
+                },
+                "notification": {
+                    "title": "$title",
+                    "body": "$description"
+                }
+            }
+        """.trimIndent()
+
+        val client = OkHttpClient()
+        val body = RequestBody.create(mediaType, json)
+        val request = Request.Builder()
+            .url("https://fcm.googleapis.com/fcm/send")
+            .addHeader("Authorization", FIREBASE_API_TOKEN)
+            .post(body)
+            .build()
+        client.newCall(request).execute().body()
     }
 
     override fun onDestroy() {

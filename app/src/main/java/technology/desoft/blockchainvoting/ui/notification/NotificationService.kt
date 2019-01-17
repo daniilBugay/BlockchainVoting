@@ -94,7 +94,7 @@ class NotificationService: Service() {
         )
         notificationBuilder.setAutoCancel(true)
         notificationBuilder.setContentTitle(poll.theme)
-        notificationBuilder.setSmallIcon(R.drawable.ic_app_white)
+        notificationBuilder.setSmallIcon(R.drawable.ic_notification)
         notificationBuilder.setContentIntent(pendingIntent)
         notificationBuilder.setContentInfo(
             resources.getString(R.string.new_poll_description, poll.theme)

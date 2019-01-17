@@ -80,22 +80,22 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
                 ) {
                     v?.removeOnLayoutChangeListener(this) ?: return
                     view.addFinishButton.visibility = View.INVISIBLE
-                    val width = v.width
-                    val height = v.height
+                    val width = view.width
+                    val height = view.height
                     val duration = v.context.resources.getInteger(R.integer.circular_animation_duration)
                     val radius = hypot(width.toFloat(), height.toFloat())
-                    val anim = ViewAnimationUtils.createCircularReveal(v, x, y, 0f, radius)
+                    val anim = ViewAnimationUtils.createCircularReveal(view, x, y, 0f, radius)
 
                     anim.interpolator = FastOutSlowInInterpolator()
                     anim.duration = duration.toLong()
                     anim.start()
                     CircularAnimationProvider.startBackgroundAnimation(
-                        v,
+                        view,
                         R.color.colorAccent,
                         android.R.color.background_light,
                         resources.getInteger(R.integer.circular_animation_duration)
                     )
-                    Handler().postDelayed({ v.addFinishButton.show() }, 300)
+                    Handler().postDelayed({ view.addFinishButton.show() }, 300)
                 }
 
             }

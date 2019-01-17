@@ -3,7 +3,11 @@
           xmlns:tools="http://schemas.android.com/tools" package="technology.desoft.blockchainvoting">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
 
     <application
             android:name=".App"
@@ -22,14 +26,11 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".ui.notification.NotificationSender"
-                  android:permission="com.google.android.c2dm.permission.SEND">
+        <service android:name=".ui.notification.FirebaseNotificationService" >
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
-
-        </receiver>
+        </service>
     </application>
 
 </manifest>

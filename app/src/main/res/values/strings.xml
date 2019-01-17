@@ -29,5 +29,7 @@
     <string name="logout">LogOut</string>
     <string name="percent">"%d%%"</string>
     <string name="vote_error">You have already voted</string>
+    <string name="new_poll_title">New poll</string>
     <string name="new_poll_description">New poll! Poll with theme \"%s\" was created</string>
+    <string name="default_notification_channel_id">notification</string>
 </resources>

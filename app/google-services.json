@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "586801354793",
+    "firebase_url": "https://blockchainvoting-83898.firebaseio.com",
+    "project_id": "blockchainvoting-83898",
+    "storage_bucket": "blockchainvoting-83898.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586801354793:android:0e58e367e063903e",
+        "android_client_info": {
+          "package_name": "technology.desoft.blockchainvoting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "586801354793-jg11ca9ldam63nmrmum66l8e38vcbamg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "technology.desoft.blockchainvoting",
+            "certificate_hash": "f1f0cf72852e0b0c8e1e1f0c5c5feb543162f923"
+          }
+        },
+        {
+          "client_id": "586801354793-qiifcs05igtjmiv5nk51rs067k57lhpp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSD-3Qvtv_-2aJQXpWF8Jj3-zpcUA65Pk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "586801354793-qiifcs05igtjmiv5nk51rs067k57lhpp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

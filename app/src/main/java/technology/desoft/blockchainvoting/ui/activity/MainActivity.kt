@@ -1,8 +1,5 @@
 package technology.desoft.blockchainvoting.ui.activity
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.button.MaterialButton
@@ -17,6 +14,7 @@ import android.view.View
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.item_poll.view.*
 import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
@@ -26,13 +24,9 @@ import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
 import technology.desoft.blockchainvoting.ui.CircularAnimationProvider
 import technology.desoft.blockchainvoting.ui.OnBackListener
 import technology.desoft.blockchainvoting.ui.fragment.*
-import technology.desoft.blockchainvoting.ui.notification.NotificationSender
+import technology.desoft.blockchainvoting.ui.notification.NEW_POLL_TOPIC
 
 class MainActivity : MvpAppCompatActivity(), MainView {
-
-    private companion object {
-        const val NOTIFICATION_PERIOD = 10_000L
-    }
 
     @InjectPresenter
     lateinit var mainPresenter: MainPresenter
@@ -71,18 +65,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (savedInstanceState == null) {
-            registerReceiver()
-        }
-    }
-
-    private fun registerReceiver() {
-        val intent = Intent(this, NotificationSender::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT
-        )
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.set(AlarmManager.RTC_WAKEUP, NOTIFICATION_PERIOD, pendingIntent)
+        FirebaseMessaging.getInstance().subscribeToTopic(NEW_POLL_TOPIC)
     }
 
     override fun showSignInScreen() {

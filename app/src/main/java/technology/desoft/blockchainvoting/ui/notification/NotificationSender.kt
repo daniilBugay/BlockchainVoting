@@ -20,11 +20,13 @@ import technology.desoft.blockchainvoting.model.network.BASE_URL
 import technology.desoft.blockchainvoting.model.network.polls.Poll
 import technology.desoft.blockchainvoting.model.network.polls.PollRepository
 import technology.desoft.blockchainvoting.model.network.polls.RetrofitPollRepository
+import technology.desoft.blockchainvoting.model.network.user.Token
 import technology.desoft.blockchainvoting.ui.activity.MainActivity
 
 class NotificationSender: BroadcastReceiver() {
     companion object {
         private const val CHANNEL_ID = "notification"
+        private const val USER_TOKEN_KEY = "token"
     }
 
     private var polls: List<Poll>? = null
@@ -41,6 +43,8 @@ class NotificationSender: BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        val token = intent?.getStringExtra(USER_TOKEN_KEY) ?: return
+        pollRepository.setToken(Token(token, false))
         sendNotifications(context)
     }
 
@@ -87,7 +91,7 @@ class NotificationSender: BroadcastReceiver() {
         val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
         notificationBuilder.setAutoCancel(true)
         notificationBuilder.setContentTitle(poll.theme)
-        notificationBuilder.setSmallIcon(R.drawable.ic_app_white)
+        notificationBuilder.setSmallIcon(R.drawable.ic_notification)
         notificationBuilder.setContentIntent(pendingIntent)
         notificationBuilder.setContentInfo(
             context.resources.getString(R.string.new_poll_description, poll.theme)

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "344551073302",
+    "firebase_url": "https://blockchainvoting-818b7.firebaseio.com",
+    "project_id": "blockchainvoting-818b7",
+    "storage_bucket": "blockchainvoting-818b7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:344551073302:android:0e58e367e063903e",
+        "android_client_info": {
+          "package_name": "technology.desoft.blockchainvoting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "344551073302-ifsdukjh7fgu1301olc3vojg8e1qhob6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARKWrgP0iY90OY74Ot4gQNWbn140IeMdE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
