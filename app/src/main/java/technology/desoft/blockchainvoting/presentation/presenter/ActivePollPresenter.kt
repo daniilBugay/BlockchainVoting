@@ -4,10 +4,10 @@ import android.content.res.Resources
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import kotlinx.coroutines.*
-import retrofit2.HttpException
 import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.model.network.polls.PollOption
 import technology.desoft.blockchainvoting.model.network.polls.PollRepository
+import technology.desoft.blockchainvoting.model.network.vote.AddVoteResult
 import technology.desoft.blockchainvoting.model.network.vote.Vote
 import technology.desoft.blockchainvoting.model.network.vote.VoteRepository
 import technology.desoft.blockchainvoting.presentation.view.ActivePollView
@@ -27,6 +27,7 @@ class ActivePollPresenter(
     private lateinit var options: List<PollOption>
     private var lastSelectedOption: Vote? = null
     private var refreshing = false
+    private var userAlreadyVoted = false
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -34,7 +35,7 @@ class ActivePollPresenter(
         showOptions()
     }
 
-    fun refresh(){
+    fun refresh() {
         if (refreshing) return
 
         refreshing = true
@@ -42,11 +43,13 @@ class ActivePollPresenter(
         showOptions()
     }
 
-    private fun showOptions(){
+    private fun showOptions() {
         val job = launch(Dispatchers.IO) {
             options = pollRepository.getOptions(pollAndAuthor.poll.id).await() ?: return@launch
             launch(Dispatchers.Main) {
                 viewState.showOptions(options)
+                if (userAlreadyVoted)
+                    viewState.lockOptions()
             }.start()
         }
         jobs.add(job)
@@ -63,41 +66,30 @@ class ActivePollPresenter(
 
     fun vote() {
         val selected = this.currentSelected ?: return
-        val errorHandler = CoroutineExceptionHandler { _, throwable ->
-            processError(throwable as Exception)
-        }
-        val job = launch(Dispatchers.IO + errorHandler) {
-            try {
-                //TODO("error")
-                tryVote(selected)
-            } catch (e: Exception){
-                processError(e)
+
+        val job = launch(Dispatchers.IO) {
+            withContext(Dispatchers.Main) {
+                viewState.lockButton()
+                viewState.lockOptions()
             }
+            if (tryVote(selected).userAlreadyVoted)
+                withContext(Dispatchers.Main) {
+                    userAlreadyVoted = true
+                    userAlreadyVotedError()
+                }
+            else
+                showOptions()
         }
         jobs.add(job)
         job.start()
     }
 
-    private suspend fun tryVote(selected: Int) {
-        launch(Dispatchers.Main) {
-            viewState.lockButton()
-            viewState.lockOptions()
-        }
-        voteRepository.addVote(pollAndAuthor.poll.id, options[selected].id).join()
-        showOptions()
+    private suspend fun tryVote(selected: Int): AddVoteResult {
+        return voteRepository.addVote(pollAndAuthor.poll.id, options[selected].id).await()
     }
 
-    private fun processError(exception: Exception) {
-        fun showNetworkError() = viewState.showError(resources.getString(R.string.network_error))
-
-        if (exception is HttpException) {
-            when (exception.code()) {
-                406 -> viewState.showError(resources.getString(R.string.vote_error))
-                else -> showNetworkError()
-            }
-        } else {
-            showNetworkError()
-        }
+    private fun userAlreadyVotedError() {
+        viewState.showError(resources.getString(R.string.vote_error))
     }
 
     override fun onDestroy() {

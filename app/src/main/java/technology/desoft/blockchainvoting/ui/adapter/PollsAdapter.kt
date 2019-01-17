@@ -36,9 +36,8 @@ class PollsAdapter(
     fun getPollByPosition(position: Int) = polls[position]
 
     fun setPolls(allPolls: List<PollAndAuthor>) {
-        val reversed = allPolls.asReversed()
         val lastSize = polls.size
-        polls = reversed.toMutableList()
+        polls = allPolls.toMutableList()
         notifyItemRangeChanged(0, lastSize)
         notifyItemRangeInserted(0, allPolls.size - lastSize)
     }

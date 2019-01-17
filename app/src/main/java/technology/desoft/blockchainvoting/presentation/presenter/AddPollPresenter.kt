@@ -3,7 +3,6 @@ package technology.desoft.blockchainvoting.presentation.presenter
 import android.content.res.Resources
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
@@ -31,7 +30,7 @@ class AddPollPresenter(
     private var startFinishing = false
 
     fun setOptions() {
-        options.asReversed().forEach { viewState.addOption(it) }
+        options.forEach { viewState.addOption(it) }
     }
 
     fun onAdd(contentString: String) {
@@ -100,7 +99,7 @@ class AddPollPresenter(
             .addHeader("Authorization", FIREBASE_API_TOKEN)
             .post(body)
             .build()
-        client.newCall(request).execute().body()
+        client.newCall(request).execute()
     }
 
     override fun onDestroy() {
