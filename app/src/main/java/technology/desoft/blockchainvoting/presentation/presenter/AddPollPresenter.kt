@@ -11,12 +11,12 @@ import okhttp3.MediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
-import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.model.network.polls.CreatePollOptionView
 import technology.desoft.blockchainvoting.model.network.polls.CreatePollView
 import technology.desoft.blockchainvoting.model.network.polls.PollRepository
 import technology.desoft.blockchainvoting.presentation.view.AddPollView
 import technology.desoft.blockchainvoting.ui.notification.FIREBASE_API_TOKEN
+import technology.desoft.blockchainvoting.R
 import java.util.*
 
 @InjectViewState
@@ -27,7 +27,6 @@ class AddPollPresenter(
     private val options: MutableList<String> = mutableListOf()
     private val jobs = mutableListOf<Job>()
     private var endsAtDate: Calendar? = null
-    private var startFinishing = false
 
     fun setOptions() {
         options.forEach { viewState.addOption(it) }
@@ -52,13 +51,14 @@ class AddPollPresenter(
     }
 
     fun finishAdding(theme: String, description: String) {
-        if (startFinishing) return
+        viewState.hideButton()
 
         val endsAt = endsAtDate
-        if (theme.isBlank() || endsAt == null || options.isEmpty())
+        if (theme.isBlank() || endsAt == null || options.isEmpty()) {
             viewState.error(resources.getString(R.string.input_error))
+            viewState.showButton()
+        }
         else {
-            startFinishing = true
             val createPollView = CreatePollView(theme, description, endsAt.time)
             val createPollOptions = options.map { CreatePollOptionView(it) }
             val job = pollRepository.createPoll(createPollView, createPollOptions.asReversed())
@@ -68,7 +68,6 @@ class AddPollPresenter(
                 sendNotification(theme)
                 GlobalScope.launch(Dispatchers.Main) {
                     viewState.finishAdding()
-                    startFinishing = false
                 }
             }
         }

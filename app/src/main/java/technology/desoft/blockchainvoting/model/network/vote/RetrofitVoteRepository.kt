@@ -14,10 +14,14 @@ class RetrofitVoteRepository(retrofit: Retrofit): VoteRepository {
         this.token = token
     }
 
-    override fun addVote(pollId: Long, optionId: Long): Deferred<AddVoteResult> {
+    override fun addVote(pollId: Long, optionId: Long): Deferred<AddVoteResult?> {
         return GlobalScope.async {
-            val response = api.addVote(pollId, optionId, token.tokenString).await()
-            AddVoteResult(response.code() == 406)
+            try {
+                val response = api.addVote(pollId, optionId, token.tokenString).await()
+                AddVoteResult(response.code() == 406)
+            } catch (e: Throwable){
+                null
+            }
         }
     }
 }

@@ -7,7 +7,6 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -59,7 +58,7 @@ class CompletedPollFragment : MvpAppCompatFragment(), CompletedPollView, OnBackL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.pollDetailsCard.transitionName = arguments?.getString(TRANSITION_NAME_KEY)
-        view.pollDetailsMakeChoiceText.setOnClickListener {
+        view.pollDetailsBottomText.setOnClickListener {
             val behavior = BottomSheetBehavior.from(view.pollDetailsOptionsLayout)
             behavior.state = if (behavior.state == BottomSheetBehavior.STATE_EXPANDED)
                 BottomSheetBehavior.STATE_COLLAPSED
@@ -69,6 +68,7 @@ class CompletedPollFragment : MvpAppCompatFragment(), CompletedPollView, OnBackL
         view.pollDetailsOptionsRecycler.layoutManager = LinearLayoutManager(
             context, LinearLayoutManager.VERTICAL, false
         )
+        view.pollDetailsBottomText.setText(R.string.show_result)
         view.pollDetailsVoteButton.visibility = View.GONE
         view.completedText.visibility = View.VISIBLE
     }

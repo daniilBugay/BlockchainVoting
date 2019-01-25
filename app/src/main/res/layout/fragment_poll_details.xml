@@ -140,9 +140,9 @@
                         android:layout_height="match_parent">
 
                     <TextView
-                            android:id="@+id/pollDetailsMakeChoiceText"
+                            android:id="@+id/pollDetailsBottomText"
                             style="@style/TextAppearance.AppCompat.Title"
-                            android:text="@string/choice"
+                            android:text="@string/bottom_title"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:textAlignment="gravity"

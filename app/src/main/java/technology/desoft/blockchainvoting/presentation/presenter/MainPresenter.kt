@@ -2,6 +2,7 @@ package technology.desoft.blockchainvoting.presentation.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -52,7 +53,7 @@ class MainPresenter(
                 else {
                     userProvider.userId = users.find { it.email == email }?.id
                     setToken(token)
-                    viewState.showAllPolls()
+                    launch(Dispatchers.Main) { showAllPolls() }
                 }
             } else {
                 showSignInScreen()
@@ -68,7 +69,13 @@ class MainPresenter(
         voteRepository.setToken(token)
     }
 
+    private fun showAllPolls(){
+        viewState.hideLoading()
+        viewState.showAllPolls()
+    }
+
     private fun showSignInScreen() {
+        viewState.hideLoading()
         viewState.showSignInScreen()
     }
 
@@ -76,5 +83,4 @@ class MainPresenter(
         super.onDestroy()
         jobs.forEach(Job::cancel)
     }
-
 }

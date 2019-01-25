@@ -2,6 +2,7 @@ package technology.desoft.blockchainvoting.presentation.view
 
 import android.view.View
 import com.arellomobile.mvp.MvpView
+import com.arellomobile.mvp.viewstate.strategy.SingleStateStrategy
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
@@ -15,4 +16,6 @@ interface MainView: MvpView {
     fun showCompletedPollDetails(poll: PollAndAuthor, itemView: View)
     fun showAddScreen()
     fun logOut()
+    @StateStrategyType(SingleStateStrategy::class)
+    fun hideLoading()
 }

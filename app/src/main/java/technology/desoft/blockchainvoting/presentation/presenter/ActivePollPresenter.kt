@@ -72,7 +72,7 @@ class ActivePollPresenter(
                 viewState.lockButton()
                 viewState.lockOptions()
             }
-            if (tryVote(selected).userAlreadyVoted)
+            if (tryVote(selected)?.userAlreadyVoted == true)
                 withContext(Dispatchers.Main) {
                     userAlreadyVoted = true
                     userAlreadyVotedError()
@@ -84,7 +84,7 @@ class ActivePollPresenter(
         job.start()
     }
 
-    private suspend fun tryVote(selected: Int): AddVoteResult {
+    private suspend fun tryVote(selected: Int): AddVoteResult? {
         return voteRepository.addVote(pollAndAuthor.poll.id, options[selected].id).await()
     }
 

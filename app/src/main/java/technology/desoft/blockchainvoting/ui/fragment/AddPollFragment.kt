@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
@@ -155,7 +156,7 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
 
     private fun createCalendar(year: Int, month: Int, day: Int): Calendar {
         return Calendar.getInstance().apply {
-            set(year, month, day, 23, 59, 59)
+            set(year, month, day, 12, 0, 0)
         }
     }
 
@@ -226,5 +227,13 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
 
     override fun finishAdding() {
         activity?.onBackPressed()
+    }
+
+    override fun hideButton() {
+        view?.addFinishButton?.hide()
+    }
+
+    override fun showButton() {
+        view?.addFinishButton?.show()
     }
 }

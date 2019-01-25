@@ -15,6 +15,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_poll.view.*
 import technology.desoft.blockchainvoting.App
 import technology.desoft.blockchainvoting.R
@@ -162,5 +163,9 @@ class MainActivity : MvpAppCompatActivity(), MainView {
     override fun logOut() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
+    }
+
+    override fun hideLoading() {
+        mainProgress.visibility = View.GONE
     }
 }

@@ -6,5 +6,5 @@ import technology.desoft.blockchainvoting.model.network.user.Token
 
 interface VoteRepository {
     fun setToken(token: Token)
-    fun addVote(pollId: Long, optionId: Long): Deferred<AddVoteResult>
+    fun addVote(pollId: Long, optionId: Long): Deferred<AddVoteResult?>
 }

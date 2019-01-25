@@ -36,6 +36,11 @@ class SignUpPresenter(
         val email = rawEmail.trim()
         val password = rawPassword.trim()
         val confirmPassword = rawConfirmPassword.trim()
+        if (rawPassword.length < 8) {
+            onError(resources.getString(R.string.password_to_short_error))
+            return
+        }
+
         viewState.loading()
         val job = launch(Dispatchers.IO) {
             try {

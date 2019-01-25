@@ -27,11 +27,15 @@ class RetrofitUserRepository(retrofit: Retrofit): UserRepository {
 
     override fun login(email: String, password: String): Deferred<Token?> {
         return GlobalScope.async {
-            val response = api.login(EmailAndPassword(email, password)).await()
-            if (response.isSuccessful)
-                response.body()
-            else
+            try {
+                val response = api.login(EmailAndPassword(email, password)).await()
+                if (response.isSuccessful)
+                    response.body()
+                else
+                    null
+            } catch (e: Throwable) {
                 null
+            }
         }
     }
 
@@ -39,18 +43,22 @@ class RetrofitUserRepository(retrofit: Retrofit): UserRepository {
         if (password != confirmPassword) return GlobalScope.async { null }
 
         return GlobalScope.async {
-            val response = api.registration(EmailAndPassword(email,password)).await()
-            if (!response.isSuccessful) return@async null
-            else {
-                val body = response.body() ?: return@async null
-                val user = User(
-                    body.id,
-                    body.email,
-                    body.createdAt,
-                    body.updatedAt
-                )
-                val token = Token(body.token, body.isAdmin)
-                UserAndToken(user, token)
+            try {
+                val response = api.registration(EmailAndPassword(email, password)).await()
+                if (!response.isSuccessful) return@async null
+                else {
+                    val body = response.body() ?: return@async null
+                    val user = User(
+                        body.id,
+                        body.email,
+                        body.createdAt,
+                        body.updatedAt
+                    )
+                    val token = Token(body.token, body.isAdmin)
+                    UserAndToken(user, token)
+                }
+            } catch (e: Throwable){
+                null
             }
         }
     }

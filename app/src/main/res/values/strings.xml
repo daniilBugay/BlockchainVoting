@@ -2,7 +2,8 @@
     <string name="app_name">BlockchainVoting</string>
     <string name="date_format">%s - %s</string>
     <string name="vote">Vote</string>
-    <string name="choice">Make Your Choice</string>
+    <string name="bottom_title">Make Your Choice</string>
+    <string name="show_result">Show results</string>
     <string name="completed">completed</string>
 
     <!--Sign strings-->
@@ -16,7 +17,6 @@
     <string name="description">Description</string>
     <string name="ends_date">Ends date</string>
     <string name="add">Add</string>
-    <string name="separation">:</string>
     <string name="date_error">Invalid date pick</string>
     <string name="input_error">Invalid poll</string>
     <string name="personal">Personal page</string>
@@ -32,4 +32,5 @@
     <string name="new_poll_title">New poll!</string>
     <string name="new_poll_description">Poll with theme %s was created</string>
     <string name="default_notification_channel_id">notification</string>
+    <string name="password_to_short_error">Password is very short</string>
 </resources>

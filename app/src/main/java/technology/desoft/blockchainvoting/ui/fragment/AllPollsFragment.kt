@@ -36,7 +36,7 @@ class AllPollsFragment : MvpAppCompatFragment(), AllPollsView {
         )
     }
 
-    fun isUserAdmin() = (activity?.application as App).userProvider.token.isAdmin
+    private fun isUserAdmin() = (activity?.application as App).userProvider.token.isAdmin
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_all_polls, container, false)
