@@ -13,7 +13,7 @@ interface MainView: MvpView {
     fun showAllPolls()
     fun showPersonalPolls()
     fun showActivePollDetails(poll: PollAndAuthor, itemView: View)
-    fun showCompletedPollDetails(poll: PollAndAuthor, itemView: View)
+    fun showCompletedPollDetails(poll: PollAndAuthor, itemView: View? = null)
     fun showAddScreen()
     fun logOut()
     @StateStrategyType(SingleStateStrategy::class)

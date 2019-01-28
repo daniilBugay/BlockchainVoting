@@ -51,7 +51,7 @@ class ActivePollFragment : MvpAppCompatFragment(), ActivePollView, OnBackListene
             ?: throw IllegalStateException("You must create fragment using withPoll companion function")
         val poll = Gson().fromJson<PollAndAuthor>(json, PollAndAuthor::class.java)
         val app = activity?.application as App
-        return ActivePollPresenter(GlobalScope, app.pollRepository, app.voteRepository, poll, resources)
+        return ActivePollPresenter(GlobalScope, app.mainRouter, app.pollRepository, app.voteRepository, poll, resources)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

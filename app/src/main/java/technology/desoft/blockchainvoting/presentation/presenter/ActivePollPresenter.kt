@@ -1,6 +1,7 @@
 package technology.desoft.blockchainvoting.presentation.presenter
 
 import android.content.res.Resources
+import android.view.View
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import kotlinx.coroutines.*
@@ -10,12 +11,17 @@ import technology.desoft.blockchainvoting.model.network.polls.PollRepository
 import technology.desoft.blockchainvoting.model.network.vote.AddVoteResult
 import technology.desoft.blockchainvoting.model.network.vote.Vote
 import technology.desoft.blockchainvoting.model.network.vote.VoteRepository
+import technology.desoft.blockchainvoting.navigation.Router
+import technology.desoft.blockchainvoting.navigation.navigations.CompletedPollDetailsNavigation
 import technology.desoft.blockchainvoting.presentation.view.ActivePollView
+import technology.desoft.blockchainvoting.presentation.view.MainView
 import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
+import java.util.*
 
 @InjectViewState
 class ActivePollPresenter(
     private val coroutineScope: CoroutineScope,
+    private val router: Router<MainView>,
     private val pollRepository: PollRepository,
     private val voteRepository: VoteRepository,
     private val pollAndAuthor: PollAndAuthor,
@@ -38,6 +44,11 @@ class ActivePollPresenter(
     fun refresh() {
         if (refreshing) return
 
+        val date = Calendar.getInstance().time
+        if (pollAndAuthor.poll.endsAt > date){
+            router.postNavigation(CompletedPollDetailsNavigation(pollAndAuthor))
+            return
+        }
         refreshing = true
         viewState.showDetails(pollAndAuthor)
         showOptions()
@@ -46,11 +57,11 @@ class ActivePollPresenter(
     private fun showOptions() {
         val job = launch(Dispatchers.IO) {
             options = pollRepository.getOptions(pollAndAuthor.poll.id).await() ?: return@launch
-            launch(Dispatchers.Main) {
+            withContext(Dispatchers.Main) {
                 viewState.showOptions(options)
                 if (userAlreadyVoted)
                     viewState.lockOptions()
-            }.start()
+            }
         }
         jobs.add(job)
         job.invokeOnCompletion { refreshing = false }

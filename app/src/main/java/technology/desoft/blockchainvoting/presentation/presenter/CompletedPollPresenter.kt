@@ -2,10 +2,7 @@ package technology.desoft.blockchainvoting.presentation.presenter
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import technology.desoft.blockchainvoting.model.network.polls.PollRepository
 import technology.desoft.blockchainvoting.presentation.view.CompletedPollView
 import technology.desoft.blockchainvoting.presentation.view.PollAndAuthor
@@ -25,9 +22,9 @@ class CompletedPollPresenter(
         val job = launch(Dispatchers.IO){
 
             val options = pollRepository.getOptions(pollAndAuthor.poll.id).await()
-            launch(Dispatchers.Main) {
+            withContext(Dispatchers.Main) {
                 options?.let { viewState.showPollResult(it) }
-            }.start()
+            }
         }
         job.start()
         jobs.add(job)

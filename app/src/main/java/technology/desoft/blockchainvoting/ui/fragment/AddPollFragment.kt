@@ -12,14 +12,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_add_poll.view.*
 import technology.desoft.blockchainvoting.App
-import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.presenter.AddPollPresenter
 import technology.desoft.blockchainvoting.presentation.view.AddPollView
 import technology.desoft.blockchainvoting.ui.CircularAnimationProvider
@@ -27,6 +25,7 @@ import technology.desoft.blockchainvoting.ui.adapter.AddOptionAdapter
 import technology.desoft.blockchainvoting.ui.adapter.PollOptionTouchCallback
 import java.util.*
 import kotlin.math.hypot
+import technology.desoft.blockchainvoting.R
 
 class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismissible, AddPollView {
     companion object {
@@ -156,7 +155,7 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
 
     private fun createCalendar(year: Int, month: Int, day: Int): Calendar {
         return Calendar.getInstance().apply {
-            set(year, month, day, 12, 0, 0)
+            set(year, month, day, 23, 59, 59)
         }
     }
 

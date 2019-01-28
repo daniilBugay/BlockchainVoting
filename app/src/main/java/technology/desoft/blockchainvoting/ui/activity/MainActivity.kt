@@ -108,12 +108,14 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         changeFragment(fragment) { addToBackStack(null) }
     }
 
-    private fun showDetails(detailsFragment: Fragment, itemView: View) {
+    private fun showDetails(detailsFragment: Fragment, itemView: View?) {
         changeFragmentWithTransition(detailsFragment) {
             addToBackStack(null)
             detailsFragment.enterTransition = Fade()
-            val card = itemView.pollCard
-            addSharedElement(card, card.transitionName)
+            if (itemView != null) {
+                val card = itemView.pollCard
+                addSharedElement(card, card.transitionName)
+            }
         }
     }
 
@@ -121,7 +123,7 @@ class MainActivity : MvpAppCompatActivity(), MainView {
         showDetails(ActivePollFragment.withPoll(poll), itemView)
     }
 
-    override fun showCompletedPollDetails(poll: PollAndAuthor, itemView: View) {
+    override fun showCompletedPollDetails(poll: PollAndAuthor, itemView: View?) {
         showDetails(CompletedPollFragment.withPoll(poll), itemView)
     }
 
