@@ -54,6 +54,8 @@
 
                     <EditText
                             android:id="@+id/addThemeEditText"
+                            android:drawableStart="@drawable/ic_theme"
+                            android:drawablePadding="3dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
@@ -63,6 +65,8 @@
 
                     <EditText
                             android:id="@+id/addDescriptionEditText"
+                            android:drawableStart="@drawable/ic_description"
+                            android:drawablePadding="3dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/description"
@@ -73,9 +77,11 @@
                     <TextView
                             style="@style/TextAppearance.AppCompat.Subhead"
                             android:id="@+id/endsAtText"
+                            android:drawableStart="@drawable/ic_calendar"
+                            android:drawablePadding="3dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:layout_marginTop="10dp"
                             android:maxLines="1"
                             android:layout_marginStart="5dp"
                             android:hint="@string/ends_date"
@@ -147,7 +153,7 @@
                     android:id="@+id/addOptionRecycler"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="60dp">
+                    android:paddingBottom="70dp">
 
             </android.support.v7.widget.RecyclerView>
         </LinearLayout>
