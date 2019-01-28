@@ -34,7 +34,7 @@
                             android:id="@+id/completedText"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:background="@color/colorAccent">
+                            android:background="@color/colorPrimary">
 
                         <technology.desoft.blockchainvoting.ui.VerticalTextView
                                 android:text="@string/completed"
@@ -148,7 +148,7 @@
                             android:textAlignment="gravity"
                             android:gravity="center"
                             android:textColor="@android:color/white"
-                            android:background="@color/colorAccent"/>
+                            android:background="@color/colorPrimary"/>
 
                     <android.support.v7.widget.RecyclerView
                             android:id="@+id/pollDetailsOptionsRecycler"
@@ -170,7 +170,7 @@
                         android:textColor="@android:color/white"
                         style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
                         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-                        android:background="@color/colorAccent"
+                        android:background="@color/colorPrimary"
                         android:layout_gravity="bottom"/>
             </LinearLayout>
 

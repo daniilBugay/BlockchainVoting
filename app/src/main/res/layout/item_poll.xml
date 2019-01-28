@@ -22,7 +22,7 @@
                 android:id="@+id/completedText"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:background="@color/colorAccent">
+                android:background="@color/colorPrimary">
             <technology.desoft.blockchainvoting.ui.VerticalTextView
                     android:text="@string/completed"
                     android:gravity="bottom|end"

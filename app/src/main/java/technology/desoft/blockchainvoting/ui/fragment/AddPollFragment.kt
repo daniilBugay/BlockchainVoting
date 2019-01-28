@@ -91,8 +91,8 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
                     anim.start()
                     CircularAnimationProvider.startBackgroundAnimation(
                         view,
-                        R.color.colorAccent,
-                        android.R.color.background_light,
+                        ContextCompat.getColor(context!!, R.color.colorAccent),
+                        ContextCompat.getColor(context!!, android.R.color.background_light),
                         resources.getInteger(R.integer.circular_animation_duration)
                     )
                     Handler().postDelayed({ view.addFinishButton.show() }, 300)
@@ -121,20 +121,17 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
         initDatePick(view)
         initRecycler(view)
         view.addFinishButton.setOnClickListener { finish() }
-
     }
 
     private fun initDatePick(view: View) {
-        view.apply {
-            endsAtText.setOnClickListener {
-                showDatePicker { year, month, day ->
-                    val date = createCalendar(year, month, day)
-                    if (Calendar.getInstance().lessThan(date)) {
-                        endsAtText.text = DateFormat.getDateFormat(context).format(date.time)
-                        addPollPresenter.setEndsDate(date)
-                    } else
-                        showDatePickError()
-                }
+        view.endsAtText.setOnClickListener {
+            showDatePicker { year, month, day ->
+                val date = createCalendar(year, month, day)
+                if (Calendar.getInstance().lessThan(date)) {
+                    view.endsAtText.text = DateFormat.getDateFormat(context).format(date.time)
+                    addPollPresenter.setEndsDate(date)
+                } else
+                    showDatePickError()
             }
         }
     }

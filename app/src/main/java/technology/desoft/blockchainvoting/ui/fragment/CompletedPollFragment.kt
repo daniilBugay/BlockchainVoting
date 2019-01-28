@@ -70,6 +70,7 @@ class CompletedPollFragment : MvpAppCompatFragment(), CompletedPollView, OnBackL
         )
         view.pollDetailsBottomText.setText(R.string.show_result)
         view.pollDetailsVoteButton.visibility = View.GONE
+        view.pollDetailsRefresh.isEnabled = false
         view.completedText.visibility = View.VISIBLE
     }
 

@@ -19,6 +19,10 @@ class CompletedPollPresenter(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         viewState.showDetails(pollAndAuthor)
+        showResults()
+    }
+
+    private fun showResults(){
         val job = launch(Dispatchers.IO){
 
             val options = pollRepository.getOptions(pollAndAuthor.poll.id).await()
