@@ -8,8 +8,10 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'com.google.gms.google-services'
 
+
 android {
     compileSdkVersion 28
+    flavorDimensions "default"
     defaultConfig {
         applicationId "technology.desoft.blockchainvoting"
         minSdkVersion 21
