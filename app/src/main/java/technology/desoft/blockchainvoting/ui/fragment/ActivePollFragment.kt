@@ -61,8 +61,8 @@ class ActivePollFragment : MvpAppCompatFragment(), ActivePollView, OnBackListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.pollDetailsCard.transitionName = arguments?.getString(TRANSITION_NAME_KEY)
+        val behavior = BottomSheetBehavior.from(view.pollDetailsOptionsLayout)
         view.pollDetailsBottomText.setOnClickListener {
-            val behavior = BottomSheetBehavior.from(view.pollDetailsOptionsLayout)
             behavior.state = if (behavior.state == BottomSheetBehavior.STATE_EXPANDED)
                 BottomSheetBehavior.STATE_COLLAPSED
             else
@@ -76,6 +76,7 @@ class ActivePollFragment : MvpAppCompatFragment(), ActivePollView, OnBackListene
             activePollDetailPresenter.refresh()
             pollDetailsRefresh.isRefreshing = false
         }
+        view.pollDetailsLayout.setOnClickListener { behavior.state = BottomSheetBehavior.STATE_COLLAPSED }
     }
 
     override fun showDetails(pollAndAuthor: PollAndAuthor) {

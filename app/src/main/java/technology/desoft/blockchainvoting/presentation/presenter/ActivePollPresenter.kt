@@ -44,11 +44,6 @@ class ActivePollPresenter(
     fun refresh() {
         if (refreshing) return
 
-        val date = Calendar.getInstance().time
-        if (pollAndAuthor.poll.endsAt > date){
-            router.postNavigation(CompletedPollDetailsNavigation(pollAndAuthor))
-            return
-        }
         refreshing = true
         viewState.showDetails(pollAndAuthor)
         showOptions()

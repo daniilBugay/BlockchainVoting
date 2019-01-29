@@ -58,8 +58,8 @@ class CompletedPollFragment : MvpAppCompatFragment(), CompletedPollView, OnBackL
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.pollDetailsCard.transitionName = arguments?.getString(TRANSITION_NAME_KEY)
+        val behavior = BottomSheetBehavior.from(view.pollDetailsOptionsLayout)
         view.pollDetailsBottomText.setOnClickListener {
-            val behavior = BottomSheetBehavior.from(view.pollDetailsOptionsLayout)
             behavior.state = if (behavior.state == BottomSheetBehavior.STATE_EXPANDED)
                 BottomSheetBehavior.STATE_COLLAPSED
             else
@@ -72,6 +72,7 @@ class CompletedPollFragment : MvpAppCompatFragment(), CompletedPollView, OnBackL
         view.pollDetailsVoteButton.visibility = View.GONE
         view.pollDetailsRefresh.isEnabled = false
         view.completedText.visibility = View.VISIBLE
+        view.pollDetailsLayout.setOnClickListener { behavior.state = BottomSheetBehavior.STATE_COLLAPSED }
     }
 
     override fun showDetails(pollAndAuthor: PollAndAuthor) {
