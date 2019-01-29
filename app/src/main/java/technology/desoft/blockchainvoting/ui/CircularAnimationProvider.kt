@@ -8,6 +8,7 @@ import android.content.Context
 import android.support.v4.view.animation.FastOutSlowInInterpolator
 import android.view.View
 import android.view.ViewAnimationUtils
+import android.view.animation.AccelerateInterpolator
 import technology.desoft.blockchainvoting.R
 import kotlin.math.hypot
 
@@ -18,6 +19,7 @@ object CircularAnimationProvider {
         ValueAnimator().apply {
             setIntValues(startColor, endColor)
             setEvaluator(ArgbEvaluator())
+            interpolator = AccelerateInterpolator()
             addUpdateListener { view.setBackgroundColor(animatedValue as Int) }
             setDuration(duration.toLong())
         }.start()
@@ -27,8 +29,6 @@ object CircularAnimationProvider {
         context: Context,
         view: View,
         settings: Settings,
-        startColor: Int,
-        endColor: Int,
         onEnd: () -> Unit
     ) {
         val cx = settings.centerX
@@ -48,12 +48,6 @@ object CircularAnimationProvider {
                 }
             })
         }
-        CircularAnimationProvider.startBackgroundAnimation(
-            view,
-            startColor,
-            endColor,
-            duration
-        )
         anim.start()
     }
 

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="corner_radius_default">2dp</dimen>
-
+    <dimen name="elevation_default">2dp</dimen>
+    <dimen name="elevation_active">15dp</dimen>
     <!--Sign spaces-->
     <dimen name="spacing_small">3dp</dimen>
     <dimen name="spacing_medium">5dp</dimen>

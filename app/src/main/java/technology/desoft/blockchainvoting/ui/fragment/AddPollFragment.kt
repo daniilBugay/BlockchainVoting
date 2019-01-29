@@ -1,10 +1,12 @@
 package technology.desoft.blockchainvoting.ui.fragment
 
+import android.animation.ObjectAnimator
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.animation.FastOutSlowInInterpolator
+import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.helper.ItemTouchHelper
 import android.text.format.DateFormat
@@ -12,20 +14,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import kotlinx.android.synthetic.main.fragment_add_poll.view.*
 import technology.desoft.blockchainvoting.App
+import technology.desoft.blockchainvoting.R
 import technology.desoft.blockchainvoting.presentation.presenter.AddPollPresenter
 import technology.desoft.blockchainvoting.presentation.view.AddPollView
 import technology.desoft.blockchainvoting.ui.CircularAnimationProvider
 import technology.desoft.blockchainvoting.ui.adapter.AddOptionAdapter
 import technology.desoft.blockchainvoting.ui.adapter.PollOptionTouchCallback
+import technology.desoft.blockchainvoting.ui.changeElevation
 import java.util.*
 import kotlin.math.hypot
-import technology.desoft.blockchainvoting.R
 
 class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismissible, AddPollView {
     companion object {
@@ -95,6 +101,7 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
                         ContextCompat.getColor(context!!, android.R.color.background_light),
                         resources.getInteger(R.integer.circular_animation_duration)
                     )
+                    view.setBackgroundColor(android.R.color.background_light)
                     Handler().postDelayed({ view.addFinishButton.show() }, 300)
                 }
 
@@ -120,11 +127,30 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
         )
         initDatePick(view)
         initRecycler(view)
+        initCards(view)
+        view.addPollLayout.setOnClickListener { view.clearFocus() }
         view.addFinishButton.setOnClickListener { finish() }
+    }
+
+    private fun initCards(view: View) {
+        val defaultElevation = resources.getDimension(R.dimen.elevation_default)
+        val activeElevation = resources.getDimension(R.dimen.elevation_active)
+        fun getCardElevationListener(cardView: CardView) = { _: View, focus: Boolean ->
+            if (focus)
+                cardView.changeElevation(defaultElevation, activeElevation)
+            else
+                cardView.changeElevation(activeElevation, defaultElevation)
+        }
+        val dataCardListener = getCardElevationListener(view.addDataCard)
+        view.addThemeEditText.setOnFocusChangeListener(dataCardListener)
+        view.addDescriptionEditText.setOnFocusChangeListener(dataCardListener)
+        view.endsAtText.setOnFocusChangeListener(dataCardListener)
+        view.addOptionContent.setOnFocusChangeListener(getCardElevationListener(view.addOptionCard))
     }
 
     private fun initDatePick(view: View) {
         view.endsAtText.setOnClickListener {
+            it.requestFocus()
             showDatePicker { year, month, day ->
                 val date = createCalendar(year, month, day)
                 if (Calendar.getInstance().lessThan(date)) {
@@ -162,7 +188,11 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
 
     private fun initRecycler(view: View) {
         val adapter = AddOptionAdapter(mutableListOf())
-        val touchHelper = ItemTouchHelper(PollOptionTouchCallback(adapter, addPollPresenter))
+        val callback = PollOptionTouchCallback(adapter, addPollPresenter)
+        val touchHelper = ItemTouchHelper(callback)
+        callback.setFocusCallBack {
+            view.clearFocus()
+        }
         adapter.setOnDragStartListener { touchHelper.startDrag(it) }
         view.addOptionRecycler.adapter = adapter
         touchHelper.attachToRecyclerView(view.addOptionRecycler)
@@ -194,9 +224,13 @@ class AddPollFragment : MvpAppCompatFragment(), CircularAnimationProvider.Dismis
                     it.context,
                     it,
                     getAnimationSettings(it, x, y),
-                    ContextCompat.getColor(it.context, android.R.color.background_light),
-                    ContextCompat.getColor(it.context, R.color.colorAccent),
                     onEnd
+                )
+                CircularAnimationProvider.startBackgroundAnimation(
+                    it,
+                    ContextCompat.getColor(context!!, android.R.color.background_light),
+                    ContextCompat.getColor(context!!, R.color.colorAccent),
+                    resources.getInteger(R.integer.circular_animation_duration)
                 )
             }
         }

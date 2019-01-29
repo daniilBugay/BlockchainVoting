@@ -2,11 +2,13 @@
 <android.support.v7.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/addOptionItemCard"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="15dp"
         android:padding="5dp"
-        app:cardCornerRadius="@dimen/corner_radius_default">
+        app:cardCornerRadius="@dimen/corner_radius_default"
+        android:elevation="100dp">
 
     <LinearLayout
             android:orientation="horizontal"

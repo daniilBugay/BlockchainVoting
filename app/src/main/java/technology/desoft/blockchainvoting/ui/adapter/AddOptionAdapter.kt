@@ -10,7 +10,12 @@ import technology.desoft.blockchainvoting.R
 class AddOptionAdapter(
     private val optionContents: MutableList<String>
 ): RecyclerView.Adapter<AddOptionAdapter.ViewHolder>() {
-    override fun getItemCount() = optionContents.size
+    private companion object {
+        const val ELEMENT = 0
+        const val FOOTER = 1
+    }
+
+    override fun getItemCount() = optionContents.size + 1
 
     private var onDragStart: ((ViewHolder) -> Unit)? = null
 
@@ -18,10 +23,19 @@ class AddOptionAdapter(
         this.onDragStart = onDragStart
     }
 
+    override fun getItemViewType(position: Int) = when(position){
+        itemCount - 1 -> FOOTER
+        else -> ELEMENT
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, type: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_add_option, parent, false)
-        return ViewHolder(view)
+        return if (type == ELEMENT) {
+            val view = inflater.inflate(R.layout.item_add_option, parent, false)
+            ViewHolder(view, false)
+        } else {
+            ViewHolder(inflater.inflate(R.layout.item_empty_footer, parent, false), true)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -34,12 +48,13 @@ class AddOptionAdapter(
     }
 
     fun removeOption(position: Int){
-        if (position == -1) return
+        if (position == -1 || getItemViewType(position) == FOOTER) return
         optionContents.removeAt(position)
         notifyItemRemoved(position)
     }
 
     fun moveOption(from: Int, to: Int){
+        if (getItemViewType(from) == FOOTER || getItemViewType(to) == FOOTER) return
         val temp = optionContents[from]
         optionContents[from] = optionContents[to]
         optionContents[to] = temp
@@ -51,8 +66,9 @@ class AddOptionAdapter(
         optionContents.clear()
     }
 
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView: View, val isHeader: Boolean): RecyclerView.ViewHolder(itemView){
         fun bind(position: Int){
+            if (isHeader) return
             val optionContent = optionContents[position]
             itemView.addOptionContentText.text = optionContent
             itemView.addOptionDragButton.setOnTouchListener { _, _->

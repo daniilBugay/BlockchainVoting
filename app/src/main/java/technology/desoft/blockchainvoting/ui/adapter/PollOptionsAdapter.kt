@@ -17,6 +17,11 @@ class PollOptionsAdapter(
     private var isLocked = false
     private var currentSelected: Int? = null
 
+    private companion object {
+        const val ELEMENT = 0
+        const val FOOTER = 1
+    }
+
     override fun getItemCount() = pollOptions.size
 
     override fun onCreateViewHolder(parent: ViewGroup, type: Int): ViewHolder {
